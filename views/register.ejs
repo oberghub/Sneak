@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <link href="/css/all.css" rel="stylesheet" />
+    <link href="/css/styles.css" rel="stylesheet" />
+    <link href="/css/bulma.css" rel="stylesheet" />
+    <script src="/js/all.js"></script>
+    <script src="/js/scripts.js"></script>
+    <style>
+        body {
+            background: var(--background);
+        }
+
+        .hero-body {
+            justify-content: center;
+        }
+
+        .login {
+            border-radius: 5px;
+            padding: 5rem;
+            box-shadow: 8px 8px 15px var(--shadowDark), -8px -8px 15px var(--shadowLight);
+        }
+
+        input {
+            background: var(--shadowDark) !important;
+        }
+
+        a {
+            font-weight: 600;
+        }
+        h1{
+            font-size: 4rem;
+        }
+    </style>
+    <title>Sign Up</title>
+</head>
+
+<body>
+    <section id="app">
+        <nav class="navSize">
+            <div class="itemLeft">
+                <a>
+                    <img src="https://bulma.io/images/bulma-logo.png" style="width: 120px;"
+                        onClick="window.location.href = '/'">
+                </a>
+                <!-- Md - Sm = ShowHamburger -->
+                <div class="hamburgerNav" style="cursor: pointer;" @click="navburger = !navburger">
+                    <div class="hamburger"></div>
+                    <div class="hamburger"></div>
+                    <div class="hamburger"></div>
+                </div>
+            </div>
+            <div class="itemCenter">
+                <div>
+                    <a class="navbar-item itemSpacing" onClick="window.location.href = '/shop/'">
+                        Shop
+                    </a>
+                </div>
+                <a class="navbar-item itemSpacing" onClick="window.location.href = '/redeem/'">
+                    Redeem
+                </a>
+                <a class="navbar-item itemSpacing" onClick="window.location.href = '/cart/'">
+                    myCart
+                </a>
+                <a class="navbar-item" onClick="window.location.href = '/feedback/'">
+                    Feedback
+                </a>
+            </div>
+            <div class="itemRight">
+                <a class="navbar-item" onClick="window.location.href = '/login/'">
+                    Login
+                </a>
+                <a class="navbar-item" onClick="window.location.href = '/register/'">
+                    Sign Up
+                </a>
+            </div>
+        </nav>
+        <div v-show="navburger" class="clickHamburger">
+            <a class="navbar-item borderItem" onClick="window.location.href = '/shop/'">
+                Shop
+            </a>
+            <a class="navbar-item borderItem" onClick="window.location.href = '/redeem/'">
+                Redeem
+            </a>
+            <a class="navbar-item borderItem" onClick="window.location.href = '/cart/'">
+                MyCart
+            </a>
+            <a class="navbar-item borderItem" onClick="window.location.href = '/feedbck/'">
+                Feedback
+            </a>
+            <div style="display: flex; margin-left: 1em; height: 65px;">
+                <button class="button is-light heightCenter" onClick="window.location.href = '/login/'">
+                    Login
+                </button>
+                <p style="margin-left: 3em; margin-right: 3em; margin-top: auto; margin-bottom: auto;">Or</p>
+                <button class="button is-light heightCenter" onClick="window.location.href = '/register/'">
+                    Sign Up
+                </button>
+            </div>
+        </div>
+        <section class="hero is-fullheight">
+            <div class="hero-body has-text-left is-fluid">
+                <div class="login" style="box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;">
+                    <h1>สมัครสมาชิก</h1>
+                    <form action="/login/" enctype="multipart/form-data" method="POST">
+                    <div class="field">
+                        <label class="label">Name</label>
+                        <div class="control">
+                            <input class="input is-medium" type="text" placeholder="กรุณาใส่ชื่อ"
+                            autocomplete="name" required />
+                        </div>
+                    </div>
+        
+                    <div class="field">
+                        <label class="label">Username</label>
+                        <div class="control">
+                            <input class="input is-medium" type="text" placeholder="กรุณาใส่ Username"
+                            autocomplete="username" required />
+                        </div>
+                    </div>
+                    
+                    <div class="field">
+                        <label class="label">Password</label>
+                        <div class="control">
+                            <input class="input is-medium" type="password" placeholder="**********"
+                            autocomplete="current-password" required />
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Email</label>
+                        <div class="control">
+                            <input class="input is-medium" type="email" placeholder="hello@example.com"
+                                    autocomplete="username" required />
+                        </div>
+                    </div>
+        
+                    <div class="field">
+                        <label class="label">Sex</label>
+                        <div class="control">
+                            <div class="select">
+                                <select>
+                                    <option>--เลือกเพศ--</option>
+                                    <option>ชาย</option>
+                                    <option>หญิง</option>
+                                    <option>ไม่ระบุ</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div class="field">
+                        <label class="label">Message</label>
+                        <div class="control">
+                            <textarea class="textarea" placeholder="Textarea"></textarea>
+                        </div>
+                    </div>
+        
+                    <div class="field">
+                        <div class="control">
+                            <label class="checkbox">
+                                <input type="checkbox">
+                                I agree to the <a href="#">terms and conditions</a>
+                            </label>
+                        </div>
+                    </div>
+        
+                    <div class="field">
+                        <div class="control">
+                            <label class="radio">
+                                <input type="radio" name="question">
+                                Yes
+                            </label>
+                            <label class="radio">
+                                <input type="radio" name="question">
+                                No
+                            </label>
+                        </div>
+                    </div>
+        
+                    <div class="field is-grouped has-text-center">
+                        <div class="control">
+                            <button class="button is-block is-fullwidth is-primary is-medium" type="submit">
+                                Register
+                            </button>
+                        </div>
+                        <div class="control">
+                            <button class="button is-block is-fullwidth is-primary is-medium is-link is-light">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+                </div>
+            </div>
+        </section>
+    </section>
+</body>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            navburger: false,
+        },
+        methods: {
+        },
+        computed: {
+        },
+    })
+</script>
+
+</html>

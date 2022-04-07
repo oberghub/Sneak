@@ -22,12 +22,21 @@ app.use(bodyParser.json());
 
 // routers
 const indexRouter = require('./routes/index')
-// const blogRouter = require('./routes/blog')
-// const commentRouter = require('./routes/comment')
+const shopRouter = require('./routes/shop')
+const loginRouter = require('./routes/login')
+const registerRouter = require('./routes/register')
+const cartRouter = require('./routes/cart')
+const feedbackRouter = require('./routes/feedback')
+const redeemRouter = require('./routes/redeem')
 
 app.use(indexRouter.router)
-// app.use(blogRouter.router)
-// app.use(commentRouter.router)
+app.use(shopRouter.router)
+app.use(loginRouter.router)
+app.use(registerRouter.router)
+app.use(cartRouter.router)
+app.use(feedbackRouter.router)
+app.use(redeemRouter.router)
+
 
 app.listen(3000, () => {
   console.log(`Example app listening at http://localhost:3000`)
