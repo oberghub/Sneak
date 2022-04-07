@@ -1,0 +1,100 @@
+.navSize{
+    width: 100%;
+    height: 70px;
+    background-color: white;
+    display: flex;
+}
+.itemLeft{
+    display: flex;
+    justify-content: left;
+    align-items: flex-start;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 3em;
+    /* background-color: aqua; */
+}
+.itemCenter{
+    display: flex;
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+    /* background-color: black; */
+}
+.itemRight{
+    display: flex;
+    justify-content: right;
+    align-items: flex-end;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 3em;
+    /* background-color: aqua; */
+}
+.itemSpacing{
+    margin-right: 2em;
+}
+.hamburgerNav{
+    display: none;
+    margin: auto;
+    margin-left: 1.5em;
+}
+.hamburger{
+    width: 15px;
+    border: 1px solid black;
+    margin-bottom: 4px;
+}
+.cilckHamburger{
+    display: none;
+    width: 100%;
+    background-color: white;
+}
+.borderItem{
+    border-bottom: 1px solid rgb(211, 211, 211);
+    width: 95%;
+    height: 50px;
+    margin-left: 1em;
+}
+.heightCenter{
+    margin-top: auto;
+    margin-bottom: auto;
+}
+.boxs{
+    background-color: gray;
+    height: 450px;
+    width: 100%;
+}
+@media (max-width: 1024px) {
+    /* navbar */
+    .navSize{
+        height: 45px;
+    }
+    .itemCenter{
+        display: none;
+    }
+    .itemRight{
+        margin:auto;
+        margin-right: 1.5em;
+    }
+    .itemLeft{
+        margin-left: 1.5em;
+    }
+    .hamburgerNav{
+        display: block;
+    }
+    .cilckHamburger{
+        display: block;
+    }
+    /* navbar */
+}
+@media (max-width: 600px){
+    .navSize{
+        padding-right: 1em;
+    }
+    .itemRight{
+        display: none;
+    }
+    .hamburgerNav{
+        position: absolute;
+        right: 5%;
+        margin-top: 0.65em;
+    }
+}
