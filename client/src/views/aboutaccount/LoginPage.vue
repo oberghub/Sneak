@@ -65,6 +65,66 @@
           </button>
         </div>
       </div>
+            <nav class="navSize">
+                <div class="itemLeft">
+                    <router-link to="/">
+                    <img src="https://bulma.io/images/bulma-logo.png" style="width: 120px;">
+                    </router-link>
+                    <!-- Md - Sm = ShowHamburger -->
+                    <div class="hamburgerNav" style="cursor: pointer;" @click="navburger = !navburger">
+                    <div class="hamburger"></div>
+                    <div class="hamburger"></div>
+                    <div class="hamburger"></div>
+                    </div>
+                </div>
+                <div class="itemCenter">
+                    <div>
+                    <a class="navbar-item itemSpacing">
+                    Shop
+                    </a>
+                    </div>
+                    <a class="navbar-item itemSpacing" >
+                    Redeem
+                    </a>
+                    <a class="navbar-item itemSpacing">
+                    myCart
+                    </a>
+                    <a class="navbar-item">
+                    Feedback
+                    </a>
+                </div>
+                <div class="itemRight">
+                    <a class="navbar-item">
+                    Login
+                    </a>
+                    <a class="navbar-item">
+                    Sign Up
+                    </a>
+                </div>
+                </nav>
+                <div v-show="navburger" class="clickHamburger">
+                <a class="navbar-item borderItem">
+                    Shop
+                </a>
+                <a class="navbar-item borderItem">
+                    Redeem
+                </a>
+                <a class="navbar-item borderItem">
+                    MyCart
+                </a>
+                <a class="navbar-item borderItem">
+                    Feedback
+                </a>
+                <div style="display: flex; margin-left: 1em; height: 65px;">
+                    <button class="button is-light heightCenter">
+                    Login
+                    </button>
+                    <p style="margin-left: 3em; margin-right: 3em; margin-top: auto; margin-bottom: auto;">Or</p>
+                    <button class="button is-light heightCenter">
+                    Sign Up
+                    </button>
+                </div>
+            </div>
             <div class="absolute-center">
                 <div class="formBox">
                     <div class="formInfo">

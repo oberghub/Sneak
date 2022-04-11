@@ -74,6 +74,7 @@
       <div class="boxs" ></div>
   </section>
   <div><h1 style="font-size:48px;">Redeem</h1></div>
+    <h1>Home</h1>
   </div>
 </template>
 
