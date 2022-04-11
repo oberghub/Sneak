@@ -28,19 +28,6 @@
           <router-link to="/feedback" class="navbar-item" >
             Feedback
           </router-link>
-            <a class="navbar-item itemSpacing">
-              Shop
-            </a>
-          </div>
-          <a class="navbar-item itemSpacing" >
-            Redeem
-          </a>
-          <a class="navbar-item itemSpacing">
-            myCart
-          </a>
-          <a class="navbar-item" >
-            Feedback
-          </a>
         </div>
         <div class="itemRight">
           <router-link to="/login" class="navbar-item" >
@@ -75,31 +62,6 @@
           <router-link to="/register">
             Sign Up
           </router-link>
-          <a class="navbar-item">
-            Sign Up
-          </a>
-        </div>
-      </nav>
-      <div v-show="navburger" class="clickHamburger">
-        <a class="navbar-item borderItem">
-          Shop
-        </a>
-        <a class="navbar-item borderItem">
-          Redeem
-        </a>
-        <a class="navbar-item borderItem">
-          MyCart
-        </a>
-        <a class="navbar-item borderItem">
-          Feedback
-        </a>
-        <div style="display: flex; margin-left: 1em; height: 65px;">
-          <button class="button is-light heightCenter" >
-            Login
-          </button>
-          <p style="margin-left: 3em; margin-right: 3em; margin-top: auto; margin-bottom: auto;">Or</p>
-          <button class="button is-light heightCenter">
-            Sign Up
           </button>
         </div>
       </div>
