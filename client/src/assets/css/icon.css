@@ -1,0 +1,17 @@
+/* Heart Icon */
+.svg-icon {
+    width: 2em;
+    height: 2em;
+  }
+  
+  .svg-icon path,
+  .svg-icon polygon,
+  .svg-icon rect {
+    fill: #444444;
+  }
+  
+  .svg-icon circle {
+    stroke: #ff0000;
+    stroke-width: 1;
+  }
+/* Heart Icon */

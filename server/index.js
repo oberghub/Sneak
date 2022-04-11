@@ -28,6 +28,7 @@ const registerRouter = require('./routes/register')
 const cartRouter = require('./routes/cart')
 const feedbackRouter = require('./routes/feedback')
 const redeemRouter = require('./routes/redeem')
+const detailRouter = require('./routes/detail')
 
 app.use(indexRouter.router)
 app.use(shopRouter.router)
@@ -36,6 +37,7 @@ app.use(registerRouter.router)
 app.use(cartRouter.router)
 app.use(feedbackRouter.router)
 app.use(redeemRouter.router)
+app.use(detailRouter.router)
 
 
 app.listen(3000, () => {

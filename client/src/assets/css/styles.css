@@ -1,0 +1,343 @@
+html{
+    background-color: rgb(245, 245, 245);
+}
+*{
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+.navSize{
+    width: 100%;
+    height: 70px;
+    background-color: white;
+    display: flex;
+    border-bottom: 1px solid rgb(238, 238, 238);
+}
+.itemLeft{
+    display: flex;
+    justify-content: left;
+    align-items: flex-start;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 3em;
+    /* background-color: aqua; */
+}
+.itemCenter{
+    display: flex;
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+    /* background-color: black; */
+}
+.itemRight{
+    display: flex;
+    justify-content: right;
+    align-items: flex-end;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 3em;
+    /* background-color: aqua; */
+}
+.itemSpacing{
+    margin-right: 2em;
+}
+.hamburgerNav{
+    display: none;
+    margin: auto;
+    margin-left: 1.5em;
+}
+.hamburger{
+    width: 15px;
+    border: 1px solid black;
+    margin-bottom: 4px;
+}
+.cilckHamburger{
+    display: none;
+    width: 100%;
+    background-color: white;
+}
+.borderItem{
+    border-bottom: 1px solid rgb(211, 211, 211);
+    width: 95%;
+    height: 50px;
+    margin-left: 1em;
+}
+.heightCenter{
+    margin-top: auto;
+    margin-bottom: auto;
+}
+.boxs{
+    background-color: gray;
+    height: 450px;
+    width: 100%;
+}
+/* Navbar */
+.absolute-center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+}
+
+
+/* Auth form */
+.textform-left{
+    text-align: left;
+}
+.formBox{
+    width: 450px;
+    height: auto;
+    background-color: white;
+    border: 1px solid rgb(238, 238, 238);
+    box-shadow: 0 14px 14px rgba(0,0,0,0.25), 0 7px 10px rgba(0,0,0,0.22);
+}
+.formInfo{
+    padding: 2em;
+}
+/* Auth form */
+
+/* Detail */
+.detail-box{
+    width: 1440px;
+    margin-left: auto;
+    margin-right: auto;
+    height: auto;
+    display: flex;
+    background-color: white;
+    padding: 1em;
+    margin-top: 2em;
+}
+.detail-content{
+    width: 1440px;
+    margin-left: auto;
+    margin-right: auto;
+    height: auto;
+    display: flex;
+    background-color: white;
+    padding: 2.5em;
+    margin-top: 2em;
+    text-align: left;
+}
+.detail-image{
+    display: flex;
+    align-items: flex-start;
+    justify-content: left;
+    margin: auto;
+    width:900px;
+    height:600px;
+    padding: 2em;
+    /* background-color: antiquewhite; */
+}
+.detail-image-size{
+    width:900px;
+    height:535px;
+}
+.detail-info{
+    display: block;
+    /* align-items: flex-end; */
+    /* justify-content: right; */
+    margin: auto;
+    padding: 2em;
+    /* background-color: rgb(131, 131, 250); */
+    width:900px;
+    height:600px;
+}
+.detail-title{
+    width: 600px;
+    font-size: 32px;
+    font-weight: 500;
+    text-align: left;
+}
+.detail-price{
+    margin-top: 1em;
+    font-size: 32px;
+    font-weight: 300;
+    text-align: left;
+}
+.detail-button{
+    display: flex;
+    justify-content: left;
+    margin-top: 2em;
+}
+.detail-quantity{
+    margin-top: 2em;
+    display: flex;
+    justify-content: left;
+    align-items: flex-start;
+}
+.item-remain{
+    margin-top:auto; 
+    margin-bottom:auto;
+    margin-left:1em;
+}
+.favitem{
+    display: flex;
+}
+/* Detail */
+@media (max-width: 1440px){
+    /* Detail */
+    .detail-content{
+        width: 1280px;
+    }
+    .detail-box{
+        max-width: 1280px;
+    }
+    .detail-info{
+        width: 600px;
+        height: 600px;
+    }
+    .detail-title{
+        width: 450px;
+    }
+    .detail-image{
+        padding: 2em -1em 2em 1em;
+        height: auto;
+    }
+    /* Detail */
+}
+@media (max-width: 1280px){
+    /* Detail */
+    .detail-content{
+        width: 1024px;
+    }
+    .detail-box{
+        max-width: 1024px;
+        height: 500px;
+    }
+    .detail-info{
+        width: 500px;
+    }
+    .detail-title{
+        width: 350px;
+        font-size: 24px;
+        font-weight: 500;
+        text-align: left;
+    }
+    .detail-price{
+        margin-top: 1em;
+        font-size: 28px;
+    }
+    .detail-image-size{
+        width:500px;
+        height:400px;
+    }
+    /* Detail */
+}
+@media (max-width: 1024px) {
+    /* navbar */
+    .navSize{
+        height: 45px;
+    }
+    .itemCenter{
+        display: none;
+    }
+    .itemRight{
+        margin:auto;
+        margin-right: 1.5em;
+    }
+    .itemLeft{
+        margin-left: 1.5em;
+    }
+    .hamburgerNav{
+        display: block;
+    }
+    .cilckHamburger{
+        display: block;
+    }
+    /* navbar */
+
+    /* Detail */
+    .detail-box{
+        width: 100%;
+        display: block;
+        height: auto;
+    }
+    .detail-content{
+        width: 100%;
+    }
+    .detail-image{
+        width:100%;
+        height:auto;
+    }
+    .detail-image-size{
+        width:900px;
+        height:auto;
+    }
+    .detail-info{
+        width:100%;
+        height:auto;
+    }
+    .detail-title{
+        width: auto;
+        font-size: 22px;
+        font-weight: 500;
+        text-align: left;
+    }
+    .detail-price{
+        margin-top: 1em;
+        font-size: 24px;
+        font-weight: 300;
+        text-align: left;
+    }
+    /* Detail */
+}
+@media (max-width: 700px){
+    /* form auth */
+    .formBox{
+        width: 300px;
+    }
+    /* form auth */
+}
+@media (max-width: 600px){
+    /* Navbar */
+    .navSize{
+        padding-right: 1em;
+    }
+    .itemRight{
+        display: none;
+    }
+    .hamburgerNav{
+        position: absolute;
+        right: 5%;
+        margin-top: 0.65em;
+    }
+    /* Navbar */
+}
+@media (max-width: 578px){
+    /* Detail */
+    .detail-box{
+        padding: 1em;
+    }
+    .detail-image{
+        width:100%;
+        height:auto;
+        padding: 0;
+    }
+    .detail-info{
+        padding: 0.5em;
+        margin-top: 1em;
+    }
+    .detail-title{
+        font-size: 18px;
+    }
+    .detail-price{
+        margin-top: 1em;
+        font-size: 20px;
+    }
+    .detail-quantity{
+        display: block;
+    } 
+    .detail-button{
+        margin-top: 1em;
+    }
+    .item-remain{
+        margin-left: 0;
+        margin-top: 0.5em;
+        text-align: left;
+    }
+    .favitem{
+        display: none;
+    }
+    /* Detail */
+}
