@@ -1,66 +1,72 @@
 <template>
   <div>
     <section id="app">
-                    <nav class="navSize">
-                <div class="itemLeft">
-                    <router-link to="/">
-                    <img src="https://bulma.io/images/bulma-logo.png" style="width: 120px;">
-                    </router-link>
-                    <!-- Md - Sm = ShowHamburger -->
-                    <div class="hamburgerNav" style="cursor: pointer;" @click="navburger = !navburger">
-                    <div class="hamburger"></div>
-                    <div class="hamburger"></div>
-                    <div class="hamburger"></div>
-                    </div>
-                </div>
-                <div class="itemCenter">
-                    <div>
-                    <a class="navbar-item itemSpacing">
-                    Shop
-                    </a>
-                    </div>
-                    <a class="navbar-item itemSpacing" >
-                    Redeem
-                    </a>
-                    <a class="navbar-item itemSpacing">
-                    myCart
-                    </a>
-                    <a class="navbar-item">
-                    Feedback
-                    </a>
-                </div>
-                <div class="itemRight">
-                    <a class="navbar-item">
-                    Login
-                    </a>
-                    <a class="navbar-item">
-                    Sign Up
-                    </a>
-                </div>
-                </nav>
-                <div v-show="navburger" class="clickHamburger">
-                <a class="navbar-item borderItem">
-                    Shop
-                </a>
-                <a class="navbar-item borderItem">
-                    Redeem
-                </a>
-                <a class="navbar-item borderItem">
-                    MyCart
-                </a>
-                <a class="navbar-item borderItem">
-                    Feedback
-                </a>
-                <div style="display: flex; margin-left: 1em; height: 65px;">
-                    <button class="button is-light heightCenter">
-                    Login
-                    </button>
-                    <p style="margin-left: 3em; margin-right: 3em; margin-top: auto; margin-bottom: auto;">Or</p>
-                    <button class="button is-light heightCenter">
-                    Sign Up
-                    </button>
-                </div>
-            </div>
+      <nav class="navSize">
+        <div class="itemLeft">
+          <a>
+            <img src="https://bulma.io/images/bulma-logo.png" style="width: 120px;" onClick="window.location.href = '/'">
+          </a>
+          <!-- Md - Sm = ShowHamburger -->
+          <div class="hamburgerNav" @click="showNavSm()">
+              <div class="hamburger"></div>
+              <div class="hamburger"></div>
+              <div class="hamburger"></div>
+          </div>
+        </div>
+        <div class="itemCenter">
+          <div class="nav-links">
+            <router-link to="/shop" class="navbar-item itemSpacing">
+              Shop
+            </router-link>
+          </div>
+          <router-link to="/redeem" class="navbar-item itemSpacing" >
+            Redeem
+          </router-link>
+          <router-link to="/cart" class="navbar-item itemSpacing">
+            myCart
+          </router-link>
+          <router-link to="/feedback" class="navbar-item" >
+            Feedback
+          </router-link>
+        </div>
+        <div class="itemRight">
+          <router-link to="/login" class="navbar-item" >
+            Login
+          </router-link>
+          <router-link to="/register" class="navbar-item">
+            Sign Up
+          </router-link>
+        </div>
+      </nav>
+      <div id="showmenu">
+        <div class="cilckHamburger">
+          <router-link to="/shop" class="navbar-item borderItem">
+            Shop
+          </router-link>
+          <router-link to="/redeem" class="navbar-item borderItem">
+            Redeem
+          </router-link>
+          <router-link to="/cart" class="navbar-item borderItem">
+            MyCart
+          </router-link>
+          <router-link to="/feedback" class="navbar-item borderItem">
+            Feedback
+          </router-link>
+          <div style="display: flex; margin-left: 1em; height: 65px;">
+            <button class="button is-light heightCenter" >
+            <router-link to="/login">
+              Login
+            </router-link>
+            </button>
+            <p style="margin-left: 3em; margin-right: 3em; margin-top: auto; margin-bottom: auto;">Or</p>
+            <button class="button is-light heightCenter">
+            <router-link to="/register">
+              Sign Up
+            </router-link>
+            </button>
+          </div>
+        </div>
+      </div>
             <div class="detail-box">
                 <div class="detail-image">
                     <img class="detail-image-size" src="https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,b_rgb:f5f5f5/b01c67f2-2481-45d7-b383-a1476d768f6e/รองเท้าผู้-air-force-1-07-next-nature-cg65FM.png" >
@@ -75,6 +81,24 @@
                             <a class=button @click="counter++">+</a>
                         </div>
                         <p class="item-remain">สินค้าเหลือ 12 ชิ้น</p>
+                    </div>
+                    <div class="detail-option">
+                        <div class="select is-normal">
+                          <select>
+                            <option>Choose Size</option>
+                            <option>US 7</option>
+                            <option>US 7.5</option>
+                            <option>US 8</option>
+                            <option>US 8.5</option>
+                            <option>US 9</option>
+                            <option>US 9.5</option>
+                            <option>US 10</option>
+                            <option>US 10.5</option>
+                            <option>US 11</option>
+                            <option>US 11.5</option>
+                            <option>US 12</option>
+                          </select>
+                        </div>
                     </div>
                     <div class="detail-button">
                         <button class="button is-success is-large is-light mr-5">Add to cart</button>
@@ -104,7 +128,7 @@ export default {
       }
     },
     methods : {
-        //เช็คจำนวนสินค้า
+        //เช็คจำนวนที่จะเอาสินค้าลง cart
         checkZero(){
             if(this.counter <= 1){
                 this.counter = 1
@@ -112,7 +136,22 @@ export default {
             else{
                 this.counter--
             }
+        },
+      showNavSm(){
+        let x = document.getElementById("showmenu")
+        if(x.style.display === 'none'){
+          x.style.display = 'block'
+          console.log('block')
         }
+        else if(x.style.display === 'block'){
+          console.log('none')
+          x.style.display = 'none'
+        }
+        else{
+          console.log('else')
+          x.style.display = 'block'
+        }
+      }
     }
   }
 </script>

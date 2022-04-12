@@ -20,7 +20,7 @@ const routes = [
     component: () => import('../views/aboutaccount/RegisterPage.vue') // set home as path '/'
   },
   {
-    path: '/detail',
+    path: '/detail/:itemId',
     name: 'Detail',
     component: () => import('../views/shop/DetailPage.vue') // set home as path '/'
   },
@@ -43,6 +43,11 @@ const routes = [
     path: '/feedback',
     name: 'Feedback',
     component: () => import('../views/FeedbackPage.vue') // set home as path '/'
+  },
+  {
+    path: '/changepassword',
+    name: 'Changepassword',
+    component: () => import('../views/aboutaccount/ChangePasswordPage.vue') // set home as path '/'
   }
 ]
 
