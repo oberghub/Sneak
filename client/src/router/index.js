@@ -16,7 +16,7 @@ const routes = [
   },
   {
     path: '/register',
-    name: 'register',
+    name: 'Register',
     component: () => import('../views/aboutaccount/RegisterPage.vue') // set home as path '/'
   },
   {
@@ -48,6 +48,11 @@ const routes = [
     path: '/changepassword',
     name: 'Changepassword',
     component: () => import('../views/aboutaccount/ChangePasswordPage.vue') // set home as path '/'
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: () => import('../views/aboutaccount/ProfilePage.vue') // set home as path '/'
   }
 ]
 
@@ -55,6 +60,14 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  document.title = "Sneak! : " + to.name
+
+  //ใส่กันฟ้อง unused var
+  next()
+  console.log(from)
 })
 
 export default router
