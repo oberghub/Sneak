@@ -102,10 +102,12 @@
           <div class="cart-upload-image">
             <input class="button" style="margin:auto;" type="file"
                   id="photo" name="photo"
-                  accept="image/*">
+                  accept="image/*" oninput="pic.src=window.URL.createObjectURL(this.files[0])">
           </div>
 
-          <div id="cart-show-image" class="mt-4"></div>
+          <div id="cart-show-image" class="mt-4">
+            <img id="pic"/>
+          </div>
 
           <div class="cart-datetime">
             <input style="width:250px;" type="datetime-local" id="datetime" name="datetime">
