@@ -82,10 +82,11 @@
 
       <!-- Starts cart div-->
       <div class="cart-container">
+
         <div class="cart-upload">
-          <p style="font-size:100px;">ยังไม่เสร็จ</p>
+          <!-- <p style="font-size:100px;">ยังไม่เสร็จ</p> -->
           <p class="cart-title">Upload หลักฐาน</p>
-          <button class="button is-danger is-light mb-4" @click="modal_act = true">ดูตัวอย่าง ที่นี่!</button>
+          <button class="button is-danger is-light mb-4" @click="modal_act = true">ดูตัวอย่างการ Upload ที่นี่!</button>
           <!-- Modal ส่งหลักฐาน -->
           <div class="modal" :class="{ 'is-active' : modal_act }" @click="modal_act = false">
             <div class="modal-background"></div>
@@ -104,7 +105,14 @@
                   accept="image/*">
           </div>
 
-          <div id="cart-show-image"></div>
+          <div id="cart-show-image" class="mt-4"></div>
+
+          <div class="cart-datetime">
+            <input style="width:250px;" type="datetime-local" id="datetime" name="datetime">
+          </div>
+          <div class="mt-3"></div>
+          <p style="font-size:10px; color:red;">*AM คือ เที่ยงคืน - 11 โมงเช้า (12AM - 11AM)</p>
+          <p style="font-size:10px; color:red;">*PM คือ เที่ยงวัน - 5 ทุ่ม (12PM - 11PM)</p>
         </div>
 
         <div class="cart-result">
@@ -115,8 +123,8 @@
               <img class="cart-image" src="https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,b_rgb:f5f5f5/b01c67f2-2481-45d7-b383-a1476d768f6e/รองเท้าผู้-air-force-1-07-next-nature-cg65FM.png">
             </div>
               <div class="cart-item-info">
-                <p class="cart-item-title">Nike Air force one</p>
-                <p class="cart-item-price">฿3,500</p>
+                <p class="cart-item-title-c">Nike Air force one</p>
+                <p class="cart-item-price-c">฿3,500</p>
                 <p class="cart-item-quantity">x2</p>
               </div>
           </div>
@@ -139,7 +147,7 @@ export default {
       return {
         modal_act : false,
         previewImage : null,
-        obj : [{id:1}, {id:2}, {id:3},{id:1}, {id:2}, {id:3}]
+        obj : [{id:1}, {id:2}, {id:3},{id:1}, {id:2}, {id:3},{id:1}, {id:2}, {id:3},{id:1}]
       }
     },
     methods : {
