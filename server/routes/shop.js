@@ -7,10 +7,12 @@ router.get("/shop", async function (req, res, next) {
     // Your code here
     const [rows, fields] = await pool.query("select * from item")
     const [rows2, fields2] = await pool.query("select distinct item_type from item")
+    const [rows3, fields3] = await pool.query("select distinct item_brand from item")
     console.log(rows)
     res.json({
       items : rows,
-      byHuman : rows2
+      byHuman : rows2,
+      brand: rows3
     })
   });
 

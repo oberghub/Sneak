@@ -20,7 +20,7 @@ const routes = [
     component: () => import('../views/aboutaccount/RegisterPage.vue') // set home as path '/'
   },
   {
-    path: '/detail/:itemId',
+    path: '/detail/:id',
     name: 'Detail',
     component: () => import('../views/shop/DetailPage.vue') // set home as path '/'
   },
