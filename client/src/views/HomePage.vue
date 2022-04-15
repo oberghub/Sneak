@@ -63,7 +63,7 @@
             </div>
             <div class="card-content">
               <div class="media">
-                <div class="media-content">
+                <div class="media-content" style="overflow:hidden;">
                   <p class="title is-4">ALL Products</p>
                   <p class="subtitle is-4">สินค้าทั้งหมด</p>
                 </div>
@@ -85,7 +85,7 @@
             </div>
             <div class="card-content">
               <div class="media">
-                <div class="media-content">
+                <div class="media-content" style="overflow:hidden;">
                   <p class="title is-4">Redeem</p>
                   <p class="subtitle is-4">แลกสินค้า</p>
                 </div>
