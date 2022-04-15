@@ -4,15 +4,23 @@ const pool = require("../config");
 router = express.Router();
 
 router.get("/shop", async function (req, res, next) {
-  try {
-    const [rows, fields] = await pool.query('SELECT * FROM item')
-  } catch (err) {
-    return next(err);
-  }
-});
-router.post("/shop", async function (req, res, next) {
-  // Your code here
-  console.log("kuy1")
-  res.render('shop')
-});
+    // Your code here
+
+    try {
+      const [rows, fields] = await pool.query("select * from item")
+      const [rows2, fields2] = await pool.query("select distinct item_type from item")
+      console.log(rows)
+      res.json({
+        items : rows,
+        byHuman : rows2
+      })
+    } catch (err) {
+      return next(err);
+    }
+  })
+// router.post("/shop", async function (req, res, next) {
+//   // Your code here
+//   console.log("kuy1")
+//   res.render('shop')
+// });
 exports.router = router;

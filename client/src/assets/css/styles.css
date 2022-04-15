@@ -320,7 +320,7 @@ input::-webkit-inner-spin-button {
 }
 .item-card{
     width: 95%;
-    height: auto;
+    height: 550px;
     display: block;
     background-color: white;
     margin-top: 2em;
@@ -337,13 +337,14 @@ input::-webkit-inner-spin-button {
 }
 .image-card{
     width: 100%;
+    height: 350px;
     margin-left: auto;
     margin-right: auto;
     border-radius: 5px;
 }
 .card-image-size{
     width: 400px;
-    height: auto;
+    height: 350px;
 }
 .item-info{
     margin-top: 1em;
@@ -355,6 +356,9 @@ input::-webkit-inner-spin-button {
 .item-info-title{
     font-size: 20px;
     font-weight: bold;
+    line-height: 2.5ex;
+    height: 2.5ex; /* 2.5ex for each visible line */
+    overflow: hidden;
 }
 .item-info-price{
     font-size: 18px;
