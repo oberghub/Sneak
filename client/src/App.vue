@@ -7,7 +7,6 @@
             <a>
               <img class="image-nav" style="border-radius:10%" src="https://cdn.discordapp.com/attachments/877785654329753660/963700674762260540/logo-proj.png" onClick="window.location.href = '/'">
             </a>
-            <!-- Md - Sm = ShowHamburger -->
             <div class="hamburgerNav" @click="showNavSm()">
               <div class="bigburger itemSpacing">
                 <div class="hamburger"></div>
