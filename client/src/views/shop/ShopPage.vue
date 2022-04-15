@@ -134,7 +134,7 @@
         <div class="shop-store-card">
           <template v-for="item in items">
               <div class="item-card" :key="item.item_id" v-if="minprice <= item.item_price && item.item_price <= maxprice">
-                <router-link :to="`/detail/${item.item_id}`">
+                <router-link style="color:black;" :to="`/detail/${item.item_id}`">
               <!-- <div class="" v-for="item in items" :key="item.item_id"> -->
               <!-- item card -->
               <div class="image-card">

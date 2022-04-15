@@ -4,13 +4,10 @@ const pool = require("../config");
 router = express.Router();
 
 router.get("/detail/:id", async function (req, res, next) {
-    const [rows, fields] = await pool.query("select * from item where item_id = ?",[req.params.id])
-    // const [rows1, fields1] = await pool.query("select * item_size where item_id = ?",[req.params.id])
+    const [rows, fields] = await pool.query("select * from item join item_size using(item_id) where item_id = ?",[req.params.id])
     res.json({
-      items:rows[0],
-      // size:rows1
+      items:rows,
     })
-    console.log(rows)
   });
 router.post("/cart", async function (req, res, next) {
     // Your code here

@@ -21,13 +21,14 @@
               >
               <a class="button" @click="counter++">+</a>
             </div>
-            <p class="item-remain">สินค้าเหลือ {{ items.item_remain }} ชิ้น</p>
+            <p v-if="size_remain === 'Choose Size'" class="item-remain">สินค้าเหลือ {{ items.item_remain }} ชิ้น</p>
+            <p v-else class="item-remain">สินค้าเหลือ {{ size_remain }} ชิ้น</p>
           </div>
           <div class="detail-option">
             <div class="select is-normal">
-              <select>
-                <option>Choose Size</option>
-                <option v-for="size in size" :key="size.item_id">US {{size.size}}</option>
+              <select v-model="size_remain">
+                <option disabled>Choose Size</option>
+                <option v-for="size in size" :key="size.size_id" :value="size.size_remain">US {{size.size}}</option>
               </select>
             </div>
           </div>
@@ -75,9 +76,7 @@
       </div>
       <div class="detail-content">
         <p style="text-indent: 50px">
-          อยู่เหนือทุกการเล่น รองเท้าผลิตจากวัสดุรีไซเคิลอย่างน้อย 20%
-          ตามน้ำหนัก
-          เป็นคู่ออริจินัลที่เคยขีดเขียนประวัติศาสตร์สนีกเกอร์และในวันนี้ได้รับการปรับโฉมด้วยหนังสังเคราะห์
+          {{items.item_desc}}
         </p>
       </div>
       <!-- end Detail div -->
@@ -93,7 +92,8 @@ export default {
       counter: 1,
       focus_heart: false, //ใช้ทดสอบชั่วคราว,
       items: null,
-      size: null
+      size: null,
+      size_remain : "Choose Size"
     };
   },
   methods: {
@@ -112,10 +112,10 @@ export default {
   },
   created() {
     axios
-      .get("http://localhost:3000/detail/" + this.$route.params.id, {})
+      .get("http://localhost:3000/detail/" + this.$route.params.id)
       .then((response) => {
-        this.items = response.data.items;
-        this.size = response.data.size;
+        this.items = response.data.items[0];
+        this.size = response.data.items
         console.log("data = ", response.data);
       })
       .catch((err) => {
