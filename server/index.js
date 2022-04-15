@@ -1,9 +1,10 @@
 const express = require("express")
 const path = require("path")
 const bodyParser = require('body-parser')
-
+const cors = require('cors');
 const app = express();
 
+app.use(cors())
 // set the view engine to ejs
 app.set('view engine', 'ejs')
 // set root folder for views
@@ -21,7 +22,7 @@ app.use(bodyParser.json());
 // app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
 // routers
-const indexRouter = require('./routes/index')
+// const indexRouter = require('./routes/index')
 const shopRouter = require('./routes/shop')
 const loginRouter = require('./routes/login')
 const registerRouter = require('./routes/register')
@@ -31,7 +32,7 @@ const redeemRouter = require('./routes/redeem')
 const detailRouter = require('./routes/detail')
 const profileRouter = require('./routes/profile')
 
-app.use(indexRouter.router)
+// app.use(indexRouter.router)
 app.use(shopRouter.router)
 app.use(loginRouter.router)
 app.use(registerRouter.router)
