@@ -4,6 +4,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors');
 const app = express();
 
+
 app.use(cors())
 // set the view engine to ejs
 app.set('view engine', 'ejs')
@@ -41,6 +42,7 @@ app.use(feedbackRouter.router)
 app.use(redeemRouter.router)
 app.use(detailRouter.router)
 app.use(profileRouter.router)
+
 
 
 app.listen(3000, () => {

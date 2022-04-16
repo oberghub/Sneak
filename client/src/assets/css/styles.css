@@ -459,11 +459,16 @@ input::-webkit-inner-spin-button {
 /* Profile */
 .profile-main{
     max-width: 1440px;
-    height: 900px;
+    height: auto;
     display: flex;
     margin: auto;
     padding: 2em;
     background-color: white;
+    position: absolute;
+    z-index: -1;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
 }
 .profile-left-box{
     display: block;
@@ -472,7 +477,7 @@ input::-webkit-inner-spin-button {
     margin: auto;
     padding: 2em;
     width: 500px;
-    height: 500px;
+    height: auto;
 }
 .profile-right-box{
     display: block;
@@ -497,11 +502,6 @@ input::-webkit-inner-spin-button {
     font-size: 26px;
     font-weight: bold;
     text-align: left;
-}
-.img-profile{
-    width: 40%;
-    height: auto;
-    border-radius: 50%;
 }
 .changepwd{
     font-size: 24px;
@@ -711,6 +711,17 @@ input::-webkit-inner-spin-button {
     font-weight: 500;
 }
 /*Edititem*/
+
+/*carousel*/
+.carous{
+    width: 1440px;
+    height: 100%;
+    display: block;
+    margin-top:-3em;
+    margin-left:auto;
+    margin-right:auto;
+}
+/*carousel*/
 @media (max-width: 1440px){
     /* Detail */
     .detail-content{
@@ -737,6 +748,12 @@ input::-webkit-inner-spin-button {
         grid-template-columns: 1fr 1fr 1fr;
     }
     /* Shop Card */
+
+    /*carous*/
+    .carous{
+        width: 1280px;
+    }
+    /*carous*/
 }
 @media (max-width: 1280px){
     /* Detail */
@@ -790,6 +807,17 @@ input::-webkit-inner-spin-button {
         width: 150%;
     }
     /* Cart */
+
+    /*carous*/
+    .carous{
+        width: 1024px;
+    }
+    /*carous*/
+
+    .profile-main{
+        width: 100%;
+        height: auto;
+    }
 }
 @media (max-width: 1024px) {
     /* navbar */
@@ -869,6 +897,12 @@ input::-webkit-inner-spin-button {
         padding: 0;
     }
     /*cart */
+
+    /*carous*/
+    .carous{
+        width: 900px;
+    }
+    /*carous*/
 }
 @media (max-width: 980px){
     /* Shop */
@@ -911,6 +945,12 @@ input::-webkit-inner-spin-button {
         grid-template-columns: 1fr 1fr;
     }
     /*Redeem*/
+    
+    /*carous*/
+    .carous{
+        width: 100%;
+    }
+    /*carous*/
 }
 @media (max-width: 700px){
     /* form auth */
@@ -988,6 +1028,17 @@ input::-webkit-inner-spin-button {
     /* Navbar */
 
     /* Profile */
+    .profile-main{
+        position: static;
+        position: absolute;
+        z-index: -1;
+        left: 0;
+        top: 0;
+        transform: translate(0,0);
+    }
+    .profile-left-box{
+        margin-top: 3em;
+    }
     /* Profile */
 
     /*Shop*/

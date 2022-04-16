@@ -98,6 +98,7 @@
                         <a class="button is-small" @click="checkZero(index)">-</a>
                         <a style="margin-top:auto; margin-bottom:auto; color:gray;" class="mx-4">{{obj.quantity}}</a>
                         <a class="button is-small" @click="obj.quantity++">+</a>
+                        <button class="button is-warning is-light is-small ml-3" @click="deleteSomeItem(index)">Delete</button>
                     </div>
                   </div>
               </div>
@@ -109,6 +110,9 @@
                   Go to cart
                   </router-link>
                 </button> <!-- กดแล้วไปหน้าสรุป CartPage พร้อมส่งค่าไปให้หน้านั้นดั้ว -->
+                <button class="button is-danger" @click="clearCart()">
+                  clear
+                </button>
             </footer>
           </div>
         <button class="modal-close is-large" aria-label="close" @click="showEditItem = false"></button>
@@ -167,6 +171,14 @@ export default {
         else{
             this.obj[index].quantity--
         }
+    },
+    clearCart(){
+      //axios.delete
+      this.obj.splice(0, this.obj.length)
+      console.log("cleared")
+    },
+    deleteSomeItem(index){
+      this.obj.splice(index, 1)
     },
     formatCurrency(currency){ //format เงินให้มีลูกน้ำ
       return ((currency).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'))

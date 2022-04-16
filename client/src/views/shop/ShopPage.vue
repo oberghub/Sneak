@@ -18,12 +18,6 @@
               <div
                 style="display: flex; justify-content: left; margin-top: 0.5em"
               >
-                <button
-                  class="button is-small is-rounded is-primary is-light"
-                  style="width: 100%"
-                >
-                  search
-                </button>
               </div>
             </div>
           </div>
@@ -71,7 +65,7 @@
                 <input type="checkbox" />
                 {{
                   type.item_brand.charAt(0).toUpperCase() +
-                  type.item_brand.slice(1)
+                  type.item_brand.toLowerCase().slice(1)
                 }}
               </label>
             </div>
@@ -132,7 +126,7 @@
           </div>
         </div>
         <div class="shop-store-card">
-          <template v-for="item in items">
+          <template v-for="item in showItem">
               <div class="item-card" :key="item.item_id" v-if="minprice <= item.item_price && item.item_price <= maxprice">
                 <router-link style="color:black;" :to="`/detail/${item.item_id}`">
               <!-- <div class="" v-for="item in items" :key="item.item_id"> -->
@@ -141,7 +135,7 @@
                 <img class="card-image-size" :src="item.item_img" />
               </div>
               <div class="item-info">
-                <p class="item-info-title">{{ overTxt(item.item_name) }}</p>
+                <p class="item-info-title">{{ item.item_name }}</p>
                 <p class="item-info-price">
                   ฿{{ formatCurrency(item.item_price) }}
                 </p>
@@ -198,12 +192,19 @@ export default {
       //format เงินให้มีลูกน้ำ
       return currency.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
     },
-    overTxt(txt) {
-      if (txt.length > 20) {
-        return txt.slice(0, 19) + "...";
-      } else {
-        return txt;
-      }
+    // overTxt(txt) {
+    //   if (txt.length > 30) {
+    //     return txt.slice(0, 19) + "...";
+    //   } else {
+    //     return txt;
+    //   }
+    // }
+  },
+  computed : {
+    showItem(){
+      return this.items.filter((item) => { //array prototype match ใช้ตัวอักษรบางส่วนเทียบกับข้อความ ถ้ามี return true 
+        return item.item_name.toLowerCase().match(this.brandname.toLowerCase())
+      })
     }
   },
   created() {
@@ -216,7 +217,7 @@ export default {
         console.log("data = ", response.data);
       })
       .catch((err) => {
-        console.log(err, "WTF");
+        console.log(err);
       });
   },
 };

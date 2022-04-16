@@ -5,9 +5,6 @@
       <div class="profile-main">
         <div class="profile-left-box">
           <p class="profile-title">Your Profile</p>
-            <div>
-                <img class="img-profile mt-3" src="https://cdn.discordapp.com/attachments/774659091745734659/963110934308593815/244753413_134410555607297_7985134242756502927_n.jpg">
-            </div>
             <p class="profile-username">user001</p>
             <p style="font-size:10px">Your point : 131</p>
             <button v-show="changepwd_bt" class="button is-small is-light is-warning heightCenter mt-2" @click="changepwd = true, changepwd_bt = false">

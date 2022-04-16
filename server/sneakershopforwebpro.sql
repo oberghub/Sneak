@@ -1,13 +1,13 @@
--- MariaDB dump 10.19  Distrib 10.4.20-MariaDB, for osx10.10 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.22, for Win64 (x86_64)
 --
--- Host: localhost    Database: sneakershopwebpro
+-- Host: localhost    Database: sneakershop
 -- ------------------------------------------------------
--- Server version	10.4.20-MariaDB
+-- Server version	8.0.22
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!50503 SET NAMES utf8 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -21,17 +21,17 @@
 
 DROP TABLE IF EXISTS `cust_redeem`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cust_redeem` (
-  `cust_redeem_id` int(10) NOT NULL,
-  `cust_id` int(10) NOT NULL,
-  `red_id` int(10) NOT NULL,
+  `cust_redeem_id` int NOT NULL,
+  `cust_id` int NOT NULL,
+  `red_id` int NOT NULL,
   PRIMARY KEY (`cust_redeem_id`,`cust_id`,`red_id`),
-  KEY `cust_redeem_FK` (`cust_id`),
   KEY `cust_redeem_FK_1` (`red_id`),
-  CONSTRAINT `cust_redeem_FK` FOREIGN KEY (`cust_id`) REFERENCES `customer` (`cust_id`),
+  KEY `cust_redeem_FK_idx` (`cust_id`),
+  CONSTRAINT `cust_redeem_FK` FOREIGN KEY (`cust_id`) REFERENCES `customer` (`cust_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `cust_redeem_FK_1` FOREIGN KEY (`red_id`) REFERENCES `redeem` (`red_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +40,7 @@ CREATE TABLE `cust_redeem` (
 
 LOCK TABLES `cust_redeem` WRITE;
 /*!40000 ALTER TABLE `cust_redeem` DISABLE KEYS */;
-INSERT INTO `cust_redeem` VALUES (1,3,5),(2,7,2);
+INSERT INTO `cust_redeem` VALUES (2,7,2),(1,3,5);
 /*!40000 ALTER TABLE `cust_redeem` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -50,19 +50,19 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `customer`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `customer` (
-  `cust_id` int(10) NOT NULL,
+  `cust_id` int NOT NULL AUTO_INCREMENT,
   `cust_fname` varchar(255) DEFAULT NULL,
   `cus_lname` varchar(255) DEFAULT NULL,
-  `cust_point` int(10) DEFAULT NULL,
+  `cust_point` int DEFAULT NULL,
   `cust_address` varchar(255) DEFAULT NULL,
   `cust_tel` char(10) DEFAULT NULL,
   `cust_password` varchar(255) DEFAULT NULL,
   `cust_email` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`cust_id`),
   UNIQUE KEY `cust_email` (`cust_email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -81,9 +81,9 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `employee`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `employee` (
-  `emp_id` int(10) NOT NULL,
+  `emp_id` int NOT NULL,
   `emp_fname` varchar(255) DEFAULT NULL,
   `emp_lname` varchar(255) DEFAULT NULL,
   `emp_sex` enum('male','female','other') DEFAULT NULL,
@@ -94,7 +94,7 @@ CREATE TABLE `employee` (
   `emp_email` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`emp_id`),
   UNIQUE KEY `emp_email` (`emp_email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -113,18 +113,18 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `fav_item`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `fav_item` (
-  `fav_item_id` int(10) NOT NULL,
+  `fav_item_id` int NOT NULL,
   `fav_item_like` tinyint(1) DEFAULT NULL,
-  `cust_id` int(10) NOT NULL,
-  `item_id` int(10) NOT NULL,
+  `cust_id` int NOT NULL,
+  `item_id` int NOT NULL,
   PRIMARY KEY (`fav_item_id`,`cust_id`,`item_id`),
-  KEY `FK_Cust_Fav_item` (`cust_id`),
   KEY `FK_Item_Fav_item` (`item_id`),
-  CONSTRAINT `FK_Cust_Fav_item` FOREIGN KEY (`cust_id`) REFERENCES `customer` (`cust_id`),
+  KEY `FK_Cust_Fav_item_idx` (`cust_id`),
+  CONSTRAINT `FK_Cust_Fav_item` FOREIGN KEY (`cust_id`) REFERENCES `customer` (`cust_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `FK_Item_Fav_item` FOREIGN KEY (`item_id`) REFERENCES `item` (`item_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -143,18 +143,18 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `item`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `item` (
-  `item_id` int(10) NOT NULL,
+  `item_id` int NOT NULL,
   `item_price` float(8,2) DEFAULT NULL,
   `item_name` varchar(255) DEFAULT NULL,
-  `item_desc` text DEFAULT NULL,
-  `item_remain` int(10) DEFAULT NULL,
+  `item_desc` text,
+  `item_remain` int DEFAULT NULL,
   `item_img` varchar(255) DEFAULT NULL,
   `item_type` enum('men','women','kid','accessories') DEFAULT NULL,
   `item_brand` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`item_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -173,16 +173,16 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `item_size`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `item_size` (
-  `size_id` int(10) NOT NULL AUTO_INCREMENT,
-  `item_id` int(10) NOT NULL,
-  `size_remain` int(10) DEFAULT NULL,
+  `size_id` int NOT NULL AUTO_INCREMENT,
+  `item_id` int NOT NULL,
+  `size_remain` int DEFAULT NULL,
   `size` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`size_id`),
   KEY `item_size_FK` (`item_id`),
   CONSTRAINT `item_size_FK` FOREIGN KEY (`item_id`) REFERENCES `item` (`item_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -201,24 +201,24 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `order`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `order` (
-  `order_id` int(10) NOT NULL,
-  `emp_id_manage` int(10) NOT NULL,
-  `emp_id_verify` int(10) NOT NULL,
-  `cust_id` int(10) NOT NULL,
+  `order_id` int NOT NULL,
+  `emp_id_manage` int NOT NULL,
+  `emp_id_verify` int NOT NULL,
+  `cust_id` int NOT NULL,
   `order_status` enum('complete','incomplete','pending') DEFAULT NULL,
   `order_address` varchar(255) DEFAULT NULL,
   `order_date` date DEFAULT NULL,
-  `order_total` int(10) DEFAULT NULL,
+  `order_total` int DEFAULT NULL,
   PRIMARY KEY (`order_id`),
   KEY `FK_Manage_Emp_Order` (`emp_id_manage`),
   KEY `FK_Verify_Emp_Order` (`emp_id_verify`),
-  KEY `FK_Cust_Order` (`cust_id`),
-  CONSTRAINT `FK_Cust_Order` FOREIGN KEY (`cust_id`) REFERENCES `customer` (`cust_id`),
+  KEY `FK_Cust_Order_idx` (`cust_id`),
+  CONSTRAINT `FK_Cust_Order` FOREIGN KEY (`cust_id`) REFERENCES `customer` (`cust_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `FK_Manage_Emp_Order` FOREIGN KEY (`emp_id_manage`) REFERENCES `employee` (`emp_id`),
   CONSTRAINT `FK_Verify_Emp_Order` FOREIGN KEY (`emp_id_verify`) REFERENCES `employee` (`emp_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -237,20 +237,20 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `order_item`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `order_item` (
-  `item_no` int(10) NOT NULL,
-  `order_id` int(10) NOT NULL,
-  `item_id` int(10) NOT NULL,
-  `item_quantity` int(10) DEFAULT NULL,
-  `item_amount` int(10) DEFAULT NULL,
+  `item_no` int NOT NULL,
+  `order_id` int NOT NULL,
+  `item_id` int NOT NULL,
+  `item_quantity` int DEFAULT NULL,
+  `item_amount` int DEFAULT NULL,
   `item_price` float(8,2) DEFAULT NULL,
   PRIMARY KEY (`item_no`,`order_id`),
   KEY `FK_Order_Order_item` (`order_id`),
   KEY `FK_Item_Order_item` (`item_id`),
   CONSTRAINT `FK_Item_Order_item` FOREIGN KEY (`item_id`) REFERENCES `item` (`item_id`),
   CONSTRAINT `FK_Order_Order_item` FOREIGN KEY (`order_id`) REFERENCES `order` (`order_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -269,17 +269,17 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `payment`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `payment` (
-  `pay_id` int(10) NOT NULL,
-  `order_id` int(10) NOT NULL,
+  `pay_id` int NOT NULL,
+  `order_id` int NOT NULL,
   `pay_image` varchar(255) DEFAULT NULL,
   `pay_date` varchar(255) DEFAULT NULL,
   `pay_time` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`pay_id`),
   KEY `FK_Order_Pay` (`order_id`),
   CONSTRAINT `FK_Order_Pay` FOREIGN KEY (`order_id`) REFERENCES `order` (`order_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -298,15 +298,15 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `redeem`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `redeem` (
-  `red_id` int(10) NOT NULL,
+  `red_id` int NOT NULL,
   `red_name` varchar(255) DEFAULT NULL,
-  `red_img` text DEFAULT NULL,
-  `red_remain` int(10) DEFAULT NULL,
-  `red_point` int(10) DEFAULT NULL,
+  `red_img` text,
+  `red_remain` int DEFAULT NULL,
+  `red_point` int DEFAULT NULL,
   PRIMARY KEY (`red_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -325,20 +325,20 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `requirement`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `requirement` (
-  `req_id` int(10) NOT NULL AUTO_INCREMENT,
-  `emp_id` int(10) NOT NULL,
-  `cust_id` int(10) NOT NULL,
+  `req_id` int NOT NULL AUTO_INCREMENT,
+  `emp_id` int NOT NULL,
+  `cust_id` int NOT NULL,
   `req_title` varchar(255) DEFAULT NULL,
   `req_date` date DEFAULT NULL,
   `req_detail` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`req_id`),
   KEY `FK_Emp_Req` (`emp_id`),
-  KEY `FK_Cust_Req` (`cust_id`),
-  CONSTRAINT `FK_Cust_Req` FOREIGN KEY (`cust_id`) REFERENCES `customer` (`cust_id`),
+  KEY `FK_Cust_Req_idx` (`cust_id`),
+  CONSTRAINT `FK_Cust_Req` FOREIGN KEY (`cust_id`) REFERENCES `customer` (`cust_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `FK_Emp_Req` FOREIGN KEY (`emp_id`) REFERENCES `employee` (`emp_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -360,4 +360,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-16  0:08:06
+-- Dump completed on 2022-04-16 19:56:47
