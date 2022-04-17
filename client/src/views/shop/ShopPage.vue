@@ -135,13 +135,13 @@
               </div>
               <div class="item-info">
                 <p class="item-info-title">{{ item.item_name }}</p>
-                <p class="item-info-type">{{ item.item_type }}</p>
+                <p class="item-info-type">{{ item.item_type.charAt(0).toUpperCase() + item.item_type.slice(1) }}</p>
                 <p class="item-info-price">
                   ฿{{ formatCurrency(item.item_price) }}
                 </p>
-                <!-- <p class="item-info-remain">
+                <p class="item-info-remain">
                   สินค้าคงเหลือ {{ item.item_remain }} ชิ้น
-                </p> -->
+                </p>
                 <div class="item-info-heart">
                   <svg
                     @click="focus_heart = !focus_heart"

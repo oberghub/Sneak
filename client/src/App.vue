@@ -74,7 +74,6 @@
           </div>
         </div>
       </div>
-      <!-- <div id="showsubnav"></div> -->
       <!--end nav-->
 
       <!-- Edit Item in cart -->
@@ -94,6 +93,7 @@
                   <div class="modal-cart-item-info">
                     <p class="modal-cart-item-title-c">{{obj.name}}</p>
                     <p class="modal-cart-item-price-c">฿{{formatCurrency(obj.price * obj.quantity)}}</p>
+                    <p style="font-size:12px; color:gray;" class="my-1">{{obj.size}} US</p>
                     <div style="display:flex;">
                         <a class="button is-small" @click="checkZero(index)">-</a>
                         <a style="margin-top:auto; margin-bottom:auto; color:gray;" class="mx-4">{{obj.quantity}}</a>
@@ -102,16 +102,16 @@
                     </div>
                   </div>
               </div>
-              <p>Total {{formatCurrency(sumAllPrice)}}</p>
             </section>
             <footer class="modal-card-foot">
-              <button class="button is-success" @click="showEditItem = false">
+              <p style="font=-size:22px; font-weight:bold;" class="mr-5">Total ฿{{formatCurrency(sumAllPrice)}}</p>  
+                <button class="button is-success" @click="showEditItem = false">
                   <router-link style="color:white;" to="cart">
                   Go to cart
                   </router-link>
                 </button> <!-- กดแล้วไปหน้าสรุป CartPage พร้อมส่งค่าไปให้หน้านั้นดั้ว -->
                 <button class="button is-danger" @click="clearCart()">
-                  clear
+                  Clear
                 </button>
             </footer>
           </div>
@@ -133,9 +133,9 @@ export default {
     return {
       showEditItem : false,
       counter : 0,
-      obj : [{id:1, quantity:1, price:3500, name:"Nike Air Force 1", img : "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,b_rgb:f5f5f5/b01c67f2-2481-45d7-b383-a1476d768f6e/รองเท้าผู้-air-force-1-07-next-nature-cg65FM.png"},
-             {id:2, quantity:1, price:2900, name:"Converse Chuck Taylor All Stars Repro 70's", img: "https://th-test-11.slatic.net/p/ce8d6c97c45bfb245fe92a806ee3e67b.jpg"},
-             {id:3, quantity:1, price:4250, name:"Keen Uneek", img:"https://www.selektivbkk.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/1/_/1_2__1.jpg"}]
+      obj : [{id:1, quantity:1, size: '6.5', price:3500, name:"Nike Air Force 1", img : "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,b_rgb:f5f5f5/b01c67f2-2481-45d7-b383-a1476d768f6e/รองเท้าผู้-air-force-1-07-next-nature-cg65FM.png"},
+             {id:2, quantity:2, size: '8.5', price:2900, name:"Converse Chuck Taylor All Stars Repro 70's", img: "https://th-test-11.slatic.net/p/ce8d6c97c45bfb245fe92a806ee3e67b.jpg"},
+             {id:3, quantity:1, size: '11', price:4250, name:"Keen Uneek", img:"https://www.selektivbkk.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/1/_/1_2__1.jpg"}]
     }
   },
   methods : {

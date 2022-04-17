@@ -320,7 +320,7 @@ input::-webkit-inner-spin-button {
 }
 .item-card{
     width: 95%;
-    height: 550px;
+    height: 570px;
     display: block;
     background-color: white;
     margin-top: 2em;
@@ -385,7 +385,7 @@ input::-webkit-inner-spin-button {
 }
 .item-info-heart{
     display:flex; 
-    margin-top:1em;
+    margin-top:0.5em;
 }
 /* shop */
 
@@ -694,19 +694,19 @@ input::-webkit-inner-spin-button {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .modal-cart-item-image{
-    width: 100px;
-    height: 100px;
+    width: 125px;
+    height: 125px;
     border-radius: 0.5em;
 }
 .modal-cart-image{
-    width: 100px;
-    height: 100px;
+    width: 125px;
+    height: 125px;
 }
 .modal-cart-item-info{
     width: auto;
     height: auto;
     display: block;
-    padding: 0.5em;
+    padding: 0.5em 2em 0.5em;
     text-align: left;
 }
 .modal-cart-item-title-c{
@@ -1008,6 +1008,41 @@ input::-webkit-inner-spin-button {
         height: 40px;
     }
     /* Cart */
+
+    /*modal*/
+    .modal-cart-item{
+        width: 100%;
+        height: auto;
+    }
+    .modal-cart-item-image{
+        width: 125px;
+        height: 125px;
+    }
+    .modal-cart-image{
+        width: 125px;
+        height: 125px;
+    }
+    .modal-cart-item-info{
+        width: 100%;
+        height: auto;
+        display: block;
+        padding: 0.5em 2em 0.5em;
+        text-align: left;
+    }
+    .modal-cart-item-title-c{
+        font-size: 15px;
+        font-weight: bold;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 1; /* number of lines to show */
+        -webkit-box-orient: vertical;
+    }
+    .modal-cart-item-price-c{
+        font-size: 14px;
+        font-weight: 500;
+    }
+    /*modal*/
 }
 @media (max-width: 600px){
     /* Navbar */
@@ -1130,6 +1165,18 @@ input::-webkit-inner-spin-button {
         font-size: 18px;
     }
     /*cart*/
+
+    /*modal*/
+    .modal-cart-item{
+        display: block;
+    }
+    .modal-cart-item-image{
+        width: 140px;
+    }
+    .modal-cart-item-info{
+        padding: 1em 0em 1em 0.5em;
+    }
+    /*modal*/
 }
 @media (max-width:500px){
     /*Cart*/
