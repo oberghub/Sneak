@@ -367,12 +367,19 @@ input::-webkit-inner-spin-button {
     height: 2.5ex; /* 2.5ex for each visible line */
     overflow: hidden;
 }
+.item-info-type{
+    font-size: 16px;
+    margin-bottom: 1em;
+
+    overflow: hidden;
+    color: gray;
+}
 .item-info-price{
     font-size: 18px;
     font-weight: 300;
 }
 .item-info-remain{
-    margin-top: 1em;
+    margin-top: 0.5em;
     text-align: left;
     font-size: 14px;
 }

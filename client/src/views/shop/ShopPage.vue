@@ -26,10 +26,9 @@
             <div class="filter-title">By Human type</div>
             <div v-for="type in human" :key="type.item_type">
               <label class="checkbox lblsize">
-                <input type="checkbox" />
+                <input type="checkbox" v-model="checkedType" :value="type.item_type"/>
                 {{
-                  type.item_type.charAt(0).toUpperCase() +
-                  type.item_type.slice(1)
+                  type.item_type.charAt(0).toUpperCase() + type.item_type.slice(1)
                 }}
               </label>
             </div>
@@ -62,7 +61,7 @@
             <div class="filter-title">By Brand</div>
             <div v-for="type in brand" :key="type.item_brand">
               <label class="checkbox lblsize">
-                <input type="checkbox" />
+                <input type="checkbox" v-model="checkedBrand" :value="type.item_brand"/>
                 {{
                   type.item_brand.charAt(0).toUpperCase() +
                   type.item_brand.toLowerCase().slice(1)
@@ -99,27 +98,27 @@
             <div class="filter-title">Sort By Price</div>
             <div class="control">
               <label class="radio lblsize">
-                <input type="radio" name="sortalpha" checked />
+                <input type="radio" name="sort" v-model="checkedSort" value="l-h"/>
                 Low - High
               </label>
               <br />
               <label class="radio lblsize">
-                <input type="radio" name="sortalpha" />
+                <input type="radio" name="sort" v-model="checkedSort" value="h-l"/>
                 High - Low
               </label>
             </div>
           </div>
           <!-- Sort by Name -->
           <div class="shop-filter-item">
-            <div class="filter-title">Sort By Price</div>
+            <div class="filter-title">Sort By Name</div>
             <div class="control">
               <label class="radio lblsize">
-                <input type="radio" name="sortprice" checked />
+                <input type="radio" name="sort" v-model="checkedSort" value="a-z"/>
                 A - Z
               </label>
               <br />
               <label class="radio lblsize">
-                <input type="radio" name="sortprice" />
+                <input type="radio" name="sort" v-model="checkedSort" value="z-a"/>
                 Z - A
               </label>
             </div>
@@ -136,12 +135,13 @@
               </div>
               <div class="item-info">
                 <p class="item-info-title">{{ item.item_name }}</p>
+                <p class="item-info-type">{{ item.item_type }}</p>
                 <p class="item-info-price">
                   ฿{{ formatCurrency(item.item_price) }}
                 </p>
-                <p class="item-info-remain">
+                <!-- <p class="item-info-remain">
                   สินค้าคงเหลือ {{ item.item_remain }} ชิ้น
-                </p>
+                </p> -->
                 <div class="item-info-heart">
                   <svg
                     @click="focus_heart = !focus_heart"
@@ -185,6 +185,9 @@ export default {
       brandname: "",
       focus_heart: false,
       brand: null,
+      checkedType: [],
+      checkedBrand: [],
+      checkedSort: 'l-h',
     };
   },
   methods: {
@@ -202,9 +205,87 @@ export default {
   },
   computed : {
     showItem(){
-      return this.items.filter((item) => { //array prototype match ใช้ตัวอักษรบางส่วนเทียบกับข้อความ ถ้ามี return true 
-        return item.item_name.toLowerCase().match(this.brandname.toLowerCase())
-      })
+      let tempitems = this.items
+      if(this.brandname != '' && this.brandname){
+        tempitems = tempitems.filter((item) => { //array prototype match ใช้ตัวอักษรบางส่วนเทียบกับข้อความ ถ้ามี return true 
+          return (item.item_name.toLowerCase().match(this.brandname.toLowerCase()))
+        })
+      }
+
+      if(this.checkedType.length){
+        let copy = []
+        tempitems = tempitems.filter((item) => {
+          for(let i=0; i<this.checkedType.length; i++){
+            if(item.item_type === this.checkedType[i]){
+              copy.push(item)
+            }
+          }
+        })
+        tempitems = copy
+      }
+      
+      if(this.checkedBrand.length){
+        let copy = []
+        tempitems = tempitems.filter((item) => {
+          for(let i=0; i<this.checkedBrand.length; i++){
+            if(item.item_brand.toLowerCase() === this.checkedBrand[i].toLowerCase()){
+              copy.push(item)
+            }
+          }
+        })
+        tempitems = copy
+      }
+      
+      if(this.checkedSort === 'l-h'){
+        tempitems = tempitems.sort((a,b) =>{
+          if(a.item_price < b.item_price){
+            console.log(1)
+            return -1
+          }
+          if(a.item_price > b.item_price){
+            return 1
+          }
+          return 0
+        })
+      }
+
+      if(this.checkedSort === 'h-l'){
+        tempitems = tempitems.sort((a,b) =>{
+          if(a.item_price < b.item_price){
+            return 1
+          }
+          if(a.item_price > b.item_price){
+            return -1
+          }
+          return 0
+        })
+      }
+      
+      if(this.checkedSort === 'a-z'){
+        tempitems = tempitems.sort((a,b) =>{
+          if(a.item_name.toLowerCase() < b.item_name.toLowerCase()){
+            return -1
+          }
+          if(a.item_name.toLowerCase() > b.item_name.toLowerCase()){
+            return 1
+          }
+          return 0
+        })
+      }
+
+      if(this.checkedSort === 'z-a'){
+        tempitems = tempitems.sort((a,b) =>{
+          if(a.item_name.toLowerCase() < b.item_name.toLowerCase()){
+            return 1
+          }
+          if(a.item_name.toLowerCase() > b.item_name.toLowerCase()){
+            return -1
+          }
+          return 0
+        })
+      }
+      
+      return tempitems;
     }
   },
   created() {

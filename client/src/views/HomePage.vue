@@ -114,7 +114,7 @@ export default {
       "https://runningmagazine.ca/wp-content/uploads/2022/03/SS22-Cloudmonster-GDN-Asset-9-1200x628-1.jpg",
       "https://cf.shopee.co.th/file/bf9af64aa05710a00cb0d4bc571793b3",
     ],
-    vfTransitions: ["fade"],
+    vfTransitions: ['fade'],
   }),
 };
 </script>
