@@ -21,15 +21,19 @@
               </div>
             </div>
           </div>
+          <!-- <div class="shop-filter-item">
+            <div class="filter-title">All Items ({{allitem}})</div>
+          </div> -->
           <!-- Filter human type -->
           <div class="shop-filter-item">
-            <div class="filter-title">By Human type</div>
+            <div class="filter-title">By Human</div>
             <div v-for="type in human" :key="type.item_type">
               <label class="checkbox lblsize">
                 <input type="checkbox" v-model="checkedType" :value="type.item_type"/>
                 {{
                   type.item_type.charAt(0).toUpperCase() + type.item_type.slice(1)
                 }}
+                ({{type.count_type}})
               </label>
             </div>
           </div>
@@ -66,6 +70,7 @@
                   type.item_brand.charAt(0).toUpperCase() +
                   type.item_brand.toLowerCase().slice(1)
                 }}
+                ({{type.count_brand}})
               </label>
             </div>
           </div>
@@ -89,7 +94,6 @@
               <div
                 style="display: flex; justify-content: left; margin-top: 0.5em"
               >
-                <!-- <button class="button is-small is-rounded is-primary is-light" style="width:100%;">submit</button> -->
               </div>
             </div>
           </div>
@@ -126,7 +130,7 @@
         </div>
         <div class="shop-store-card">
           <template v-for="item in showItem">
-              <div class="item-card" :key="item.item_id" v-if="minprice <= item.item_price && item.item_price <= maxprice">
+              <div class="item-card" :key="item.item_id" v-if="minprice <= item.item_price && item.item_price <= maxprice && item.item_remain > 0">
                 <router-link style="color:black;" :to="`/detail/${item.item_id}`">
               <!-- <div class="" v-for="item in items" :key="item.item_id"> -->
               <!-- item card -->
@@ -140,7 +144,7 @@
                   ฿{{ formatCurrency(item.item_price) }}
                 </p>
                 <p class="item-info-remain">
-                  สินค้าคงเหลือ {{ item.item_remain }} ชิ้น
+                  มีสินค้าท้ังหมด {{ item.item_remain }} ชิ้น
                 </p>
                 <div class="item-info-heart">
                   <svg
@@ -182,7 +186,9 @@ export default {
       maxprice: 99999,
       items: null,
       human: null,
+      allitem : null,
       brandname: "",
+      itemcount : "",
       focus_heart: false,
       brand: null,
       checkedType: [],
@@ -284,7 +290,6 @@ export default {
           return 0
         })
       }
-      
       return tempitems;
     }
   },
@@ -295,6 +300,7 @@ export default {
         this.items = response.data.items;
         this.human = response.data.byHuman;
         this.brand = response.data.brand;
+        this.allitem = response.data.allitem[0].count;
         console.log("data = ", response.data);
       })
       .catch((err) => {

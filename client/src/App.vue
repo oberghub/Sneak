@@ -80,12 +80,8 @@
       <div class="modal" :class="{ 'is-active' : showEditItem }">
         <div class="modal-background"></div>
           <div class="modal-content">
-            <header class="modal-card-head">
-              <p class="modal-card-title">Your Item</p>
-              <button class="delete" aria-label="close" @click="showEditItem = false"></button>
-            </header>
-            <section class="modal-card-body">
-              <!-- Content ... -->
+            <div class="modal-bg-custom">
+                <!-- Content ... -->
               <div class="modal-cart-item" v-for="obj,index in obj" :key="obj.id">
                 <div class="modal-cart-item-image">
                   <img class="modal-cart-image" :src="obj.img">
@@ -93,7 +89,7 @@
                   <div class="modal-cart-item-info">
                     <p class="modal-cart-item-title-c">{{obj.name}}</p>
                     <p class="modal-cart-item-price-c">฿{{formatCurrency(obj.price * obj.quantity)}}</p>
-                    <p style="font-size:12px; color:gray;" class="my-1">{{obj.size}} US</p>
+                    <p style="font-size:12px; color:gray;" class="my-1">{{obj.size}} US Men</p>
                     <div style="display:flex;">
                         <a class="button is-small" @click="checkZero(index)">-</a>
                         <a style="margin-top:auto; margin-bottom:auto; color:gray;" class="mx-4">{{obj.quantity}}</a>
@@ -102,18 +98,22 @@
                     </div>
                   </div>
               </div>
-            </section>
-            <footer class="modal-card-foot">
-              <p style="font=-size:22px; font-weight:bold;" class="mr-5">Total ฿{{formatCurrency(sumAllPrice)}}</p>  
-                <button class="button is-success" @click="showEditItem = false">
-                  <router-link style="color:white;" to="cart">
-                  Go to cart
-                  </router-link>
-                </button> <!-- กดแล้วไปหน้าสรุป CartPage พร้อมส่งค่าไปให้หน้านั้นดั้ว -->
-                <button class="button is-danger" @click="clearCart()">
-                  Clear
-                </button>
-            </footer>
+              <div class="modal-bottom">
+                <div class="modal-bottom-l">
+                  <button class="button is-success" @click="showEditItem = false">
+                    <router-link style="color:white;" to="cart">
+                    Go to cart
+                    </router-link>
+                  </button> <!-- กดแล้วไปหน้าสรุป CartPage พร้อมส่งค่าไปให้หน้านั้นดั้ว -->
+                  <button class="button is-danger ml-5" @click="clearCart()">
+                    Clear
+                  </button>
+                </div>
+                <div class="modal-bottom-r">
+                  <p style="font-weight:bold;">Total ฿{{formatCurrency(sumAllPrice)}}</p>  
+                </div>
+              </div>
+            </div>
           </div>
         <button class="modal-close is-large" aria-label="close" @click="showEditItem = false"></button>
       </div>

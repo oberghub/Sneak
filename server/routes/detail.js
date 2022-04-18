@@ -4,7 +4,7 @@ const pool = require("../config");
 router = express.Router();
 
 router.get("/detail/:id", async function (req, res, next) {
-    const [rows, fields] = await pool.query("select * from item join item_size using(item_id) where item_id = ?",[req.params.id])
+    const [rows, fields] = await pool.query("select * from item join item_size using(item_id) where item_id = ? order by size",[req.params.id])
     res.json({
       items:rows,
     })

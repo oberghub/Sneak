@@ -21,14 +21,20 @@
               >
               <a class="button" @click="counter++">+</a>
             </div>
-            <p v-if="size_remain === 'Choose Size'" class="item-remain">สินค้าเหลือ {{ items.item_remain }} ชิ้น</p>
-            <p v-else class="item-remain">สินค้าเหลือ {{ size_remain }} ชิ้น</p>
+            <p v-if="size_remain === 'Choose Size'" class="item-remain">มีสินค้าท้ังหมด {{ items.item_remain }} ชิ้น</p>
+            <p v-else class="item-remain">สินค้าคงเหลือ {{ size_remain }} ชิ้น</p>
           </div>
           <div class="detail-option">
-            <div class="select is-normal">
+            <div class="select is-normal" v-if="items.item_type == 'kid'">
               <select v-model="size_remain">
                 <option disabled>Choose Size</option>
-                <option v-for="size in size" :key="size.size_id" :value="size.size_remain">US {{size.size}}</option>
+                <option v-for="size in size" :key="size.size_id" :value="size.size_remain" :disabled="size.size_remain == 0" :style= "[size.size_remain == 0 ? {color : '#E1E1E1'} : {color : 'black'}]">US {{size.size}}Y</option>
+              </select>
+            </div>
+            <div class="select is-normal" v-else>
+              <select v-model="size_remain">
+                <option disabled>Choose Size</option>
+                <option v-for="size in size" :key="size.size_id" :value="size.size_remain" :disabled="size.size_remain == 0" :style= "[size.size_remain == 0 ? {color : '#E1E1E1'} : {color : 'black'}]">US {{size.size}}</option>
               </select>
             </div>
           </div>
@@ -93,7 +99,7 @@ export default {
       focus_heart: false, //ใช้ทดสอบชั่วคราว,
       items: null,
       size: null,
-      size_remain : "Choose Size"
+      size_remain : "Choose Size",
     };
   },
   methods: {
