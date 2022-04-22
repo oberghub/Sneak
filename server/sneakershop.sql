@@ -112,14 +112,14 @@ DROP TABLE IF EXISTS `order`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `order` (
   `order_id` int NOT NULL,
-  `cust_id` int NOT NULL,
+  `user_id` int NOT NULL,
   `order_status` enum('complete','incomplete','pending') DEFAULT NULL,
   `order_address` varchar(255) DEFAULT NULL,
   `order_date` date DEFAULT NULL,
   `order_total` int DEFAULT NULL,
   PRIMARY KEY (`order_id`),
-  KEY `FK_Cust_Order` (`cust_id`),
-  CONSTRAINT `order_FK_2` FOREIGN KEY (`cust_id`) REFERENCES `user` (`user_id`)
+  KEY `FK_Cust_Order` (`user_id`),
+  CONSTRAINT `order_FK_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -322,4 +322,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-23  0:22:35
+-- Dump completed on 2022-04-23  0:32:07
