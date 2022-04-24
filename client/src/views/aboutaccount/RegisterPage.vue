@@ -6,10 +6,10 @@
               <div class="formInfo">
                   <p class="textform-left mb-5" style="font-size:24px;"> Sign up </p>
                     <div class="field">
-                        <label class="label textform-left">Email</label>
+                        <label class="label textform-left">Username</label>
                         <div class="control">
-                            <input class="input is-small" name="email" type="email" placeholder="hello@example.com"
-                                    autocomplete="username" v-model="email" required />
+                            <input class="input is-small" name="username" type="text" placeholder="username"
+                                    autocomplete="username" v-model="username" required />
                         </div>
                     </div>
                     
@@ -46,11 +46,11 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from '@/plugins/axios'
 export default {
     data() {
       return {
-          email : "",
+          username : "",
           pwd : "",
           conpwd : ""
       }
@@ -59,11 +59,11 @@ export default {
         register(){
             if(this.pwd.length > 6 && this.conpwd.length > 6){
                 if(this.pwd === this.conpwd){
-                    axios.post("http://localhost:3000/register", {email : this.email, pwd : this.pwd})
+                    axios.post("http://localhost:3000/users/register", {username : this.username, pwd : this.pwd})
                     .then((response) => {console.log(response)})
                     .catch((err) => {console.log(err)})
                     alert("สมัครสมาชิกสำเร็จ")
-                    this.email = ""
+                    this.username = ""
                     this.pwd = ""
                     this.conpwd = ""
                     this.$router.push({path : '/login'})

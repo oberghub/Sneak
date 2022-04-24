@@ -12,7 +12,8 @@
             ฿ {{ formatCurrency(items.item_price) }}
           </div>
           <div class="detail-quantity">
-            <div style="display: flex">
+            <p style="font-size:20px; color:red; text-align:left;" v-show="items.item_remain == 0">สินค้าหมด</p>
+            <div style="display: flex" v-show="items.item_remain != 0">
               <a class="button" @click="checkZero">-</a>
               <a
                 style="margin-top: auto; margin-bottom: auto; color: gray"
@@ -21,25 +22,25 @@
               >
               <a class="button" @click="counter++">+</a>
             </div>
-            <p v-if="size_remain === 'Choose Size'" class="item-remain">มีสินค้าท้ังหมด {{ items.item_remain }} ชิ้น</p>
-            <p v-else class="item-remain">สินค้าคงเหลือ {{ size_remain }} ชิ้น</p>
+            <p v-if="size_remain === 'Choose Size' && items.item_remain != 0" class="item-remain">มีสินค้าท้ังหมด {{ items.item_remain }} ชิ้น</p>
+            <p v-else-if="size_remain !== 'Choose Size' && items.item_remain != 0" class="item-remain">สินค้าคงเหลือ {{ size_remain }} ชิ้น</p>
           </div>
-          <div class="detail-option">
+          <div class="detail-option" v-show="items.item_remain != 0">
             <div class="select is-normal" v-if="items.item_type == 'kid'">
               <select v-model="size_remain">
                 <option disabled>Choose Size</option>
-                <option v-for="size in size" :key="size.size_id" :value="size.size_remain" :disabled="size.size_remain == 0" :style= "[size.size_remain == 0 ? {color : '#E1E1E1'} : {color : 'black'}]">US {{size.size}}Y</option>
+                <option v-for="size in size" :key="size.size_id" :value="size.size_remain" :disabled="size.size_remain == 0" :style= "[size.size_remain == 0 ? {color : '#E1E1E1'} : {color : 'black'}]">US {{size.size}} Y</option>
               </select>
             </div>
             <div class="select is-normal" v-else>
               <select v-model="size_remain">
                 <option disabled>Choose Size</option>
-                <option v-for="size in size" :key="size.size_id" :value="size.size_remain" :disabled="size.size_remain == 0" :style= "[size.size_remain == 0 ? {color : '#E1E1E1'} : {color : 'black'}]">US {{size.size}}</option>
+                <option v-for="size in size" :key="size.size_id" :value="size.size_remain" :disabled="size.size_remain == 0" :style= "[size.size_remain == 0 ? {color : '#E1E1E1'} : {color : 'black'}]">US {{size.size}} {{items.item_type.charAt(0).toUpperCase()}}</option>
               </select>
             </div>
           </div>
           <div class="detail-button">
-            <button class="button is-success is-large is-light mr-5">
+            <button class="button is-success is-large is-light mr-5" v-show="items.item_remain != 0">
               Add to cart
             </button>
             <div style="display: flex">
@@ -91,7 +92,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from '@/plugins/axios'
 export default {
   data() {
     return {

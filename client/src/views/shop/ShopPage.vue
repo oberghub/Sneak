@@ -130,7 +130,7 @@
         </div>
         <div class="shop-store-card">
           <template v-for="item in showItem">
-              <div class="item-card" :key="item.item_id" v-if="minprice <= item.item_price && item.item_price <= maxprice && item.item_remain > 0">
+              <div class="item-card" :key="item.item_id" v-if="minprice <= item.item_price && item.item_price <= maxprice">
                 <router-link style="color:black;" :to="`/detail/${item.item_id}`">
               <!-- <div class="" v-for="item in items" :key="item.item_id"> -->
               <!-- item card -->
@@ -139,7 +139,7 @@
               </div>
               <div class="item-info">
                 <p class="item-info-title">{{ item.item_name }}</p>
-                <p class="item-info-type">{{ item.item_type.charAt(0).toUpperCase() + item.item_type.slice(1) }}</p>
+                <p style="margin-bottom:1em;" class="item-info-type">{{ item.item_type.charAt(0).toUpperCase() + item.item_type.slice(1) }}<span style="font-size:16px; color:red; margin-left:1em;" v-show="item.item_remain == 0">สินค้าหมด</span> </p>
                 <p class="item-info-price">
                   ฿{{ formatCurrency(item.item_price) }}
                 </p>
@@ -178,7 +178,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from '@/plugins/axios'
 export default {
   data() {
     return {

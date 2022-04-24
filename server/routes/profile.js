@@ -1,6 +1,6 @@
 const express = require("express");
 const pool = require("../config");
-
+// const { isLoggedIn } = require('../middlewares')
 router = express.Router();
 
 router.get("/profile", async function (req, res, next) {

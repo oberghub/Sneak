@@ -369,7 +369,6 @@ input::-webkit-inner-spin-button {
 }
 .item-info-type{
     font-size: 16px;
-    margin-bottom: 1em;
 
     overflow: hidden;
     color: gray;

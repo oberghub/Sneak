@@ -42,6 +42,7 @@
             <router-link to="/register" class="navbar-item font-in-nav">
               Sign Up
             </router-link>
+            <p v-if="user">{{user.user_username}}</p>
           </div>
         </nav>
         <div id="showmenu">
@@ -118,12 +119,12 @@
         <button class="modal-close is-large" aria-label="close" @click="showEditItem = false"></button>
       </div>
       <!-- Edit item in cart -->
-    <router-view :key="$route.fullPath" />
+    <router-view :key="$route.fullPath" @auth-change="onAuthChange" :user="user" />
   </div>
 </template>
 
 <script>
-
+import axios from '@/plugins/axios'
 export default {
   name: 'App',
   components: {
@@ -131,6 +132,7 @@ export default {
   },
   data () {
     return {
+      user : null,
       showEditItem : false,
       counter : 0,
       obj : [{id:1, quantity:1, size: '6.5', price:3500, name:"Nike Air Force 1", img : "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,b_rgb:f5f5f5/b01c67f2-2481-45d7-b383-a1476d768f6e/รองเท้าผู้-air-force-1-07-next-nature-cg65FM.png"},
@@ -138,7 +140,21 @@ export default {
              {id:3, quantity:1, size: '11', price:4250, name:"Keen Uneek", img:"https://www.selektivbkk.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/1/_/1_2__1.jpg"}]
     }
   },
+  mounted () {
+    this.onAuthChange()
+  },
   methods : {
+    onAuthChange () {
+      const token = localStorage.getItem('token')
+      if (token) {
+        this.getUser()
+      }
+    },
+    getUser () {
+        axios.get('/user/me').then(res => {
+        this.user = res.data
+      })
+    },
     showNavSm(){
       let x = document.getElementById("showmenu")
       // let y = document.getElementById("showsubnav")

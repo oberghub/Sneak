@@ -97,7 +97,7 @@
 
 <script>
 import { VueFlux, FluxControls, FluxPagination } from "vue-flux";
-
+// import axios from '@/plugins/axios'
 export default {
   components: {
     VueFlux,
