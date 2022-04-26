@@ -26,9 +26,6 @@
             <router-link to="/redeem" class="navbar-item itemSpacing font-in-nav" >
               Redeem
             </router-link>
-            <router-link to="/cart" class="navbar-item itemSpacing font-in-nav">
-              myCart
-            </router-link>
             <router-link to="/feedback" class="navbar-item itemSpacing font-in-nav" >
               Feedback
             </router-link>
@@ -36,13 +33,16 @@
             </svg>
           </div>
           <div class="itemRight">
-            <router-link to="/login" class="navbar-item font-in-nav" >
+            <router-link to="/login" class="navbar-item font-in-nav" v-if="!user">
               Login
             </router-link>
-            <router-link to="/register" class="navbar-item font-in-nav">
+            <router-link to="/register" class="navbar-item font-in-nav" v-if="!user">
               Sign Up
             </router-link>
-            <p v-if="user">{{user.user_username}}</p>
+            <router-link to="/profile" class="navbar-item font-in-nav" v-if="user">
+              <p v-if="user">Hi! {{user.user_username}}</p>
+            </router-link>
+            <p class="button is-primary" v-if="user" @click="logout()">Log out</p>
           </div>
         </nav>
         <div id="showmenu">
@@ -53,13 +53,16 @@
             <router-link to="/redeem" class="navbar-item borderItem font-in-ham">
               Redeem
             </router-link>
-            <router-link to="/cart" class="navbar-item borderItem font-in-ham">
-              MyCart
-            </router-link>
             <router-link to="/feedback" class="navbar-item borderItem font-in-ham">
               Feedback
             </router-link>
-            <div style="display: flex; margin-left: 1em; height: 65px;">
+
+            <router-link to="/profile" class="navbar-item font-in-nav" v-if="user">
+              <p v-if="user">Hi! {{user.user_username}}</p>
+            </router-link>
+            <p class="button is-primary" v-if="user" @click="logout()">Log out</p>
+
+            <div v-if="!user" style="display: flex; margin-left: 1em; height: 65px;">
               <button class="button is-light heightCenter font-in-ham" >
               <router-link to="/login">
                 Login
@@ -198,6 +201,11 @@ export default {
     },
     formatCurrency(currency){ //format เงินให้มีลูกน้ำ
       return ((currency).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'))
+    },
+    logout(){
+      localStorage.removeItem('token')
+      this.$router.push({path: '/'})
+      location.reload()
     }
   },
   computed : {

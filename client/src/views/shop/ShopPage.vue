@@ -180,6 +180,7 @@
 <script>
 import axios from '@/plugins/axios'
 export default {
+  props: ['user'],
   data() {
     return {
       minprice: 0,

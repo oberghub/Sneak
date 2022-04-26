@@ -9,7 +9,7 @@ router = express.Router();
 
 
 router.get('/user/me', isLoggedIn, async (req, res, next) => {
-  res.json(req.user)
+    res.json(req.user)
 })
 router.post("/users/register", async function (req, res, next) {
     // Your code here
@@ -87,6 +87,30 @@ router.post("/users/login", async function(req, res, next) {
     console.log(err)
   }
   finally{
+    conn.release()
+  }
+})
+router.put("/users/saveinfo/:id", isLoggedIn, async function (req, res, next) {
+  const conn = await pool.getConnection()
+  await conn.beginTransaction()
+
+  try{
+    const pass = await conn.query("select user_password from user where user_id=?", [req.params.id])
+    //check password
+    if( !(await bcrypt.compare(req.body.password, pass[0][0].user_password)) ){
+      res.status(400).send("invalid password!")
+    }
+
+    let results = await conn.query(
+      "UPDATE user SET user_fname=?, user_lname=?, user_email=?, user_tel=?, user_address=? WHERE user_id=?",
+      [req.body.fname, req.body.lname, req.body.email, req.body.tel, req.body.address, req.params.id]
+    )
+    conn.commit()
+    res.status(200).json('yeah')
+  }catch(err){
+    conn.rollback()
+    console.log(err)
+  }finally {
     conn.release()
   }
 })

@@ -53,9 +53,13 @@ export default {
             .then((response) => {
                 localStorage.setItem('token', response.data.token)
                 console.log(response)
+                this.$emit('auth-change')
+                this.$router.push({path: '/'})
+                location.reload()
             })
             .catch(err => {console.log(err)})
             this.$router.push({name:'Home'})
+
         }
     }
   }

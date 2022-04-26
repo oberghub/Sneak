@@ -3,7 +3,7 @@
     <section id="app">
       <div class="redeem-container">
         <p class="text-redeem">แลกรับของรางวัล</p>
-        <p style="font-size:14px; font-weight:bold">Your point : 131</p>
+        <p style="font-size:14px; font-weight:bold" v-if="user">Your point : {{user.user_point}}</p>
         <div class="redeem-store-card">
           <div class="" v-for="item in items" :key="item.red_id">
           <!-- redeem card -->
@@ -31,6 +31,7 @@
 <script>
 import axios from '@/plugins/axios'
 export default {
+    props: ['user'],
     data() {
       return {
         minprice : 0,
