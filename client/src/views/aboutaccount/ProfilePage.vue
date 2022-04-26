@@ -15,7 +15,7 @@
                   <label class="label textform-left">Old Password</label>
                   <div class="control">
                       <input class="input is-small" type="password" placeholder="**********"
-                      autocomplete="current-password" required />
+                      autocomplete="current-password" v-model="oldpwd" required />
                   </div>
               </div>
                   
@@ -23,21 +23,23 @@
                   <label class="label textform-left">New Password</label>
                   <div class="control">
                       <input class="input is-small" type="password" placeholder="**********"
-                      autocomplete="new-password" required />
+                      autocomplete="new-password" v-model="newpwd" required />
                   </div>
+                  <p style="font-size:10px; color:red; text-align:left;">{{errmsg_cpwd}}</p>
               </div>
 
               <div class="field">
                   <label class="label textform-left">Confirm New Password</label>
                   <div class="control">
                       <input class="input is-small" type="password" placeholder="**********"
-                      autocomplete="confirm-password" required />
+                      autocomplete="confirm-password" v-model="confirm_newpwd" required />
                   </div>
+                  <p style="font-size:10px; color:red; text-align:left;">{{errmsg_cpwd}}</p>
               </div>
 
               <div class="field is-grouped mt-4">
                   <div class="control">
-                      <button class="button is-block is-fullwidth is-primary is-small" type="submit">
+                      <button class="button is-block is-fullwidth is-primary is-small" type="submit" @click="changePwd()">
                           Confirm
                       </button>
                   </div>
@@ -54,7 +56,7 @@
               <button class="button is-light is-primary heightCenter is-small" @click="saveInfo()">
                   Save Info
               </button>
-              <p class="has-text-primary ml-3"> {{ complete}}</p>
+              <p class="has-text-primary ml-3" style="font-size:12px;"> {{complete}}</p>
             </div>
           </div>
           <div class="profile-name">
@@ -128,7 +130,11 @@ export default {
         tel: this.user.user_tel,
         address: this.user.user_address,
         currentPass: '',
-        complete: ''
+        complete: '',
+        oldpwd : '',
+        newpwd : '',
+        confirm_newpwd : '',
+        errmsg_cpwd : '',
       }
     },
     methods : {
@@ -142,8 +148,18 @@ export default {
             });
             this.currentPass = ''
             this.complete = 'Update success!'
+        },
+        changePwd(){
+            if((this.newpwd !== this.confirm_newpwd) || this.newpwd.length == 0 || this.confirm_newpwd.length == 0){
+                this.errmsg_cpwd = "รหัสผ่านไม่ตรงกัน"
+            }
+            axios.put('http://localhost:3000/users/changepwd/'+this.user.user_id, {oldpwd : this.oldpwd, newpwd: this.newpwd})
+            .then(response => {console.log(response)})
+            .catch(err => {console.log(err)})
+            this.oldpwd = ''
+            this.newpwd = ''
+            this.confirm_newpwd = ''
         }
-        
     }
   }
 </script>

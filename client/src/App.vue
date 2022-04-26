@@ -57,13 +57,15 @@
               Feedback
             </router-link>
 
-            <router-link to="/profile" class="navbar-item font-in-nav" v-if="user">
-              <p v-if="user">Hi! {{user.user_username}}</p>
-            </router-link>
-            <p class="button is-primary" v-if="user" @click="logout()">Log out</p>
+            <div style="display: flex; margin-left: 1em; height: 65px;" v-if="user">
+              <router-link to="/profile" class="navbar-item font-in-nav heightCenter">
+                <p>Hi! {{user.user_username}}</p>
+              </router-link>
+              <p class="button is-primary heightCenter ml-3" @click="logout()">Log out</p>
+            </div>
 
-            <div v-if="!user" style="display: flex; margin-left: 1em; height: 65px;">
-              <button class="button is-light heightCenter font-in-ham" >
+            <div v-else style="display: flex; margin-left: 1em; height: 65px;">
+              <button class="button is-light heightCenter font-in-ham"  >
               <router-link to="/login">
                 Login
               </router-link>

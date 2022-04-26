@@ -22,7 +22,7 @@
               >
               <a class="button" @click="counter++">+</a>
             </div>
-            <p v-if="size_remain === 'Choose Size' && items.item_remain != 0" class="item-remain">มีสินค้าท้ังหมด {{ items.item_remain }} ชิ้น</p>
+            <p v-if="size_remain === 'Choose Size' && items.item_remain != 0" class="item-remain">มีสินค้าทั้งหมด {{ items.item_remain }} ชิ้น</p>
             <p v-else-if="size_remain !== 'Choose Size' && items.item_remain != 0" class="item-remain">สินค้าคงเหลือ {{ size_remain }} ชิ้น</p>
           </div>
           <div class="detail-option" v-show="items.item_remain != 0">
@@ -35,12 +35,12 @@
             <div class="select is-normal" v-else>
               <select v-model="size_remain">
                 <option disabled>Choose Size</option>
-                <option v-for="size in size" :key="size.size_id" :value="size.size_remain" :disabled="size.size_remain == 0" :style= "[size.size_remain == 0 ? {color : '#E1E1E1'} : {color : 'black'}]">US {{size.size}} {{items.item_type.charAt(0).toUpperCase()}}</option>
+                <option v-for="size, index in size" :key="size.size_id" :value="size.size_remain" :disabled="size.size_remain == 0" :input="setSize(index)" :style= "[size.size_remain == 0 ? {color : '#E1E1E1'} : {color : 'black'}]">US {{size.size}} {{items.item_type.charAt(0).toUpperCase()}}</option>
               </select>
             </div>
           </div>
           <div class="detail-button">
-            <button class="button is-success is-large is-light mr-5" v-show="items.item_remain != 0">
+            <button @click="addItem" class="button is-success is-large is-light mr-5" v-show="items.item_remain != 0">
               Add to cart
             </button>
             <div style="display: flex">
@@ -101,9 +101,21 @@ export default {
       items: null,
       size: null,
       size_remain : "Choose Size",
+      select_size : "",
+      item_in_cart : []
     };
   },
   methods: {
+    setSize(index){
+      this.select_size = this.size[index].size
+    },
+    addItem(){
+      this.item_in_cart.push({name : this.items.item_name, 
+      price : this.items.item_price, 
+      size : this.select_size + " US " + this.items.item_type,
+      quantity : this.counter})
+      localStorage.setItem("cart", JSON.stringify(this.item_in_cart))
+    },
     //เช็คจำนวนที่จะเอาสินค้าลง cart
     checkZero() {
       if (this.counter <= 1) {

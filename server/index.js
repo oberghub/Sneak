@@ -30,7 +30,6 @@ const cartRouter = require('./routes/cart')
 const feedbackRouter = require('./routes/feedback')
 const redeemRouter = require('./routes/redeem')
 const detailRouter = require('./routes/detail')
-const profileRouter = require('./routes/profile')
 
 // app.use(indexRouter.router)
 app.use(shopRouter.router)
@@ -39,7 +38,6 @@ app.use(cartRouter.router)
 app.use(feedbackRouter.router)
 app.use(redeemRouter.router)
 app.use(detailRouter.router)
-app.use(profileRouter.router)
 
 
 

@@ -114,4 +114,31 @@ router.put("/users/saveinfo/:id", isLoggedIn, async function (req, res, next) {
     conn.release()
   }
 })
+router.put("/users/changepwd/:id", isLoggedIn, async function (req, res, next) {
+  const conn = await pool.getConnection()
+  await conn.beginTransaction()
+
+  try{
+    const pass = await conn.query("select user_password from user where user_id=?", [req.params.id])
+    //check password
+    console.log(req.body.oldpwd, pass[0][0].user_password)
+    if( !(await bcrypt.compare(req.body.oldpwd, pass[0][0].user_password)) ){
+      res.status(400).send("invalid password!")
+    }
+    else{
+      const newpass = await bcrypt.hash(req.body.newpwd, saltRounds)
+      let results = await conn.query(
+        "UPDATE user SET user_password=? WHERE user_id=?",
+        [newpass, req.params.id]
+      )
+    }
+    conn.commit()
+    res.status(200).json('yeah')
+  }catch(err){
+    conn.rollback()
+    console.log(err)
+  }finally {
+    conn.release()
+  }
+})
 exports.router = router;
