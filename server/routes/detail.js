@@ -9,9 +9,9 @@ router.get("/detail/:id", async function (req, res, next) {
       items:rows,
     })
   });
-router.post("/cart", async function (req, res, next) {
+router.post("/detail/addFav/:id", async function (req, res, next) {
     // Your code here
-    console.log("kuy1")
-    res.render('cart')
-  });
+    console.log(req.params.id)
+    // const addfav = pool.query("insert into fav_item (fav_item_like, user_id, item_id) values(?, ?, ?)", [1, req.body.user_id, req.params.id])
+  }); 
 exports.router = router;

@@ -49,9 +49,11 @@ export default {
     },
     methods : {
         login(){
+            let cart = []
             axios.post("http://localhost:3000/users/login", {username : this.username, password : this.password})
             .then((response) => {
                 localStorage.setItem('token', response.data.token)
+                localStorage.setItem("cart", JSON.stringify(cart))
                 console.log(response)
                 this.$emit('auth-change')
                 this.$router.push({path: '/'})

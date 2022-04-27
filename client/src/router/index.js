@@ -45,11 +45,6 @@ const routes = [
     component: () => import('../views/FeedbackPage.vue') // set home as path '/'
   },
   {
-    path: '/changepassword',
-    name: 'Changepassword',
-    component: () => import('../views/aboutaccount/ChangePasswordPage.vue') // set home as path '/'
-  },
-  {
     path: '/profile',
     name: 'Profile',
     component: () => import('../views/aboutaccount/ProfilePage.vue') // set home as path '/'

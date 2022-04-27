@@ -8,30 +8,30 @@
 
           <div class="cart-item" v-for="obj in obj" :key="obj.id">
             <div class="cart-item-image">
-              <img class="cart-image" src="https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,b_rgb:f5f5f5/b01c67f2-2481-45d7-b383-a1476d768f6e/รองเท้าผู้-air-force-1-07-next-nature-cg65FM.png">
+              <img class="cart-image" :src="obj.img">
             </div>
               <div class="cart-item-info">
-                <p class="cart-item-title-c">Nike Air Force 1</p>
-                <p class="cart-item-price-c">฿3,500 <span style="font-size:12px; color:gray;" class="my-1">Size 7 US Men</span></p>
-                <p class="cart-item-quantity">x2</p>
+                <p class="cart-item-title-c">{{obj.name}}</p>
+                <p class="cart-item-price-c">฿{{formatCurrency(obj.price)}} <span style="font-size:12px; color:gray;" class="my-1">Size {{obj.size}}</span></p>
+                <p class="cart-item-quantity">จำนวน {{obj.quantity}} ชิ้น</p>
               </div>
           </div>
 
           <div class="cart-item-result">
               <div class="cart-item-title mt-3">รวมทุกรายการ</div>
-              <div class="cart-item-price mb-1">฿21,000</div>
-              <div style="font-size:12px">ได้รับแต้ม <span style="color:gold;"> 210 </span>แต้ม</div>
+              <div class="cart-item-price mb-1">฿{{formatCurrency(sumAllPrice)}}</div>
+              <div style="font-size:12px">ได้รับแต้ม <span style="color:gold;"> {{sumAllPrice / 100}} </span>แต้ม</div>
           </div>
 
         </div>
         <div class="cart-upload">
           <!-- <p style="font-size:100px;">ยังไม่ได้ทำปุ่ม SUBMIT</p> -->
           <p class="cart-title">Upload หลักฐาน</p>
-          <div class="cart-addressbox">
-            <p class="cart-adbox-info"><b>ชื่อ-นามสกุล : </b>ปูนพร้อมก่อ สุดหล่อพร้อมยัง (084-342-6892)</p>
-            <p class="cart-adbox-info"><b>เบอร์โทรศัพท์ : </b>084-342-6892</p>
-            <p class="cart-adbox-info"><b>ที่อยู่จัดส่ง : </b> 123 / 4 ซอยตัน ถนนห้ามหวง เขตหวงห้าม เมืองวากานดา 69696</p>
-          </div>
+            <div class="cart-addressbox">
+              <p class="cart-adbox-info"><b>ชื่อ-นามสกุล : </b>{{user.user_fname}} {{user.user_lname}}</p>
+              <p class="cart-adbox-info"><b>เบอร์โทรศัพท์ : </b>{{user.user_tel}}</p>
+              <p class="cart-adbox-info"><b>ที่อยู่จัดส่ง : </b> {{user.user_address}}</p>
+            </div>
           <button class="button is-danger is-light my-4" @click="modal_act = true">ดูตัวอย่างการ Upload ที่นี่!</button>
           <!-- Modal ส่งหลักฐาน -->
           <div class="modal" :class="{ 'is-active' : modal_act }" @click="modal_act = false">
@@ -72,15 +72,35 @@
 <script>
 // import axios from '@/plugins/axios'
 export default {
+    props : ['user'],
     data() {
       return {
         modal_act : false,
         previewImage : null,
         dateTime : "",
-        obj : [{id:1}, {id:2}, {id:3},{id:1}, {id:2}]
+        obj : null
       }
     },
+    mounted(){
+      this.getCartItem()
+    },
     methods : {
+      getCartItem(){
+        let item = JSON.parse(localStorage.getItem("cart"))
+        this.obj = item
+      },    
+      formatCurrency(currency){ //format เงินให้มีลูกน้ำ
+        return ((currency).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'))
+      },
+    },
+    computed : {
+      sumAllPrice(){
+        let sumprice =0
+        for(let i=0;i<this.obj.length;i++){
+          sumprice += (this.obj[i].price * this.obj[i].quantity)
+        }
+        return sumprice
+      }
     }
   }
 </script>

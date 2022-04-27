@@ -20,30 +20,32 @@
                 class="mx-5"
                 >{{ counter }}</a
               >
-              <a class="button" @click="counter++">+</a>
+              <a class="button" @click="checkLimit">+</a>
             </div>
             <p v-if="size_remain === 'Choose Size' && items.item_remain != 0" class="item-remain">มีสินค้าทั้งหมด {{ items.item_remain }} ชิ้น</p>
-            <p v-else-if="size_remain !== 'Choose Size' && items.item_remain != 0" class="item-remain">สินค้าคงเหลือ {{ size_remain }} ชิ้น</p>
+            <p v-else-if="size_remain !== 'Choose Size' && items.item_remain != 0" class="item-remain">สินค้าคงเหลือ {{ size_remain.substr(-1) }} ชิ้น</p>
           </div>
           <div class="detail-option" v-show="items.item_remain != 0">
             <div class="select is-normal" v-if="items.item_type == 'kid'">
               <select v-model="size_remain">
                 <option disabled>Choose Size</option>
-                <option v-for="size in size" :key="size.size_id" :value="size.size_remain" :disabled="size.size_remain == 0" :style= "[size.size_remain == 0 ? {color : '#E1E1E1'} : {color : 'black'}]">US {{size.size}} Y</option>
+                <option v-for="size in size" :key="size.size_id" :value="size.size + size.size_remain" :disabled="size.size_remain == 0" :style= "[size.size_remain == 0 ? {color : '#E1E1E1'} : {color : 'black'}]">US {{size.size}} Y</option>
               </select>
+              <p style="color:red; font-size:12px;">{{al_msg}}</p>
             </div>
             <div class="select is-normal" v-else>
-              <select v-model="size_remain">
+              <select v-model="size_remain" @change="counter=1">
                 <option disabled>Choose Size</option>
-                <option v-for="size, index in size" :key="size.size_id" :value="size.size_remain" :disabled="size.size_remain == 0" :input="setSize(index)" :style= "[size.size_remain == 0 ? {color : '#E1E1E1'} : {color : 'black'}]">US {{size.size}} {{items.item_type.charAt(0).toUpperCase()}}</option>
+                <option v-for="size in size" :key="size.size_id" :value="size.size + size.size_remain" :disabled="size.size_remain == 0" :style= "[size.size_remain == 0 ? {color : '#E1E1E1'} : {color : 'black'}]">US {{size.size}} {{items.item_type.charAt(0).toUpperCase()}}</option>
               </select>
+              <p style="color:red; font-size:12px;">{{al_msg}}</p>
             </div>
           </div>
           <div class="detail-button">
             <button @click="addItem" class="button is-success is-large is-light mr-5" v-show="items.item_remain != 0">
               Add to cart
             </button>
-            <div style="display: flex">
+            <div style="display: flex" @click="addFav">
               <svg
                 @click="focus_heart = !focus_heart"
                 style="cursor: pointer; color: red; margin-top: 1em"
@@ -94,6 +96,7 @@
 <script>
 import axios from '@/plugins/axios'
 export default {
+  props : ['user'],
   data() {
     return {
       counter: 1,
@@ -101,27 +104,52 @@ export default {
       items: null,
       size: null,
       size_remain : "Choose Size",
-      select_size : "",
-      item_in_cart : []
+      al_msg : '',
     };
   },
   methods: {
-    setSize(index){
-      this.select_size = this.size[index].size
-    },
     addItem(){
-      this.item_in_cart.push({name : this.items.item_name, 
-      price : this.items.item_price, 
-      size : this.select_size + " US " + this.items.item_type,
-      quantity : this.counter})
-      localStorage.setItem("cart", JSON.stringify(this.item_in_cart))
+      if(this.size_remain === 'Choose Size'){
+        this.al_msg = 'Please Choose Size'
+      }
+      else{
+        this.al_msg = ''
+        let lastdata = ({name : this.items.item_name, 
+        price : this.items.item_price, 
+        size : this.size_remain.substr(0, this.size_remain.length-1) + " US " + this.items.item_type,
+        quantity : this.counter,
+        img : this.items.item_img})
+        let save_item = JSON.parse(localStorage.getItem("cart"))
+        save_item.push(lastdata)
+        localStorage.setItem('cart', JSON.stringify(save_item))
+      }
+    },
+    addFav(){
+      axios.post("http://localhost:3000/detail/addFav/"+this.items.item_id, {user_id : this.user.user_id})
+      .then(response => {console.log(response)})
+      .catch(err => console.log(err))
     },
     //เช็คจำนวนที่จะเอาสินค้าลง cart
     checkZero() {
       if (this.counter <= 1) {
         this.counter = 1;
-      } else {
+      }
+      else {
         this.counter--;
+      }
+    },
+    checkLimit(){
+      if(this.size_remain == 'Choose Size' && this.counter == 1){
+        this.counter = 1
+        this.al_msg = 'Please Choose Size'
+      }
+      else if(this.counter >= this.size_remain.substr(-1)){
+        this.counter = this.size_remain.substr(-1)
+        this.al_msg = ''
+      }
+      else{
+        this.counter++;
+        this.al_msg = ''
       }
     },
     formatCurrency(currency) {
