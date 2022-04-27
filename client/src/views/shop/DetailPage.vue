@@ -122,6 +122,7 @@ export default {
         let save_item = JSON.parse(localStorage.getItem("cart"))
         save_item.push(lastdata)
         localStorage.setItem('cart', JSON.stringify(save_item))
+        this.$router.go()
       }
     },
     addFav(){

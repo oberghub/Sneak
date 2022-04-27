@@ -14,7 +14,7 @@
                 <div class="hamburger"></div>
               </div>
             </div>
-            <div class="nav-cart-icon">
+            <div @click="getCartItem" class="nav-cart-icon"> <!--Cart-->
               <svg v-show="checkRoute($route.fullPath)" @click="showEditItem = true" style="width:2em; height:2em;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M96 0C107.5 0 117.4 8.19 119.6 19.51L121.1 32H541.8C562.1 32 578.3 52.25 572.6 72.66L518.6 264.7C514.7 278.5 502.1 288 487.8 288H170.7L179.9 336H488C501.3 336 512 346.7 512 360C512 373.3 501.3 384 488 384H159.1C148.5 384 138.6 375.8 136.4 364.5L76.14 48H24C10.75 48 0 37.25 0 24C0 10.75 10.75 0 24 0H96zM128 464C128 437.5 149.5 416 176 416C202.5 416 224 437.5 224 464C224 490.5 202.5 512 176 512C149.5 512 128 490.5 128 464zM512 464C512 490.5 490.5 512 464 512C437.5 512 416 490.5 416 464C416 437.5 437.5 416 464 416C490.5 416 512 437.5 512 464z"/>
               </svg>
               <svg xmlns="http://www.w3.org/2000/svg" class="noti-icon" viewBox="0 0 512 512">
@@ -35,7 +35,7 @@
             <router-link to="/feedback" class="navbar-item itemSpacing font-in-nav" >
               Feedback
             </router-link>
-            <div v-show="checkRoute($route.fullPath)">
+            <div @click="getCartItem" v-show="checkRoute($route.fullPath)"> <!--Cart-->
               <svg @click="showEditItem = true" class="nav-cart-icon-d" style="width:2em; height:2em;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M96 0C107.5 0 117.4 8.19 119.6 19.51L121.1 32H541.8C562.1 32 578.3 52.25 572.6 72.66L518.6 264.7C514.7 278.5 502.1 288 487.8 288H170.7L179.9 336H488C501.3 336 512 346.7 512 360C512 373.3 501.3 384 488 384H159.1C148.5 384 138.6 375.8 136.4 364.5L76.14 48H24C10.75 48 0 37.25 0 24C0 10.75 10.75 0 24 0H96zM128 464C128 437.5 149.5 416 176 416C202.5 416 224 437.5 224 464C224 490.5 202.5 512 176 512C149.5 512 128 490.5 128 464zM512 464C512 490.5 490.5 512 464 512C437.5 512 416 490.5 416 464C416 437.5 437.5 416 464 416C490.5 416 512 437.5 512 464z"/>
               </svg>
               <svg v-show="obj.length > 0" xmlns="http://www.w3.org/2000/svg" class="nav-cart-icon-d" style="position:absolute; top:15; width:17px; fill:red;" viewBox="0 0 512 512">
@@ -117,21 +117,16 @@
                     <p style="font-size:12px; color:gray;" class="mt-1">{{obj.size}}</p>
                     <div style="display:flex;">
                       <p style="font-size:12px; text-align:left; color:black; margin-top:auto; margin-bottom:auto;">จำนวน {{obj.quantity}} ชิ้น</p>
-                        <!-- <a class="button is-small" @click="checkZero(index)">-</a>
-                        <a style="margin-top:auto; margin-bottom:auto; color:gray;" class="mx-4">{{obj.quantity}}</a>
-                        <a class="button is-small" @click="obj.quantity++">+</a> -->
                         <button class="button is-warning is-light is-small ml-3" @click="deleteSomeItem(index)">Delete</button>
                     </div>
                   </div>
               </div>
               <div class="modal-bottom">
                 <div class="modal-bottom-l" v-show="obj.length !== 0">
-                  <button class="button is-success" @click="showEditItem = false">
-                    <router-link style="color:white;" to="cart">
+                  <button class="button is-success is-light" @click="showEditItem = false, $router.push('/cart')">
                     Go to cart
-                    </router-link>
-                  </button> <!-- กดแล้วไปหน้าสรุป CartPage พร้อมส่งค่าไปให้หน้านั้นดั้ว -->
-                  <button class="button is-danger ml-5" @click="clearCart()">
+                  </button>
+                  <button class="button is-danger is-light ml-5" @click="clearCart()">
                     Clear
                   </button>
                 </div>
@@ -160,12 +155,11 @@ export default {
       user : null,
       showEditItem : false,
       counter : 0,
-      obj : null
+      obj : []
     }
   },
   mounted () {
     this.onAuthChange()
-    this.getCartItem()
   },
   methods : {
     onAuthChange () {
@@ -217,7 +211,6 @@ export default {
       this.obj.splice(0, this.obj.length)
       item.splice(0, item.length)
       localStorage.setItem("cart", JSON.stringify(item))
-      console.log("cleared")
     },
     deleteSomeItem(index){
       let item = JSON.parse(localStorage.getItem('cart'))

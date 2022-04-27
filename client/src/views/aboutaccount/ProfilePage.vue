@@ -3,8 +3,8 @@
     <section id="app">
       <!-- Start Div profile -->
       <div class="profile-main">
-        <form>
-          <div class="profile-left-box">
+        <form class="profile-left-box">
+          <div>
             <p class="profile-title">Your Profile</p>
             <p class="profile-username">{{ user.user_username }}</p>
             <p style="font-size: 10px">
