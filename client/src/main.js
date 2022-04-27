@@ -4,6 +4,8 @@ import router from './router/index'
 import 'bulma/css/bulma.css'
 import '@/assets/css/styles.css'
 import '@/assets/css/icon.css'
+import Vuelidate from 'vuelidate'
+Vue.use(Vuelidate)
 
 Vue.config.productionTip = false
 

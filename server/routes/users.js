@@ -100,11 +100,12 @@ router.put("/users/saveinfo/:id", isLoggedIn, async function (req, res, next) {
     if( !(await bcrypt.compare(req.body.password, pass[0][0].user_password)) ){
       res.status(400).send("invalid password!")
     }
-
+    else{
     let results = await conn.query(
       "UPDATE user SET user_fname=?, user_lname=?, user_email=?, user_tel=?, user_address=? WHERE user_id=?",
       [req.body.fname, req.body.lname, req.body.email, req.body.tel, req.body.address, req.params.id]
     )
+    }
     conn.commit()
     res.status(200).json('yeah')
   }catch(err){
