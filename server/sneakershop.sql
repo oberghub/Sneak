@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS `fav_item`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `fav_item` (
-  `fav_item_id` int NOT NULL,
+  `fav_item_id` int NOT NULL AUTO_INCREMENT,
   `fav_item_like` tinyint(1) DEFAULT NULL,
   `user_id` int NOT NULL,
   `item_id` int NOT NULL,
@@ -32,7 +32,7 @@ CREATE TABLE `fav_item` (
   KEY `fav_item_FK` (`user_id`),
   CONSTRAINT `fav_item_FK` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
   CONSTRAINT `FK_Item_Fav_item` FOREIGN KEY (`item_id`) REFERENCES `item` (`item_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +41,7 @@ CREATE TABLE `fav_item` (
 
 LOCK TABLES `fav_item` WRITE;
 /*!40000 ALTER TABLE `fav_item` DISABLE KEYS */;
-INSERT INTO `fav_item` VALUES (1,1,3,2),(2,1,3,15),(3,1,1,20),(4,1,9,21),(5,1,7,12);
+INSERT INTO `fav_item` VALUES (1,1,3,2),(2,1,3,15),(3,1,1,20),(4,1,9,21),(5,1,7,12),(6,1,25,8);
 /*!40000 ALTER TABLE `fav_item` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -217,7 +217,7 @@ CREATE TABLE `redeem` (
 
 LOCK TABLES `redeem` WRITE;
 /*!40000 ALTER TABLE `redeem` DISABLE KEYS */;
-INSERT INTO `redeem` VALUES (1,'ถุงผ้า Sneakershop Limited','https://aumento.officemate.co.th/media/catalog/product/O/F/OFMM001910.jpg',30,3000),(2,'แก้วนํ้า Sneakershop','https://fy.lnwfile.com/_/fy/_raw/gb/1u/wa.jpg',30,2500),(3,'ถุงเท้า Sneakershop สีขาว','https://shop.fbtsports.com/wp-content/uploads/2021/06/800_82529_blue-3.jpg',50,1500),(4,'เสื้อ Sneakershop Limited','https://image.makewebeasy.net/makeweb/m_750x0/LEtWDN1kw/attachfile/69_138686.jpg?v=202012190947',30,4000),(5,'กางเกงชั้นใน Sneakershop','https://www.thaijpress.com/wp-content/uploads/2020/10/กางเกงในชาย-ขาสั้น-Seamless-รุ่น-8227-NA.jpg',50,1500);
+INSERT INTO `redeem` VALUES (1,'ถุงผ้า Sneakershop Limited','https://aumento.officemate.co.th/media/catalog/product/O/F/OFMM001910.jpg',10,75),(2,'แก้วนํ้า Sneakershop','https://fy.lnwfile.com/_/fy/_raw/gb/1u/wa.jpg',6,85),(3,'ถุงเท้า Sneakershop สีขาว','https://shop.fbtsports.com/wp-content/uploads/2021/06/800_82529_blue-3.jpg',13,90),(4,'เสื้อ Sneakershop Limited','https://image.makewebeasy.net/makeweb/m_750x0/LEtWDN1kw/attachfile/69_138686.jpg?v=202012190947',3,150),(5,'กางเกงชั้นใน Sneakershop','https://www.thaijpress.com/wp-content/uploads/2020/10/กางเกงในชาย-ขาสั้น-Seamless-รุ่น-8227-NA.jpg',7,100);
 /*!40000 ALTER TABLE `redeem` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -307,7 +307,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'สมควร','สมวยถลอก',NULL,'อยู่ในใจเธอ','0999999923','admin','admin1@gmail.com','admin','admin'),(2,'สมชี','ท่านอนกองกับพื้น',123123,'อยู่กับผัว','0999992323','somshe','somshe@hotmail.com','somshe','normal'),(3,'สมมวย','เป็นคนดี',NULL,'155/66 LA','0864878787','samul','samul@ok.com','samul','admin'),(4,'รธา','วงไข่น้อย',3123,'776 Thailand','0878776786','rata44','rata@gmail.com','rata23','normal'),(5,'ยิ่งสัก','ยิ่งรวย',NULL,'MasterChef','0967866666','yek123','yk@gmail.com','kydurex','admin'),(6,'ดารินทร์','แสงกระจ่าง',12323,'สงขลา','0869423517','sangja','admin6@gmail.com','sangja','normal'),(7,'เมนิลา','วิไลรัตน์',NULL,'อ่างทอง','0963487521','556677','admin7@gmail.com','admin7','admin'),(8,'ชลธี','อรุณฉาย',232,'เชียงใหม่','0976588823','654321','admin8@gmail.com','changmai','normal'),(9,'บัลลังค์','ปานประกอบ',23,'ชัยภูมิ','0877569982','875612','admin9@gmail.com','kuy123','normal'),(10,'ภูมิ','ไม้ทอง',NULL,'ชลบุรี','0988753221','af6845','admin10@gmail.com','admin10','admin'),(11,'ชนายุส','เกียรติบวรสกุล',NULL,'อยู่บ้าน','0932423411','admin11','emp11@gmail.com','admin11','admin'),(12,'นนท์','วงศ์วริศธารา',21,'อยู่โรงเรียน','0871243125','admin12','emp12@gmail.com','asas12','normal'),(13,'ชยพล','วีรภัทรเมธี',1223,'อยู่โรงแรม','0651312312','admin13','emp13@gmail.com','isas2','normal'),(14,'ดรัณภพ','ศรีสุข',NULL,'อยู่ทะเล','0992134455','admin14','emp14@gmail.com','admin14','admin'),(15,'ชัชชน','พุ่มสนธิ',232,'อยู่บนเขา','0985235211','admin15','emp15@gmail.com','too','normal'),(16,NULL,NULL,NULL,NULL,NULL,'1234566',NULL,'user111','normal'),(22,NULL,NULL,NULL,NULL,NULL,'$2b$10$ebA3odKwGMzK4WfCKsaMeek1F2gKCWahgIo5AtfcOwOHmIq7xlVfu',NULL,'user0203','normal'),(23,NULL,NULL,NULL,NULL,NULL,'$2b$10$PQSZZfNCncVkG43ctuVlFOcp9lSGqrOLf83reLCWQ9Yuql7061VYG',NULL,'user5555','normal'),(24,NULL,NULL,NULL,NULL,NULL,'$2b$10$zGBYIS4QyaD5s9JFNxyzEu9U2KpB1UEVw5DwxXCVmielKK8rSCyYq',NULL,'user_test','normal'),(25,NULL,NULL,NULL,NULL,NULL,'$2b$10$B90IiE7gKHzuqcvA6mI1r.pSbvKvvrADviFCCwSJn/ZeTYBSIqM7.',NULL,'user_t1','normal'),(26,NULL,NULL,NULL,NULL,NULL,'$2b$10$Igk5Zx5ZxRn1.mdTPiHMReC3MYHqiYOOFk1IopjAojJKWgvAyk/ge',NULL,'asdfgh','normal');
+INSERT INTO `user` VALUES (1,'สมควร','สมวยถลอก',NULL,'อยู่ในใจเธอ','0999999923','admin','admin1@gmail.com','admin','admin'),(2,'สมชี','ท่านอนกองกับพื้น',123123,'อยู่กับผัว','0999992323','somshe','somshe@hotmail.com','somshe','normal'),(3,'สมมวย','เป็นคนดี',NULL,'155/66 LA','0864878787','samul','samul@ok.com','samul','admin'),(4,'รธา','วงไข่น้อย',3123,'776 Thailand','0878776786','rata44','rata@gmail.com','rata23','normal'),(5,'ยิ่งสัก','ยิ่งรวย',NULL,'MasterChef','0967866666','yek123','yk@gmail.com','kydurex','admin'),(6,'ดารินทร์','แสงกระจ่าง',12323,'สงขลา','0869423517','sangja','admin6@gmail.com','sangja','normal'),(7,'เมนิลา','วิไลรัตน์',NULL,'อ่างทอง','0963487521','556677','admin7@gmail.com','admin7','admin'),(8,'ชลธี','อรุณฉาย',232,'เชียงใหม่','0976588823','654321','admin8@gmail.com','changmai','normal'),(9,'บัลลังค์','ปานประกอบ',23,'ชัยภูมิ','0877569982','875612','admin9@gmail.com','kuy123','normal'),(10,'ภูมิ','ไม้ทอง',NULL,'ชลบุรี','0988753221','af6845','admin10@gmail.com','admin10','admin'),(11,'ชนายุส','เกียรติบวรสกุล',NULL,'อยู่บ้าน','0932423411','admin11','emp11@gmail.com','admin11','admin'),(12,'นนท์','วงศ์วริศธารา',21,'อยู่โรงเรียน','0871243125','admin12','emp12@gmail.com','asas12','normal'),(13,'ชยพล','วีรภัทรเมธี',1223,'อยู่โรงแรม','0651312312','admin13','emp13@gmail.com','isas2','normal'),(14,'ดรัณภพ','ศรีสุข',NULL,'อยู่ทะเล','0992134455','admin14','emp14@gmail.com','admin14','admin'),(15,'ชัชชน','พุ่มสนธิ',232,'อยู่บนเขา','0985235211','admin15','emp15@gmail.com','too','normal'),(16,NULL,NULL,NULL,NULL,NULL,'1234566',NULL,'user111','normal'),(22,NULL,NULL,NULL,NULL,NULL,'$2b$10$ebA3odKwGMzK4WfCKsaMeek1F2gKCWahgIo5AtfcOwOHmIq7xlVfu',NULL,'user0203','normal'),(23,NULL,NULL,NULL,NULL,NULL,'$2b$10$PQSZZfNCncVkG43ctuVlFOcp9lSGqrOLf83reLCWQ9Yuql7061VYG',NULL,'user5555','normal'),(24,NULL,NULL,NULL,NULL,NULL,'$2b$10$zGBYIS4QyaD5s9JFNxyzEu9U2KpB1UEVw5DwxXCVmielKK8rSCyYq',NULL,'user_test','normal'),(25,'Peter','Saawu',NULL,'123/4 ซอยหอม ถนนห้ามห้วง เขตหวงห้าม เมืองวากานดา 69696','0944939210','$2b$10$llLxo9LlWiBa5CS78wmi4OougrnjmwZJ1sAqh0g.ijryFWIvgOJsG','ptsadw@gmail.com','user_t1','normal'),(26,NULL,NULL,NULL,NULL,NULL,'$2b$10$Igk5Zx5ZxRn1.mdTPiHMReC3MYHqiYOOFk1IopjAojJKWgvAyk/ge',NULL,'asdfgh','normal');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -349,4 +349,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-24 18:10:43
+-- Dump completed on 2022-04-27 14:12:46
