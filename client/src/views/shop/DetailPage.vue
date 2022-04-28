@@ -45,9 +45,9 @@
             <button @click="addItem" class="button is-success is-large is-light mr-5" v-show="items.item_remain != 0">
               Add to cart
             </button>
-            <div style="display: flex" @click="addFav">
+            <div style="display: flex" @click="addFav" v-if="user">
               <svg
-                @click="focus_heart = !focus_heart"
+                v-if="checkHeart.length < 1"
                 style="cursor: pointer; color: red; margin-top: 1em"
                 xmlns="http://www.w3.org/2000/svg"
                 width="1.8em"
@@ -57,14 +57,51 @@
                 viewBox="0 0 16 16"
               >
                 <path
-                  v-show="focus_heart == false"
                   d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"
                   fill="red"
                 ></path>
+              </svg>
+
+              <svg
+                v-else
+                style="cursor: pointer; color: red; margin-top: 1em"
+                xmlns="http://www.w3.org/2000/svg"
+                width="1.8em"
+                height="1.8em"
+                fill="currentColor"
+                class="bi bi-heart"
+                viewBox="0 0 16 16"
+              >
                 <path
-                  v-show="focus_heart"
                   fill-rule="evenodd"
                   d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"
+                  fill="red"
+                ></path>
+              </svg>
+              <p
+                class="favitem"
+                style="
+                  font-size: 20px;
+                  margin-top: auto;
+                  margin-bottom: auto;
+                  margin-left: 1em;
+                "
+              >
+                Add to favourite
+              </p>
+            </div>
+            <div style="display:flex;" v-else>
+              <svg
+                style="cursor: pointer; color: red; margin-top: 1em"
+                xmlns="http://www.w3.org/2000/svg"
+                width="1.8em"
+                height="1.8em"
+                fill="currentColor"
+                class="bi bi-heart"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"
                   fill="red"
                 ></path>
               </svg>
@@ -109,26 +146,43 @@ export default {
   },
   methods: {
     addItem(){
-      if(this.size_remain === 'Choose Size'){
-        this.al_msg = 'Please Choose Size'
+      if(!this.user){
+        alert("Please login before add item to your cart.")
       }
       else{
-        this.al_msg = ''
-        let lastdata = ({name : this.items.item_name, 
-        price : this.items.item_price, 
-        size : this.size_remain.substr(0, this.size_remain.length-1) + " US " + this.items.item_type,
-        quantity : this.counter,
-        img : this.items.item_img})
-        let save_item = JSON.parse(localStorage.getItem("cart"))
-        save_item.push(lastdata)
-        localStorage.setItem('cart', JSON.stringify(save_item))
-        this.$router.go()
+        if(this.size_remain === 'Choose Size'){
+          this.al_msg = 'Please Choose Size'
+        }
+        else{
+          this.al_msg = ''
+          let lastdata = ({name : this.items.item_name, 
+          price : this.items.item_price, 
+          size : this.size_remain.substr(0, this.size_remain.length-1) + " US " + this.items.item_type,
+          quantity : this.counter,
+          img : this.items.item_img})
+          let save_item = JSON.parse(localStorage.getItem("cart"))
+          save_item.push(lastdata)
+          localStorage.setItem('cart', JSON.stringify(save_item))
+          this.$router.go()
+        }
       }
     },
     addFav(){
-      axios.post("http://localhost:3000/detail/addFav/"+this.items.item_id, {user_id : this.user.user_id})
-      .then(response => {console.log(response)})
-      .catch(err => console.log(err))
+      // console.log(this.focus_heart)
+      if(this.focus_heart){
+        // this.focus_heart.splice(0, 1)
+        console.log(this.focus_heart)
+        // axios.post("http://localhost:3000/detail/addFav/"+this.items.item_id, {user_id : this.user.user_id})
+        // .then(response => {console.log(response)})
+        // .catch(err => console.log(err))
+      }
+      else{ //false
+      // this.focus_heart.push()
+      console.log(this.focus_heart)
+        // axios.delete("http://localhost:3000/detail/remFav/"+this.items.item_id, {user_id : this.user.user_id})
+        // .then(response => {console.log(response)})
+        // .catch(err => console.log(err))
+      }
     },
     //เช็คจำนวนที่จะเอาสินค้าลง cart
     checkZero() {
@@ -158,16 +212,28 @@ export default {
       return currency.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
     },
   },
+  computed : {
+    checkHeart(){
+      let copy=[]
+      for(let i=0;i<this.focus_heart.length;i++){
+        if(this.focus_heart[i].user_id == this.user.user_id){
+          copy.push(this.focus_heart[i])
+        }
+      }
+      return copy
+    }
+  },
   created() {
     axios
       .get("http://localhost:3000/detail/" + this.$route.params.id)
       .then((response) => {
         this.items = response.data.items[0];
         this.size = response.data.items
+        this.focus_heart = response.data.favo[0]
         console.log("data = ", response.data);
       })
       .catch((err) => {
-        console.log(err, "WTF");
+        console.log(err);
       });
   },
 };

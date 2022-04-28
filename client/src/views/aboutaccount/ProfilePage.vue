@@ -65,18 +65,6 @@
                 <p style="font-size: 10px; color: red; text-align: left">
                   {{ errmsg_cpwd }}
                 </p>
-                <!-- <div
-                  class="error has-text-danger"
-                  v-if="!$v.confirm_newpwd.required"
-                >
-                  กรุณายืนยันรหัสผ่าน
-                </div>
-                <div
-                  class="error has-text-danger"
-                  v-if="!$v.confirm_newpwd.sameAsPassword"
-                >
-                  รหัสผ่านไม่ตรงกัน
-                </div> -->
               </div>
 
               <div class="field is-grouped mt-4">
@@ -117,6 +105,9 @@
                 >
                   Save Info
                 </button>
+                <button @click="showEditItem = true" class="button is-light is-warning heightCenter is-small ml-4">
+                  Purchase History
+                </button>
                 <p class="has-text-primary ml-3" style="font-size: 12px">
                   {{ complete }}
                 </p>
@@ -137,12 +128,8 @@
                     required
                   />
                 </div>
-                <div class="error has-text-danger" v-if="!$v.fname.required">
+                <div style="text-align:left; font-size:12px;" class="error has-text-danger" v-if="!$v.fname.required">
                   กรุณาใส่ชื่อ
-                </div>
-                <div class="error has-text-danger" v-if="!$v.fname.minLength">
-                  ชื่อต้องมีความยาวเกิน
-                  {{ $v.fname.$params.minLength.min }} ตัวอักษร.
                 </div>
               </div>
 
@@ -160,12 +147,8 @@
                     required
                   />
                 </div>
-                <div class="error has-text-danger" v-if="!$v.lname.required">
+                <div style="text-align:left; font-size:12px;" class="error has-text-danger" v-if="!$v.lname.required">
                   กรุณาใส่นามสกุล
-                </div>
-                <div class="error has-text-danger" v-if="!$v.lname.minLength">
-                  นามสกุลต้องมีความยาวเกิน
-                  {{ $v.lname.$params.minLength.min }} ตัวอักษร.
                 </div>
               </div>
             </div>
@@ -184,10 +167,10 @@
                   required
                 />
               </div>
-              <div class="error has-text-danger" v-if="!$v.email.required">
+              <div style="text-align:left; font-size:12px;" class="error has-text-danger" v-if="!$v.email.required">
                 กรุณากรอก Email
               </div>
-              <div class="error has-text-danger" v-if="!$v.email.email">
+              <div style="text-align:left; font-size:12px;" class="error has-text-danger" v-if="!$v.email.email">
                 ไม่ใช่ Email กรุณากรอกใหม่
               </div>
             </div>
@@ -200,26 +183,27 @@
               >
                 <input
                   class="input is-small"
-                  type="text"
+                  type="number"
                   v-model="tel"
+                  :maxlength="10"
                   autocomplete="username"
                   required
                 />
               </div>
-              <div class="error has-text-danger" v-if="!$v.tel.required">
+              <div style="text-align:left; font-size:12px;" class="error has-text-danger" v-if="!$v.tel.required">
                 กรุณากรอกเบอร์โทร
               </div>
-              <div class="error has-text-danger" v-if="!$v.tel.maxLength">
+              <div style="text-align:left; font-size:12px;" class="error has-text-danger" v-if="!$v.tel.maxLength">
                 เบอร์โทรต้องมีความยาว
                 {{ $v.tel.$params.maxLength.max }} ตัว.
               </div>
-              <div class="error has-text-danger" v-if="!$v.tel.minLength">
+              <div style="text-align:left; font-size:12px;" class="error has-text-danger" v-if="!$v.tel.minLength">
                 เบอร์โทรต้องมีความยาว
                 {{ $v.tel.$params.minLength.min }} ตัว.
               </div>
-              <div class="error has-text-danger" v-if="!$v.tel.numeric">
+              <!-- <div style="text-align:left; font-size:12px;" class="error has-text-danger" v-if="!$v.tel.numeric">
                 เบอร์โทรต้องเป็นตัวเลขเท่านั้น
-              </div>
+              </div> -->
             </div>
 
             <div class="field">
@@ -243,7 +227,6 @@
                   type="password"
                   placeholder="**********"
                   autocomplete="current-password"
-                  required
                   v-model="currentPass"
                 />
               </div>
@@ -252,6 +235,59 @@
         </form>
       </div>
       <!--End proile div-->
+
+      <!-- modal history -->
+      <div class="modal" :class="{ 'is-active' : showEditItem }">
+        <div class="modal-background"></div>
+          <div class="modal-content">
+            <div class="modal-bg-custom">
+              <div class="modal-card-head">
+                <p class="modal-card-title">Purchase History</p>
+              </div>
+                <!-- Content ... -->
+              <div style="font-size:32px; font-weight:500;" class="mb-4" v-show="obj.length == 0">You are haven't purchase yet.</div>
+              <div class="profile-purhis my-3" v-for="order in order" :key="order.id">
+                <div class="modal-cart-item" v-for="obj in obj" :key="obj.id">
+                  <div class="modal-cart-item-image" v-show="obj.o_id == order.id">
+                    <img class="modal-cart-image" src="https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/b7d9211c-26e7-431a-ac24-b0540fb3c00f/%E0%B8%A3%E0%B8%AD%E0%B8%87%E0%B9%80%E0%B8%97%E0%B9%89%E0%B8%B2%E0%B8%9C%E0%B8%B9%E0%B9%89-air-force-1-07-WrLlWX.png">
+                  </div>
+                    <div class="modal-cart-item-info" v-show="obj.o_id == order.id">
+                      <p class="modal-cart-item-title-c">{{obj.name}}</p>
+                      <p class="modal-cart-item-price-c">฿{{formatCurrency(obj.price * obj.quantity)}}</p>
+                      <p style="font-size:12px; color:gray;" class="mt-1">{{obj.size}}</p>
+                      <div style="display:flex;">
+                        <p style="font-size:12px; text-align:left; color:black; margin-top:auto; margin-bottom:auto;">จำนวน {{obj.quantity}} ชิ้น</p>
+                      </div>
+                  </div>
+              </div>
+              <div style="width:100%; height:auto; background-color:white; padding:1em; display:flex; border-radius:0.5em;">
+                <div class="modal-bottom-l" style="margin-top:0;">
+                  <div style="font-size:16px; font-weight:bold; text-align:left;">รวมทั้งหมด</div>
+                </div>
+               <div class="modal-bottom-r" style="margin-top:0;">
+                  <div style="font-size:16px; font-weight:bold; align-items:flex-end;">฿10,100.00</div>
+                </div>
+              </div>
+
+              </div>
+              <!-- <div class="modal-bottom">
+                <div class="modal-bottom-l" v-show="obj.length !== 0">
+                  <button class="button is-success is-light" @click="showEditItem = false, $router.push('/cart')">
+                    Go to cart
+                  </button>
+                  <button class="button is-danger is-light ml-5" @click="clearCart()">
+                    Clear
+                  </button>
+                </div>
+                <div class="modal-bottom-r">
+                  <p style="font-weight:bold;">Total ฿{{formatCurrency(sumAllPrice)}}</p>  
+                </div>
+              </div> -->
+            </div>
+          </div>
+        <button class="modal-close is-large" aria-label="close" @click="showEditItem = false"></button>
+      </div>
+      <!--end modal-->
     </section>
   </div>
 </template>
@@ -269,6 +305,11 @@ export default {
   props: ["user"],
   data() {
     return {
+      showEditItem : false,
+      order : [{id: 1}, {id : 2}],
+      obj : [{name : 'Nike Air force 1', price : 3500, quantity : 1, image : '', size : '10', o_id : 1},
+      {name : 'Nike Air force 2', price : 5500, quantity : 2, image : '', size : '11', o_id : 2},
+      {name : 'Nike Air force 1', price : 11500, quantity : 3, image : '', size : '10', o_id : 2}],
       changepwd: false,
       changepwd_bt: true,
       fname: this.user.user_fname,
@@ -309,6 +350,9 @@ export default {
     //   sameAsPassword: sameAs("newpwd"),
     // },
   },
+  // mounted () {
+  //   this.getHistory()
+  // },
   methods: {
     submit() {
       console.log("submit!");
@@ -323,10 +367,18 @@ export default {
         }, 500);
       }
     },
+    formatCurrency(currency){ //format เงินให้มีลูกน้ำ
+      return ((currency).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'))
+    },
+    // checklentel(){
+    //   if(this.tel.length > 10){
+
+    //   }
+    // },
     saveInfo() {
       if (this.$v.$invalid) {
         this.submitStatus = "ERROR";
-        this.complete = "Update ไม่สําเร็จ! รหัสผ่านอาจไม่ถูกต้อง";
+        this.complete = "Update ไม่สําเร็จ! ข้อมูลบางอย่างไม่ถูกต้อง";
       } else {
         axios
           .put("http://localhost:3000/users/saveinfo/" + this.user.user_id, {
@@ -345,7 +397,7 @@ export default {
           });
         this.currentPass = "";
         this.complete = "Update สําเร็จ!";
-        this.$router.go();
+        // this.$router.go();
       }
     },
     changePwd() {
@@ -377,8 +429,15 @@ export default {
         this.confirm_newpwd = "";
       }
     },
+    // getHistory(){
+    //   axios.get("http://localhost:3000/profile/purchase/history/"+this.user.user_id)
+    //   .then((response) => {
+    //     // this.obj = response.data.order
+    //     console.log("order",response.data.order)
+    //   })
+    //   .catch((err) => {console.log(err)})
+    // }
   },
-  // },
 };
 </script>
 

@@ -146,26 +146,23 @@
                 <p class="item-info-remain">
                   มีสินค้าท้ังหมด {{ item.item_remain }} ชิ้น
                 </p>
-                <div class="item-info-heart">
-                  <svg
-                    @click="focus_heart = !focus_heart"
-                    style="cursor: pointer; color: red"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20px"
-                    height="20px"
-                    fill="currentColor"
-                    class="bi bi-heart"
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      v-show="focus_heart == false"
-                      d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"
-                      fill="red"
-                    ></path>
-                    <!-- <path v-show="obj.focus_heart" fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" fill="red"></path> -->
-                  </svg>
+                <div v-if="!user"></div>
+                <div v-else>
+                    <div v-for="heart in checkHeart" :key="heart.item_id" class="item-info-heart">
+                      <svg v-if="heart.item_id == item.item_id"
+                        style="cursor: pointer; color: red"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20px"
+                        height="20px"
+                        fill="currentColor"
+                        class="bi bi-heart"
+                        viewBox="0 0 16 16"
+                      >
+                        <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" fill="red"></path>
+                      </svg>
+                    </div>
+                  </div>
                 </div>
-              </div>
               </router-link>
             </div>
             <!-- Item card -->
@@ -211,6 +208,15 @@ export default {
     // }
   },
   computed : {
+    checkHeart(){
+      let copy = []
+      for(let i=0;i<this.focus_heart.length;i++){
+        if(this.focus_heart[i].user_id == this.user.user_id){
+          copy.push(this.focus_heart[i])
+        }
+      }
+      return copy
+    },
     showItem(){
       let tempitems = this.items
       if(this.brandname != '' && this.brandname){
@@ -302,6 +308,7 @@ export default {
         this.human = response.data.byHuman;
         this.brand = response.data.brand;
         this.allitem = response.data.allitem[0].count;
+        this.focus_heart = response.data.fav[0]
         console.log("data = ", response.data);
       })
       .catch((err) => {

@@ -539,6 +539,13 @@ input::-webkit-inner-spin-button {
 .profile-header{
     display: flex;
 }
+.profile-purhis{
+    width:100%;
+    height:auto;
+    padding:1em;
+    background-color:rgb(211,211,211);
+    border-radius:0.5em;
+}
 /** Profile **/
 
 /* Feedback */
@@ -1238,6 +1245,12 @@ input::-webkit-inner-spin-button {
     /* .modal-cart-item-image{
         position: absolute;
     } */
+    .modal-bg-custom{
+        padding-top: 1em;
+        padding-bottom: 1em;
+        padding-left: 0.3em;
+        padding-right: 0.3em;
+    }
     .modal-cart-image{
         position: absolute;
         left: 3.9%;
@@ -1265,6 +1278,14 @@ input::-webkit-inner-spin-button {
         margin-top: 0.5em;
     }
     /*modal*/
+
+    .profile-purhis{
+        width:100%;
+        height:auto;
+        padding:1em;
+        background-color:rgb(211,211,211);
+        border-radius:0.5em;
+    }
 }
 @media (max-width:500px){
     /*Cart*/

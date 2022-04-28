@@ -5,8 +5,10 @@ router = express.Router();
 
 router.get("/detail/:id", async function (req, res, next) {
     const [rows, fields] = await pool.query("select * from item join item_size using(item_id) where item_id = ? order by cast(size as float)",[req.params.id])
+    const fav = await pool.query("select * from fav_item where item_id=?", [req.params.id])
     res.json({
       items:rows,
+      favo : fav
     })
   });
 router.post("/detail/addFav/:id", async function (req, res, next) {

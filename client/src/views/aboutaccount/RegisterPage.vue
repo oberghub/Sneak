@@ -22,10 +22,11 @@
                     required
                   />
                 </div>
-                <div class="error has-text-danger" v-if="!$v.username.required">
+                <div style="text-align:left; font-size:12px;" class="error has-text-danger" v-if="!$v.username.required">
                   กรุณาใส่ชื่อผู้ใช้
                 </div>
                 <div
+                  style="text-align:left; font-size:12px;"
                   class="error has-text-danger"
                   v-if="!$v.username.minLength"
                 >
@@ -56,14 +57,14 @@
                     required
                   />
                 </div>
-                <div class="error has-text-danger" v-if="!$v.pwd.required">
+                <div style="text-align:left; font-size:12px;" class="error has-text-danger" v-if="!$v.pwd.required">
                   กรุณาใส่รหัสผ่าน
                 </div>
-                <div class="error has-text-danger" v-if="!$v.pwd.minLength">
+                <div style="text-align:left; font-size:12px;" class="error has-text-danger" v-if="!$v.pwd.minLength">
                   รหัสผ่านต้องมีความยาวเกิน
                   {{ $v.pwd.$params.minLength.min }} ตัว.
                 </div>
-                <div class="error has-text-danger" v-if="!$v.pwd.maxLength">
+                <div style="text-align:left; font-size:12px;" class="error has-text-danger" v-if="!$v.pwd.maxLength">
                   รหัสผ่านต้องมีความยาวไม่เกิน
                   {{ $v.pwd.$params.maxLength.max }} ตัว.
                 </div>
@@ -85,6 +86,7 @@
                   />
                 </div>
                 <div
+                  style="text-align:left; font-size:12px;"
                   class="error has-text-danger"
                   v-if="!$v.conpwd.sameAsPassword"
                 >

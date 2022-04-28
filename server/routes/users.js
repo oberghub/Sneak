@@ -142,4 +142,18 @@ router.put("/users/changepwd/:id", isLoggedIn, async function (req, res, next) {
     conn.release()
   }
 })
+router.get("profile/purchase/history/:uid", isLoggedIn, async function(req, res, next){
+  console.log(req.params.uid)
+  const order = await pool.query("SELECT * FROM `user`"+
+                                  // "join `order`" +
+                                  // "using (user_id)" +
+                                  // "join order_item" +
+                                  // "using (order_id)" + 
+                                  // "join item" + 
+                                  // "using (item_id)" +
+                                  " WHERE user_id = ?"
+                                  ,[25])
+
+  res.json({order : order[0]})
+})
 exports.router = router;
