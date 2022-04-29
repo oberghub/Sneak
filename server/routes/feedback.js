@@ -4,11 +4,11 @@ const pool = require("../config");
 
 router = express.Router();
 
-// router.get("/feedback", async function (req, res, next) {
-//     // Your code here
-//     console.log("kuy")
-//     res.render('feedback')
-//   });
+router.get("/feedback", async function (req, res, next) {
+    // Your code here
+    const feed = await pool.query("select * from requirement join user using(user_id)")
+    res.json({feedback: feed[0]})
+  });
 router.post("/feedback/sendpost", isLoggedIn, async function (req, res, next) {
     // Your code here
     const conn = await pool.getConnection()

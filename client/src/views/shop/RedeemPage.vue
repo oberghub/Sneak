@@ -3,66 +3,114 @@
     <section id="app">
       <div class="redeem-container">
         <p class="text-redeem">แลกรับของรางวัล</p>
-        <p style="font-size:14px; font-weight:bold" v-if="user">Your point : {{user.user_point || 0}}</p>
+        <p style="font-size: 14px; font-weight: bold" v-if="user">
+          Your point : {{ user.user_point || 0 }}
+        </p>
         <div class="redeem-store-card">
           <div class="" v-for="item in items" :key="item.red_id">
-          <!-- redeem card -->
+            <!-- redeem card -->
             <div class="redeem-card">
               <div class="image-redeem-card">
-                <img class="card-image-redeem-size" :src="item.red_img">
+                <img class="card-image-redeem-size" :src="item.red_img" />
               </div>
               <div class="redeem-info">
-                <p class="redeem-info-title">{{overTxt(item.red_name)}}</p>
-                <p class="redeem-info-price">{{item.red_point}} แต้ม</p>
-                <p class="redeem-info-remain">รางวัลคงเหลือ {{item.red_remain}} ชิ้น</p>
+                <p class="redeem-info-title">{{ overTxt(item.red_name) }}</p>
+                <p class="redeem-info-price">{{ item.red_point }} แต้ม</p>
+                <p
+                  style="font-size: 16px; color: red; margin-bottom: 1em"
+                  class="item-info-type"
+                  v-show="item.red_remain == 0"
+                >
+                  สินค้าหมด
+                </p>
+                <p class="redeem-info-remain">
+                  รางวัลคงเหลือ {{ item.red_remain }} ชิ้น
+                </p>
                 <div class="redeem-info-heart">
-                    <button class="button is-primary is-light is-medium">Redeem</button>
+                  <button
+                    v-show="
+                      item.red_remain > 0 && user.user_point > item.red_point
+                    "
+                    @click="goRedeem(item.red_id)"
+                    class="button is-primary is-light is-medium"
+                  >
+                    Redeem
+                  </button>
                 </div>
               </div>
             </div>
-          <!-- redeem card -->
+            <!-- redeem card -->
           </div>
         </div>
       </div>
-  </section>
+    </section>
   </div>
 </template>
 
 <script>
-import axios from '@/plugins/axios'
+import axios from "@/plugins/axios";
 export default {
-    props: ['user'],
-    data() {
-      return {
-        minprice : 0,
-        maxprice : 99999,
-        items : null,
-        human : null,
-        brandname : "",
-        focus_heart : false,
+  props: ["user"],
+  data() {
+    return {
+      minprice: 0,
+      maxprice: 99999,
+      items: null,
+      human: null,
+      brandname: "",
+      focus_heart: false,
+      remain: 0,
+      point: 0,
+    };
+  },
+  methods: {
+    overTxt(txt) {
+      if (txt.length > 20) {
+        return txt.slice(0, 19) + "...";
+      } else {
+        return txt;
       }
     },
-    methods : {
-      overTxt(txt){
-        if(txt.length > 20){
-          return txt.slice(0, 19) + '...'
-        }
-        else{
-          return txt
-        }
-      },
+    goRedeem(id) {
+      if (confirm("ต้องการแลกสินค้านี้มั้ย") == true) {
+        axios
+          .put("http://localhost:3000/redeem/" + id, {
+            user: this.user.user_id,
+          })
+          .then((response) => {
+            console.log("data = ", response.data);
+            // this.user.user_point = response.data.point
+          })
+          .catch((err) => {
+            console.log(err, "WTF");
+          });
+        axios
+          .post("http://localhost:3000/redeem/" + id, {
+            user: this.user.user_id,
+          })
+          .then((response) => {
+            console.log("data = ", response.data);
+            // this.user.user_point = response.data.point
+          })
+          .catch((err) => {
+            console.log(err, "WTF");
+          });
+      }
+      location.reload();
     },
-    created(){
-      axios.get("http://localhost:3000/redeem/", {})
+  },
+  created() {
+    axios
+      .get("http://localhost:3000/redeem/", {})
       .then((response) => {
-        this.items = response.data.items
-        console.log('data = ', response.data)
+        this.items = response.data.items;
+        console.log("data = ", response.data);
       })
       .catch((err) => {
-        console.log(err, "WTF")
+        console.log(err, "WTF");
       });
-    }
-  }
+  },
+};
 </script>
 
 <style scoped>

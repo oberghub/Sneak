@@ -1,3 +1,4 @@
+
 <template>
   <div>
     <section id="app">
@@ -130,37 +131,43 @@
         </div>
         <div class="shop-store-card">
           <template v-for="item in showItem">
-              <div class="item-card" :key="item.item_id" v-if="minprice <= item.item_price && item.item_price <= maxprice">
-                <router-link style="color:black;" :to="`/detail/${item.item_id}`">
-              <!-- <div class="" v-for="item in items" :key="item.item_id"> -->
-              <!-- item card -->
-              <div class="image-card">
-                <img class="card-image-size" :src="item.item_img" />
-              </div>
-              <div class="item-info">
-                <p class="item-info-title">{{ item.item_name }}</p>
-                <p style="margin-bottom:1em;" class="item-info-type">{{ item.item_type.charAt(0).toUpperCase() + item.item_type.slice(1) }}<span style="font-size:16px; color:red; margin-left:1em;" v-show="item.item_remain == 0">สินค้าหมด</span> </p>
-                <p class="item-info-price">
-                  ฿{{ formatCurrency(item.item_price) }}
-                </p>
-                <p class="item-info-remain">
-                  มีสินค้าท้ังหมด {{ item.item_remain }} ชิ้น
-                </p>
-                <div v-if="!user"></div>
-                <div v-else>
-                    <div v-for="heart in checkHeart" :key="heart.item_id" class="item-info-heart">
-                      <svg v-if="heart.item_id == item.item_id"
-                        style="cursor: pointer; color: red"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="20px"
-                        height="20px"
-                        fill="currentColor"
-                        class="bi bi-heart"
-                        viewBox="0 0 16 16"
-                      >
-                        <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" fill="red"></path>
-                      </svg>
-                    </div>
+            <div class="item-card" :key="item.item_id" v-if="minprice <= item.item_price && item.item_price <= maxprice">
+              <router-link style="color:black;" :to="`/detail/${item.item_id}`">
+              
+                <div class="image-card">
+                  <img class="card-image-size" :src="item.item_img" />
+                </div>
+                <div class="item-info">
+                  <p class="item-info-title">{{ item.item_name }}</p>
+                  <p style="margin-bottom:1em;" class="item-info-type">{{ item.item_type.charAt(0).toUpperCase() + item.item_type.slice(1) }}<span style="font-size:16px; color:red; margin-left:1em;" v-show="item.item_remain == 0">สินค้าหมด</span> </p>
+                  <p class="item-info-price">
+                    ฿{{ formatCurrency(item.item_price) }}
+                  </p>
+                  <p class="item-info-remain">
+                    มีสินค้าท้ังหมด {{ item.item_remain }} ชิ้น
+                  </p>
+                  <div v-if="!user"></div>
+                  <div v-else>
+                      <div class="item-info-heart">
+                        <svg
+                          style="cursor: pointer; color: red"
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="20px"
+                          height="20px"
+                          fill="currentColor"
+                          class="bi bi-heart"
+                          viewBox="0 0 16 16"
+                        >
+                          <path v-if="checkHeart.some(heart=>heart.item_id === item.item_id)"
+                            fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" 
+                            fill="red"
+                          ></path>
+                          <path v-else
+                            d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"
+                            fill="red"
+                          ></path>
+                        </svg>
+                      </div>
                   </div>
                 </div>
               </router-link>
@@ -176,6 +183,7 @@
 
 <script>
 import axios from '@/plugins/axios'
+
 export default {
   props: ['user'],
   data() {

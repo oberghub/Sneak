@@ -45,9 +45,8 @@
             <button @click="addItem" class="button is-success is-large is-light mr-5" v-show="items.item_remain != 0">
               Add to cart
             </button>
-            <div style="display: flex" @click="addFav" v-if="user">
+            <div style="display: flex" @click="toggleFav" v-if="user">
               <svg
-                v-if="checkHeart.length < 1"
                 style="cursor: pointer; color: red; margin-top: 1em"
                 xmlns="http://www.w3.org/2000/svg"
                 width="1.8em"
@@ -55,24 +54,14 @@
                 fill="currentColor"
                 class="bi bi-heart"
                 viewBox="0 0 16 16"
-              >
-                <path
+              > 
+                <!-- ไม่ได้กด fav ใช้ path นี้-->
+                <path v-if="(checkHeart.length < 1) && showFavHeart == false" 
                   d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"
                   fill="red"
                 ></path>
-              </svg>
 
-              <svg
-                v-else
-                style="cursor: pointer; color: red; margin-top: 1em"
-                xmlns="http://www.w3.org/2000/svg"
-                width="1.8em"
-                height="1.8em"
-                fill="currentColor"
-                class="bi bi-heart"
-                viewBox="0 0 16 16"
-              >
-                <path
+                <path v-else-if="(checkHeart.length = 1) && showFavHeart == true"
                   fill-rule="evenodd"
                   d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"
                   fill="red"
@@ -142,6 +131,7 @@ export default {
       size: null,
       size_remain : "Choose Size",
       al_msg : '',
+      showFavHeart: null
     };
   },
   methods: {
@@ -161,27 +151,44 @@ export default {
           quantity : this.counter,
           img : this.items.item_img})
           let save_item = JSON.parse(localStorage.getItem("cart"))
+          for(let i=0;i<save_item.length;i++){
+            if(save_item[i].size == lastdata.size && save_item[i].name == lastdata.name){
+              lastdata.quantity = save_item[i].quantity + lastdata.quantity
+              save_item.splice(i, 1)
+              break
+            }
+          }
           save_item.push(lastdata)
           localStorage.setItem('cart', JSON.stringify(save_item))
           this.$router.go()
         }
       }
     },
-    addFav(){
-      // console.log(this.focus_heart)
-      if(this.focus_heart){
-        // this.focus_heart.splice(0, 1)
-        console.log(this.focus_heart)
-        // axios.post("http://localhost:3000/detail/addFav/"+this.items.item_id, {user_id : this.user.user_id})
-        // .then(response => {console.log(response)})
-        // .catch(err => console.log(err))
+    toggleFav(){
+      if(this.checkHeart.length == 1){
+        axios.delete("http://localhost:3000/detail/delFav/"+this.items.item_id, {
+          headers:{
+            'authorization': localStorage.getItem('token') 
+          }, 
+          data: { 
+            userId : this.user.user_id 
+          }
+        })
+        .then(response => {
+          console.log(response)
+          this.checkHeart.pop()
+          this.showFavHeart = false
+        })
+        .catch(err => console.log(err))
       }
-      else{ //false
-      // this.focus_heart.push()
-      console.log(this.focus_heart)
-        // axios.delete("http://localhost:3000/detail/remFav/"+this.items.item_id, {user_id : this.user.user_id})
-        // .then(response => {console.log(response)})
-        // .catch(err => console.log(err))
+      else{
+        console.log(this.checkHeart)
+        axios.post("http://localhost:3000/detail/addFav/"+this.items.item_id, {userId : this.user.user_id})
+        .then(response => {
+          console.log(response)
+          this.showFavHeart = true
+        })
+        .catch(err => console.log(err))
       }
     },
     //เช็คจำนวนที่จะเอาสินค้าลง cart
@@ -229,7 +236,12 @@ export default {
       .then((response) => {
         this.items = response.data.items[0];
         this.size = response.data.items
-        this.focus_heart = response.data.favo[0]
+        this.focus_heart = response.data.favItem[0]
+        if(this.focus_heart.length == 0){
+          this.showFavHeart = false
+        }else {
+          this.showFavHeart = true
+        }
         console.log("data = ", response.data);
       })
       .catch((err) => {

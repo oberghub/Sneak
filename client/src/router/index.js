@@ -48,6 +48,11 @@ const routes = [
     path: '/profile',
     name: 'Profile',
     component: () => import('../views/aboutaccount/ProfilePage.vue') // set home as path '/'
+  },
+  {
+    path: '/manage',
+    name: 'Manage',
+    component: () => import('../views/staff/ManageOrder.vue') // set home as path '/'
   }
 ]
 

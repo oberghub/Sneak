@@ -248,15 +248,15 @@
               <div style="font-size:32px; font-weight:500;" class="mb-4" v-show="obj.length == 0">You are haven't purchase yet.</div>
               <div class="profile-purhis my-3" v-for="order in order" :key="order.id">
                 <div class="modal-cart-item" v-for="obj in obj" :key="obj.id">
-                  <div class="modal-cart-item-image" v-show="obj.o_id == order.id">
-                    <img class="modal-cart-image" src="https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/b7d9211c-26e7-431a-ac24-b0540fb3c00f/%E0%B8%A3%E0%B8%AD%E0%B8%87%E0%B9%80%E0%B8%97%E0%B9%89%E0%B8%B2%E0%B8%9C%E0%B8%B9%E0%B9%89-air-force-1-07-WrLlWX.png">
+                  <div class="modal-cart-item-image" v-show="obj.order_id == order.order_id">
+                    <img class="modal-cart-image" :src="obj.item_img">
                   </div>
-                    <div class="modal-cart-item-info" v-show="obj.o_id == order.id">
-                      <p class="modal-cart-item-title-c">{{obj.name}}</p>
-                      <p class="modal-cart-item-price-c">฿{{formatCurrency(obj.price * obj.quantity)}}</p>
+                    <div class="modal-cart-item-info" v-show="obj.order_id == order.order_id">
+                      <p class="modal-cart-item-title-c">{{obj.item_name}}</p>
+                      <p class="modal-cart-item-price-c">฿{{formatCurrency(obj.item_price * obj.item_quantity)}}</p>
                       <p style="font-size:12px; color:gray;" class="mt-1">{{obj.size}}</p>
                       <div style="display:flex;">
-                        <p style="font-size:12px; text-align:left; color:black; margin-top:auto; margin-bottom:auto;">จำนวน {{obj.quantity}} ชิ้น</p>
+                        <p style="font-size:12px; text-align:left; color:black; margin-top:auto; margin-bottom:auto;">จำนวน {{obj.item_quantity}} ชิ้น</p>
                       </div>
                   </div>
               </div>
@@ -265,7 +265,7 @@
                   <div style="font-size:16px; font-weight:bold; text-align:left;">รวมทั้งหมด</div>
                 </div>
                <div class="modal-bottom-r" style="margin-top:0;">
-                  <div style="font-size:16px; font-weight:bold; align-items:flex-end;">฿10,100.00</div>
+                  <div style="font-size:16px; font-weight:bold; align-items:flex-end;">฿{{order.order_total}}</div>
                 </div>
               </div>
 
@@ -306,10 +306,8 @@ export default {
   data() {
     return {
       showEditItem : false,
-      order : [{id: 1}, {id : 2}],
-      obj : [{name : 'Nike Air force 1', price : 3500, quantity : 1, image : '', size : '10', o_id : 1},
-      {name : 'Nike Air force 2', price : 5500, quantity : 2, image : '', size : '11', o_id : 2},
-      {name : 'Nike Air force 1', price : 11500, quantity : 3, image : '', size : '10', o_id : 2}],
+      order : [],
+      obj : [],
       changepwd: false,
       changepwd_bt: true,
       fname: this.user.user_fname,
@@ -350,9 +348,9 @@ export default {
     //   sameAsPassword: sameAs("newpwd"),
     // },
   },
-  // mounted () {
-  //   this.getHistory()
-  // },
+  mounted () {
+    this.getHistory()
+  },
   methods: {
     submit() {
       console.log("submit!");
@@ -391,12 +389,14 @@ export default {
           })
           .then((response) => {
             console.log(response.data);
+            this.complete = "Update สําเร็จ!";
           })
           .catch((err) => {
             console.log(err);
+            alert("รหัสไม่ถูกต้อง");
           });
+        this.complete = "";
         this.currentPass = "";
-        this.complete = "Update สําเร็จ!";
         // this.$router.go();
       }
     },
@@ -429,14 +429,15 @@ export default {
         this.confirm_newpwd = "";
       }
     },
-    // getHistory(){
-    //   axios.get("http://localhost:3000/profile/purchase/history/"+this.user.user_id)
-    //   .then((response) => {
-    //     // this.obj = response.data.order
-    //     console.log("order",response.data.order)
-    //   })
-    //   .catch((err) => {console.log(err)})
-    // }
+    getHistory(){
+      axios.get("http://localhost:3000/users/purchase/"+this.user.user_id)
+      .then((response) => {
+        this.obj = response.data.order
+        this.order = response.data.orderBig
+        console.log("order",response.data.order)
+      })
+      .catch((err) => {console.log(err)})
+    }
   },
 };
 </script>

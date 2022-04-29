@@ -783,7 +783,86 @@ input::-webkit-inner-spin-button {
     margin-top: 1.5em;
 }
 /*Edititem*/
-
+/*manage (admin)*/
+.manage-bar{
+    max-width: 1440px;
+    height: auto;
+    margin:auto;
+    background-color: white;
+    display: flex;
+    padding: 1.5em;
+}
+.sub-box-manage{
+    width: 200px;
+    height: 60px;
+    background-color: white;
+    display: flex;
+    margin: auto;
+    border-radius: 0.3em;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.sub-box-manage:hover{
+    transform: scale(1.2);
+}
+.text-manage-bar{
+    font-size: 18px;
+    font-weight: bold;
+    margin:auto;
+    /* border-bottom: 1px solid black; */
+}
+.list-item-box{
+    max-width: 1440px;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2em;
+    padding: 2em;
+    background-color: white;
+}
+.feed-box{
+    width: 100%;
+    height: auto;
+    display: block;
+    text-align: left;
+    background-color: white;
+    margin-bottom: 2em;
+    padding: 1.5em;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.feed-text-title{
+    font-size: 18px;
+    font-weight: bold;
+}
+.feed-text-p{
+    width: 100%;
+    font-size: 16px;
+    font-weight: 300;
+}
+.order-box{
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 2em;
+    padding: 1.5em;
+    background-color: white;
+    text-align: left;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.order-box-address{
+    width: 40%;
+    border-radius: 0.3em;
+    padding: 1.5em;
+    height: auto;
+    display: block;
+    align-items: flex-end;
+    justify-content: right;
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+/* manage (admin)*/
 /*carousel*/
 .carous{
     width: 1440px;
