@@ -38,7 +38,7 @@
               <p style="font-weight:bold;">Total Items : {{order.item_quantity}} Items</p>
               <p style="font-weight:bold;">Total : <span style="font-size:18px; color:#FFBF18;">฿{{order.order_total}}</span></p>
               <div class="mt-5"></div>
-              <p style="font-weight:bold;">ชื่อ-นามสกุล : {{order.user_fname+" "+order.user_lname}}</p>
+              <p style="font-weight:bold;">ชื่อ-นามสกุล : {{order.fullname}}</p>
               <p style="font-weight:bold;">เบอร์โทร : {{order.user_tel}}</p>
               <p style="font-weight:bold;">ที่อยู่ : {{order.user_address}}</p>
               <div class="mt-5"></div>
@@ -93,7 +93,7 @@
               <p style="font-weight:bold;">Total Items : {{order.item_quantity}} Items</p>
               <p style="font-weight:bold;">Total : <span style="font-size:18px; color:#FFBF18;">฿{{order.order_total}}</span></p>
               <div class="mt-5"></div>
-              <p style="font-weight:bold;">ชื่อ-นามสกุล : {{order.user_fname+" "+order.user_lname}}</p>
+              <p style="font-weight:bold;">ชื่อ-นามสกุล : {{order.fullname}}</p>
               <p style="font-weight:bold;">เบอร์โทร : {{order.user_tel}}</p>
               <p style="font-weight:bold;">ที่อยู่ : {{order.user_address}}</p>
               <div class="mt-5"></div>
@@ -144,7 +144,7 @@
               <p style="font-weight:bold;">Total Items : {{order.item_quantity}} Items</p>
               <p style="font-weight:bold;">Total : <span style="font-size:18px; color:#FFBF18;">฿{{order.order_total}}</span></p>
               <div class="mt-5"></div>
-              <p style="font-weight:bold;">ชื่อ-นามสกุล : {{order.user_fname+" "+order.user_lname}}</p>
+              <p style="font-weight:bold;">ชื่อ-นามสกุล : {{order.fullname}}</p>
               <p style="font-weight:bold;">เบอร์โทร : {{order.user_tel}}</p>
               <p style="font-weight:bold;">ที่อยู่ : {{order.user_address}}</p>
               <div class="mt-5"></div>

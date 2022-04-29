@@ -28,8 +28,8 @@
                 </p>
                 <div class="redeem-info-heart">
                   <button
-                    v-show="
-                      item.red_remain > 0 && user.user_point > item.red_point
+                    :disabled="
+                      item.red_remain > 0 && user.user_point < item.red_point
                     "
                     @click="goRedeem(item.red_id)"
                     class="button is-primary is-light is-medium"
@@ -96,7 +96,7 @@ export default {
             console.log(err, "WTF");
           });
       }
-      location.reload();
+      this.$router.go();
     },
   },
   created() {

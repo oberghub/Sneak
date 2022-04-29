@@ -42,7 +42,7 @@
             </div>
           </div>
           <div class="detail-button">
-            <button @click="addItem" class="button is-success is-large is-light mr-5" v-show="items.item_remain != 0">
+            <button @click="addItem" class="button is-success is-large is-light mr-5" :disabled="items.item_remain == 0">
               Add to cart
             </button>
             <div style="display: flex" @click="toggleFav" v-if="user">

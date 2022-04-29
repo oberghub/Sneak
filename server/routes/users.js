@@ -159,16 +159,14 @@ router.get("/users/purchase/:uid", isLoggedIn, async function (req, res, next) {
   res.json({ order: order[0], orderBig: order1[0] })
 })
 router.get('/user/order', isLoggedIn, async (req, res, next) => {
-  const order = await pool.query("SELECT distinct * FROM `user`" +
+  const order = await pool.query("SELECT user_username, order_id, count(item_quantity) as item_quantity, sum(item_amount) as order_total, concat(user_fname, ' ' ,user_lname) as fullname, user_tel, user_address, order_status, pay_image FROM `user`" +
   " join `order`" +
   " using (user_id)" +
   " join order_item" +
   " using (order_id)" +
-  " join item" +
-  " using (item_id)" +
   " join payment" +
-  " using (order_id)")
+  " using (order_id) group by order_item.order_id")
   const order1 = await pool.query("SELECT * FROM `order` join order_item using (order_id) join item using (item_id)")
-  res.json({orderBig:order[0],order: order1[0]})
+  res.json({orderBig:order[0], order: order1[0]}) 
 })
 exports.router = router;
