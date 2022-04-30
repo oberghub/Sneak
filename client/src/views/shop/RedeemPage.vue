@@ -14,7 +14,7 @@
                 <img class="card-image-redeem-size" :src="item.red_img" />
               </div>
               <div class="redeem-info">
-                <p class="redeem-info-title">{{ overTxt(item.red_name) }}</p>
+                <p class="redeem-info-title">{{ item.red_name }}</p>
                 <p class="redeem-info-price">{{ item.red_point }} แต้ม</p>
                 <p
                   style="font-size: 16px; color: red; margin-bottom: 1em"
@@ -64,13 +64,6 @@ export default {
     };
   },
   methods: {
-    overTxt(txt) {
-      if (txt.length > 20) {
-        return txt.slice(0, 19) + "...";
-      } else {
-        return txt;
-      }
-    },
     goRedeem(id) {
       if (confirm("ต้องการแลกสินค้านี้มั้ย") == true) {
         axios

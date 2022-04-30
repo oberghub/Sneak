@@ -448,6 +448,9 @@ input::-webkit-inner-spin-button {
 .redeem-info-title{
     font-size: 20px;
     font-weight: bold;
+    line-height: 2.5ex;
+    height: 2.5ex; /* 2.5ex for each visible line */
+    overflow: hidden;
 }
 .redeem-info-price{
     font-size: 18px;

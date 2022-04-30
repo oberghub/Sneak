@@ -1,6 +1,6 @@
 const express = require("express");
 const pool = require("../config");
-// const { isLoggedIn } = require('../middlewares')
+const { isLoggedIn } = require("../middlewares");
 router = express.Router();
 
 router.get("/redeem", async function (req, res, next) {
@@ -12,10 +12,10 @@ router.get("/redeem", async function (req, res, next) {
     items : rows
   })
 });
-router.post("/redeem", async function (req, res, next) {
+router.get("/user/redeem/", isLoggedIn, async function (req, res, next) {
     // Your code here
-    console.log("kuy1")
-    res.render('redeem')
+    const user_red = await pool.query("select * from user_redeem join redeem using(red_id) where user_id=?", [req.user.user_id])
+    res.json(user_red[0])
   });
   router.put("/redeem/:itemId", async function (req, res, next) {
     // Your code here

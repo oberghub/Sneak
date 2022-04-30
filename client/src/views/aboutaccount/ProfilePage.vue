@@ -241,11 +241,10 @@
         <div class="modal-background"></div>
           <div class="modal-content">
             <div class="modal-bg-custom">
-              <div class="modal-card-head">
-                <p class="modal-card-title">Purchase History</p>
-              </div>
                 <!-- Content ... -->
+                <p style="font-size:24px; font-weight:bold; text-align:center; margin-bottom:1.5em;">Purchase History</p>
               <div style="font-size:32px; font-weight:500;" class="mb-4" v-show="obj.length == 0">You are haven't purchase yet.</div>
+              
               <div class="profile-purhis my-3" v-for="order in order" :key="order.id">
                 <div class="modal-cart-item" v-for="obj in obj" :key="obj.id">
                   <div class="modal-cart-item-image" v-show="obj.order_id == order.order_id">
@@ -270,19 +269,6 @@
               </div>
 
               </div>
-              <!-- <div class="modal-bottom">
-                <div class="modal-bottom-l" v-show="obj.length !== 0">
-                  <button class="button is-success is-light" @click="showEditItem = false, $router.push('/cart')">
-                    Go to cart
-                  </button>
-                  <button class="button is-danger is-light ml-5" @click="clearCart()">
-                    Clear
-                  </button>
-                </div>
-                <div class="modal-bottom-r">
-                  <p style="font-weight:bold;">Total ฿{{formatCurrency(sumAllPrice)}}</p>  
-                </div>
-              </div> -->
             </div>
           </div>
         <button class="modal-close is-large" aria-label="close" @click="showEditItem = false"></button>
