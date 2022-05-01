@@ -376,6 +376,7 @@ export default {
           .then((response) => {
             console.log(response.data);
             this.complete = "Update สําเร็จ!";
+            location.reload()
           })
           .catch((err) => {
             console.log(err);

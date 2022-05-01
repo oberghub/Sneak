@@ -145,7 +145,7 @@ export default {
         }
         else{
           this.al_msg = ''
-          let lastdata = ({name : this.items.item_name, 
+          let lastdata = ({id:this.items.item_id,name : this.items.item_name, 
           price : this.items.item_price, 
           size : this.size_remain.substr(0, this.size_remain.length-1),
           type : this.items.item_type,

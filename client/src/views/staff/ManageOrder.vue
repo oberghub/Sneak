@@ -78,8 +78,8 @@
               <div class="mt-5"></div>
               <div style="display:flex;">
                 <button class="button is-warning is-light mr-3" @click="modal_act = true, getpayImg(index)">See a payment</button>
-                <button class="button is-success is-light mr-3" @click="changeStatusOrder('complete', order.user_id)">Confirm order</button>
-                <button class="button is-danger is-light" @click="changeStatusOrder('incomplete', order.user_id)">Cancel order</button>
+                <button class="button is-success is-light mr-3" @click="changeStatusOrder('complete', order.user_id,order.order_id)">Confirm order</button>
+                <button class="button is-danger is-light" @click="changeStatusOrder('incomplete', order.user_id,order.order_id)">Cancel order</button>
               </div>
             </div>
             <!-- <div class="order-box" style="text-align:center;" v-show="order.length == 0">
@@ -220,9 +220,9 @@ export default {
     getpayImg(index){
       this.modalind = this.order[index].pay_image
     },
-    changeStatusOrder(status, usr_id){
+    changeStatusOrder(status, usr_id, order_id){
       console.log(status, usr_id)
-      axios.put("http://localhost:3000/user/change/status/order/"+usr_id, {status : status})
+      axios.put("http://localhost:3000/user/change/status/order/"+usr_id, {status : status, order_id:order_id})
       .then(response => {console.log(response)})
       .catch(err => {console.log(err)})
       location.reload()

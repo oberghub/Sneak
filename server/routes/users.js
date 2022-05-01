@@ -170,6 +170,6 @@ router.get('/user/order', isLoggedIn, async (req, res, next) => {
   res.json({orderBig:order[0], order: order1[0]}) 
 })
 router.put('/user/change/status/order/:uid', isLoggedIn, async (req, res, next) => {
-  const up_status = await pool.query("update `order` set order_status=? where user_id=?", [req.body.status, req.params.uid])
+  const up_status = await pool.query("update `order` set order_status=? where user_id=? and order_id = ?", [req.body.status, req.params.uid, req.body.order_id])
 })
 exports.router = router;
