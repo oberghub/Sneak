@@ -12,7 +12,7 @@
             </div>
               <div class="cart-item-info">
                 <p class="cart-item-title-c">{{obj.name}}</p>
-                <p class="cart-item-price-c">฿{{formatCurrency(obj.price)}} <span style="font-size:12px; color:gray;" class="my-1">Size {{obj.size}}</span></p>
+                <p class="cart-item-price-c">฿{{formatCurrency(obj.price)}} <span style="font-size:12px; color:gray;" class="my-1">{{obj.size}} US {{obj.type}}</span></p>
                 <p class="cart-item-quantity">จำนวน {{obj.quantity}} ชิ้น</p>
               </div>
           </div>
