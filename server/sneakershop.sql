@@ -32,7 +32,7 @@ CREATE TABLE `fav_item` (
   KEY `fav_item_FK` (`user_id`),
   CONSTRAINT `fav_item_FK` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
   CONSTRAINT `FK_Item_Fav_item` FOREIGN KEY (`item_id`) REFERENCES `item` (`item_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +41,7 @@ CREATE TABLE `fav_item` (
 
 LOCK TABLES `fav_item` WRITE;
 /*!40000 ALTER TABLE `fav_item` DISABLE KEYS */;
-INSERT INTO `fav_item` VALUES (1,1,3,2),(2,1,3,15),(3,1,1,20),(4,1,9,21),(5,1,7,12),(6,1,25,8);
+INSERT INTO `fav_item` VALUES (1,1,3,2),(2,1,3,15),(3,1,1,20),(4,1,9,21),(5,1,7,12),(6,1,25,8),(7,1,27,1),(8,1,27,9),(9,1,25,1),(11,1,25,19),(12,1,25,5);
 /*!40000 ALTER TABLE `fav_item` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -129,7 +129,7 @@ CREATE TABLE `order` (
 
 LOCK TABLES `order` WRITE;
 /*!40000 ALTER TABLE `order` DISABLE KEYS */;
-INSERT INTO `order` VALUES (1,1,'complete','อยู่ไทยนี่แหละ','2022-04-08',7000),(2,4,'pending','สุดซอย','2022-04-13',6500),(3,13,'incomplete','ใต้ทางด่วน','2022-04-13',5499),(4,14,'complete','ไซต์ก่อสร้าง','2022-04-13',5000),(5,15,'pending','บ้านอยู่บนกองทอง','2022-04-13',13000),(6,6,'complete','ราชบุรี','2022-04-08',5490),(7,7,'complete','พิจิตร','2022-04-09',8990),(8,8,'complete','เพชรบูรณ์','2022-04-10',5490),(9,9,'complete','กาญจนบุรี','2022-04-11',5000),(10,10,'complete','กระบี่','2022-04-12',2990);
+INSERT INTO `order` VALUES (1,1,'complete','อยู่ไทยนี่แหละ','2022-04-08',7000),(2,4,'pending','สุดซอย','2022-04-13',6500),(3,13,'incomplete','ใต้ทางด่วน','2022-04-13',5499),(4,14,'complete','ไซต์ก่อสร้าง','2022-04-13',5000),(5,5,'pending','บ้านอยู่บนกองทอง','2022-04-13',13000),(6,6,'complete','ราชบุรี','2022-04-08',5490),(7,7,'complete','พิจิตร','2022-04-09',8990),(8,8,'complete','เพชรบูรณ์','2022-04-10',5490),(9,9,'complete','กาญจนบุรี','2022-04-11',5000),(10,10,'complete','กระบี่','2022-04-12',2990),(11,25,'complete','123/4 ซอยหอม ถนนห้ามห้วง เขตหวงห้าม เมืองวากานดา 69696','2022-04-28',7000),(12,25,'complete','123/4 ซอยหอม ถนนห้ามห้วง เขตหวงห้าม เมืองวากานดา 69696','2022-04-14',3300);
 /*!40000 ALTER TABLE `order` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -147,6 +147,7 @@ CREATE TABLE `order_item` (
   `item_quantity` int DEFAULT NULL,
   `item_amount` int DEFAULT NULL,
   `item_price` float(8,2) DEFAULT NULL,
+  `item_size` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`item_no`,`order_id`),
   KEY `FK_Order_Order_item` (`order_id`),
   KEY `FK_Item_Order_item` (`item_id`),
@@ -161,7 +162,7 @@ CREATE TABLE `order_item` (
 
 LOCK TABLES `order_item` WRITE;
 /*!40000 ALTER TABLE `order_item` DISABLE KEYS */;
-INSERT INTO `order_item` VALUES (1,1,2,1,7000,7000.00),(2,2,11,1,6500,6500.00),(3,3,7,1,5499,5499.00),(4,4,14,2,5000,2500.00),(5,5,11,1,6500,6500.00),(6,5,12,1,6500,6500.00),(7,6,18,1,5490,5490.00),(8,7,13,1,8990,8990.00),(9,8,14,1,5490,5490.00),(10,9,12,1,5000,5000.00),(11,10,11,1,2990,2990.00);
+INSERT INTO `order_item` VALUES (1,1,2,1,7000,7000.00,'6.5'),(2,1,11,1,6500,6500.00,'10'),(3,3,7,1,5499,5499.00,'10.5'),(4,4,14,2,5000,2500.00,'7'),(5,5,11,1,6500,6500.00,'7'),(6,5,12,1,6500,6500.00,'8'),(7,6,18,1,5490,5490.00,'5'),(8,7,13,1,8990,8990.00,'12'),(9,8,14,1,5490,5490.00,'11'),(10,9,12,1,5000,5000.00,'9.5'),(11,10,11,1,2990,2990.00,'9'),(12,11,1,1,3500,3500.00,'8'),(13,11,2,1,3500,3500.00,'10.5'),(14,12,8,1,3300,3300.00,'7.5');
 /*!40000 ALTER TABLE `order_item` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -175,7 +176,7 @@ DROP TABLE IF EXISTS `payment`;
 CREATE TABLE `payment` (
   `pay_id` int NOT NULL,
   `order_id` int NOT NULL,
-  `pay_image` varchar(255) DEFAULT NULL,
+  `pay_image` text,
   `pay_date` varchar(255) DEFAULT NULL,
   `pay_time` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`pay_id`),
@@ -190,7 +191,7 @@ CREATE TABLE `payment` (
 
 LOCK TABLES `payment` WRITE;
 /*!40000 ALTER TABLE `payment` DISABLE KEYS */;
-INSERT INTO `payment` VALUES (1,1,'https://www.kasikornbank.com/SiteCollectionDocuments/personal/digital-banking/kplus/functions/verified-slip/img/img-06.png','2022-04-08','02.14'),(2,2,'https://www.kasikornbank.com/SiteCollectionDocuments/personal/digital-banking/kplus/functions/verified-slip/img/img-06.png','2022-04-13','00.53'),(3,4,'https://www.kasikornbank.com/SiteCollectionDocuments/personal/digital-banking/kplus/functions/verified-slip/img/img-06.png','2022-04-13','05.24'),(4,5,'https://www.kasikornbank.com/SiteCollectionDocuments/personal/digital-banking/kplus/functions/verified-slip/img/img-06.png','2022-04-13','03.33'),(5,6,'https://www.kasikornbank.com/SiteCollectionDocuments/personal/digital-banking/kplus/functions/verified-slip/img/img-06.png','2022-04-08','02.14'),(6,7,'https://www.kasikornbank.com/SiteCollectionDocuments/personal/digital-banking/kplus/functions/verified-slip/img/img-06.png','2022-04-09','03.50'),(7,8,'https://www.kasikornbank.com/SiteCollectionDocuments/personal/digital-banking/kplus/functions/verified-slip/img/img-06.png','2022-04-10','12.15'),(8,9,'https://www.kasikornbank.com/SiteCollectionDocuments/personal/digital-banking/kplus/functions/verified-slip/img/img-06.png','2022-04-11','13.40'),(9,10,'https://www.kasikornbank.com/SiteCollectionDocuments/personal/digital-banking/kplus/functions/verified-slip/img/img-06.png','2022-04-12','15.55');
+INSERT INTO `payment` VALUES (1,1,'https://www.kasikornbank.com/SiteCollectionDocuments/personal/digital-banking/kplus/functions/verified-slip/img/img-06.png','2022-04-08','02.14'),(2,2,'https://www.kasikornbank.com/SiteCollectionDocuments/personal/digital-banking/kplus/functions/verified-slip/img/img-06.png','2022-04-13','00.53'),(3,4,'https://www.kasikornbank.com/SiteCollectionDocuments/personal/digital-banking/kplus/functions/verified-slip/img/img-06.png','2022-04-13','05.24'),(4,5,'https://www.kasikornbank.com/SiteCollectionDocuments/personal/digital-banking/kplus/functions/verified-slip/img/img-06.png','2022-04-13','03.33'),(5,6,'https://www.kasikornbank.com/SiteCollectionDocuments/personal/digital-banking/kplus/functions/verified-slip/img/img-06.png','2022-04-08','02.14'),(6,7,'https://www.kasikornbank.com/SiteCollectionDocuments/personal/digital-banking/kplus/functions/verified-slip/img/img-06.png','2022-04-09','03.50'),(7,8,'https://www.kasikornbank.com/SiteCollectionDocuments/personal/digital-banking/kplus/functions/verified-slip/img/img-06.png','2022-04-10','12.15'),(8,9,'https://www.kasikornbank.com/SiteCollectionDocuments/personal/digital-banking/kplus/functions/verified-slip/img/img-06.png','2022-04-11','13.40'),(9,10,'https://www.kasikornbank.com/SiteCollectionDocuments/personal/digital-banking/kplus/functions/verified-slip/img/img-06.png','2022-04-12','15.55'),(10,3,'https://images-ext-2.discordapp.net/external/mM3RGj5kiaw-RRJXAn5JrSl4ghjO44pqCccFonvvhI8/%3F_nc_cat%3D103%26ccb%3D1-5%26_nc_sid%3Dae9488%26_nc_ohc%3D1wxSkCqmlJkAX-MhZLT%26tn%3DWcwTTfOD8BqN81e6%26_nc_ht%3Dscontent.fbkk22-3.fna%26oh%3D03_AVLLHbMyRXnWFCHqubfHQZdXmOS2C91g_PM-C039twzkkg%26oe%3D62938BB1/https/scontent.fbkk22-3.fna.fbcdn.net/v/t1.15752-9/275887883_516095816550304_8156555540180172838_n.jpg?width=546&height=671','2022-04-29','13.34'),(11,12,'https://images-ext-1.discordapp.net/external/DS13fSSUohZCNcEJcHDsD1WpQkvHGB06T2WjMjlF28w/%3F_nc_cat%3D105%26ccb%3D1-5%26_nc_sid%3Dae9488%26_nc_ohc%3Dhsg7HTwsmYMAX8ya6CB%26_nc_ht%3Dscontent.fbkk22-2.fna%26oh%3D03_AVLw1ZiVz6XW_pQYkbARadPx3qGBLMcXzy4XqWHfYu_40Q%26oe%3D62919192/https/scontent.fbkk22-2.fna.fbcdn.net/v/t1.15752-9/278912626_709551823725321_2070053246784373022_n.jpg?width=546&height=671','2022-04-30','12.21');
 /*!40000 ALTER TABLE `payment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -217,7 +218,7 @@ CREATE TABLE `redeem` (
 
 LOCK TABLES `redeem` WRITE;
 /*!40000 ALTER TABLE `redeem` DISABLE KEYS */;
-INSERT INTO `redeem` VALUES (1,'ถุงผ้า Sneakershop Limited','https://aumento.officemate.co.th/media/catalog/product/O/F/OFMM001910.jpg',10,75),(2,'แก้วนํ้า Sneakershop','https://fy.lnwfile.com/_/fy/_raw/gb/1u/wa.jpg',6,85),(3,'ถุงเท้า Sneakershop สีขาว','https://shop.fbtsports.com/wp-content/uploads/2021/06/800_82529_blue-3.jpg',13,90),(4,'เสื้อ Sneakershop Limited','https://image.makewebeasy.net/makeweb/m_750x0/LEtWDN1kw/attachfile/69_138686.jpg?v=202012190947',3,150),(5,'กางเกงชั้นใน Sneakershop','https://www.thaijpress.com/wp-content/uploads/2020/10/กางเกงในชาย-ขาสั้น-Seamless-รุ่น-8227-NA.jpg',7,100);
+INSERT INTO `redeem` VALUES (1,'ถุงผ้า Sneakershop','https://media.discordapp.net/attachments/877785654329753660/969812250087010354/toongpha.png',10,75),(2,'แก้วนํ้า Sneakershop Limited','https://media.discordapp.net/attachments/877785654329753660/969812249852137553/keawnam.png?width=671&height=671',5,85),(3,'ถุงเท้า Sneakershop B&W','https://media.discordapp.net/attachments/877785654329753660/969812249646624839/toongtaw.png',12,90),(4,'เสื้อ Sneakershop Limited','https://media.discordapp.net/attachments/877785654329753660/969812249428496394/suea.png',3,150),(5,'กางเกงชั้นใน Sneakershop','https://media.discordapp.net/attachments/877785654329753660/969812249193611274/kaengnai.png?width=671&height=671',7,100);
 /*!40000 ALTER TABLE `redeem` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -237,7 +238,7 @@ CREATE TABLE `requirement` (
   PRIMARY KEY (`req_id`),
   KEY `FK_Emp_Req` (`user_id`),
   CONSTRAINT `requirement_FK` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -246,7 +247,7 @@ CREATE TABLE `requirement` (
 
 LOCK TABLES `requirement` WRITE;
 /*!40000 ALTER TABLE `requirement` DISABLE KEYS */;
-INSERT INTO `requirement` VALUES (1,2,'เว็ปกากจัง','2022-04-08','เว็ปเน่าอะ ซื้ออะไรไม่ได้เลย'),(2,11,'เว็ปช้ามาก','2022-04-09','เข้าเว็ปช้า'),(3,12,'ซื้อของไม่ได้','2022-04-14','ซื้ออะไรไม่ได้เลย'),(4,12,'รอของนาน','2022-04-14','รีบใช้โว้ย'),(5,12,'ไม่มีตัดบัตรหรอ','2022-04-15','อยากให้มีตัดบัตรจัง'),(6,7,'ภาพไม่ขึ้น','2022-04-08','ไม่เห็นภาพ ทำไงอ่ะ'),(7,9,'ชื่ออ่านยาก','2022-04-09','ขอชื่อรองเท้าแบบแปลไทยได้ป่ะ'),(8,10,'แพงจัง','2022-04-09','ขอต่อราคาได้ไหม'),(9,6,'เมื่อไหร่จะมีลดราคา','2022-04-10','รอลดราคาอยู่นะ สัก 10% ได้ไหม'),(10,8,'เว็บไม่โหลด','2022-04-10','เว็บไม่ขึ้นอะไรเลย ซื้ออะไรไม่ได้เลย');
+INSERT INTO `requirement` VALUES (1,2,'เว็ปกากจัง','2022-04-08','เว็ปเน่าอะ ซื้ออะไรไม่ได้เลย'),(2,11,'เว็ปช้ามาก','2022-04-09','เข้าเว็ปช้า'),(3,12,'ซื้อของไม่ได้','2022-04-14','ซื้ออะไรไม่ได้เลย'),(4,12,'รอของนาน','2022-04-14','รีบใช้โว้ย'),(5,12,'ไม่มีตัดบัตรหรอ','2022-04-15','อยากให้มีตัดบัตรจัง'),(6,7,'ภาพไม่ขึ้น','2022-04-08','ไม่เห็นภาพ ทำไงอ่ะ'),(7,9,'ชื่ออ่านยาก','2022-04-09','ขอชื่อรองเท้าแบบแปลไทยได้ป่ะ'),(8,10,'แพงจัง','2022-04-09','ขอต่อราคาได้ไหม'),(9,6,'เมื่อไหร่จะมีลดราคา','2022-04-10','รอลดราคาอยู่นะ สัก 10% ได้ไหม'),(10,8,'เว็บไม่โหลด','2022-04-10','เว็บไม่ขึ้นอะไรเลย ซื้ออะไรไม่ได้เลย'),(11,25,'scan qr','2022-04-27','เมื่อไหร่จะทำระบบนี้ครับ'),(12,25,'qr scan','2022-04-27','เมื่อไหร่จะทำครับ'),(13,25,'โคตรดีโคตรแจ่มอะ','2022-04-27','คราวหลังเดะมาซื้อ มีงบแบบจุกๆ'),(14,25,'อยากให้เอารองเท้าแรร์มาขายครับ','2022-04-27','เดะผมจัดคนแรกเลย'),(15,25,'เฟี้ยวจัด','2022-04-27','โคตรเท่'),(16,25,'สุดจัด','2022-04-27','ของจริง'),(17,27,'แจ๋ว','2022-04-27','โคตรเจ๋ง'),(18,25,'อยากให้เอารองเท้ามาขายเยอะๆ','2022-04-29','อยากให้เอารองเท้ามาขายเยอะๆอยากให้เอารองเท้ามาขายเยอะๆอยากให้เอารองเท้ามาขายเยอะๆอยากให้เอารองเท้ามาขายเยอะๆอยากให้เอารองเท้ามาขายเยอะๆ');
 /*!40000 ALTER TABLE `requirement` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -264,7 +265,7 @@ CREATE TABLE `token` (
   PRIMARY KEY (`token_id`),
   KEY `user_id_idx` (`user_id`),
   CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -273,7 +274,7 @@ CREATE TABLE `token` (
 
 LOCK TABLES `token` WRITE;
 /*!40000 ALTER TABLE `token` DISABLE KEYS */;
-INSERT INTO `token` VALUES (1,22,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIwMjAzIiwiaWF0IjoxNjUwNzg2NTE2LCJleHAiOjE2NTA4MDQ1MTZ9.UUJoDgpabkYjtIHKCHQhu9BNj1g184WARcmw55WbxHw'),(2,23,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXI1NTU1IiwiaWF0IjoxNjUwNzg2NjAwLCJleHAiOjE2NTA4MDQ2MDB9.gMxv83ejj_lQ33WsQLm2GV085WkCRC8sxf6iAxKvvCs'),(3,24,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXJfdGVzdCIsImlhdCI6MTY1MDc5MTE4OCwiZXhwIjoxNjUwODA5MTg4fQ.Y4O9G0cZjtVCIvMr-cpXNJ0TlfK9c7bqSe9Lcez85fU'),(4,25,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXJfdDEiLCJpYXQiOjE2NTA3OTY3NTR9.q5jhcws0SWRW-cqerEV0zzFGgoU0rF8Yr8KE-31gOtk'),(5,26,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFzZGZnaCIsImlhdCI6MTY1MDc5Nzk4NH0.WGcYIHF5VCtzaJiEsY_PPWMqkGA3E5b6vox-Yq3_sf0');
+INSERT INTO `token` VALUES (1,22,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIwMjAzIiwiaWF0IjoxNjUwNzg2NTE2LCJleHAiOjE2NTA4MDQ1MTZ9.UUJoDgpabkYjtIHKCHQhu9BNj1g184WARcmw55WbxHw'),(2,23,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXI1NTU1IiwiaWF0IjoxNjUwNzg2NjAwLCJleHAiOjE2NTA4MDQ2MDB9.gMxv83ejj_lQ33WsQLm2GV085WkCRC8sxf6iAxKvvCs'),(3,24,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXJfdGVzdCIsImlhdCI6MTY1MDc5MTE4OCwiZXhwIjoxNjUwODA5MTg4fQ.Y4O9G0cZjtVCIvMr-cpXNJ0TlfK9c7bqSe9Lcez85fU'),(4,25,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXJfdDEiLCJpYXQiOjE2NTA3OTY3NTR9.q5jhcws0SWRW-cqerEV0zzFGgoU0rF8Yr8KE-31gOtk'),(5,26,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFzZGZnaCIsImlhdCI6MTY1MDc5Nzk4NH0.WGcYIHF5VCtzaJiEsY_PPWMqkGA3E5b6vox-Yq3_sf0'),(6,27,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXJfdDIiLCJpYXQiOjE2NTEwNjc1Mjh9.mtUVm5c3NvXByoLvu_JCBO8G9shCm3XoTkYXtBqDpmc'),(7,28,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluX3QxIiwiaWF0IjoxNjUxMTMzNTgzfQ.sztOIZcL9nrfst4DHK9B1NKAOw6HuVdcnEJ1nzd79aM');
 /*!40000 ALTER TABLE `token` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -298,7 +299,7 @@ CREATE TABLE `user` (
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `user_email` (`user_email`),
   UNIQUE KEY `user_username` (`user_username`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -307,7 +308,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'สมควร','สมวยถลอก',NULL,'อยู่ในใจเธอ','0999999923','admin','admin1@gmail.com','admin','admin'),(2,'สมชี','ท่านอนกองกับพื้น',123123,'อยู่กับผัว','0999992323','somshe','somshe@hotmail.com','somshe','normal'),(3,'สมมวย','เป็นคนดี',NULL,'155/66 LA','0864878787','samul','samul@ok.com','samul','admin'),(4,'รธา','วงไข่น้อย',3123,'776 Thailand','0878776786','rata44','rata@gmail.com','rata23','normal'),(5,'ยิ่งสัก','ยิ่งรวย',NULL,'MasterChef','0967866666','yek123','yk@gmail.com','kydurex','admin'),(6,'ดารินทร์','แสงกระจ่าง',12323,'สงขลา','0869423517','sangja','admin6@gmail.com','sangja','normal'),(7,'เมนิลา','วิไลรัตน์',NULL,'อ่างทอง','0963487521','556677','admin7@gmail.com','admin7','admin'),(8,'ชลธี','อรุณฉาย',232,'เชียงใหม่','0976588823','654321','admin8@gmail.com','changmai','normal'),(9,'บัลลังค์','ปานประกอบ',23,'ชัยภูมิ','0877569982','875612','admin9@gmail.com','kuy123','normal'),(10,'ภูมิ','ไม้ทอง',NULL,'ชลบุรี','0988753221','af6845','admin10@gmail.com','admin10','admin'),(11,'ชนายุส','เกียรติบวรสกุล',NULL,'อยู่บ้าน','0932423411','admin11','emp11@gmail.com','admin11','admin'),(12,'นนท์','วงศ์วริศธารา',21,'อยู่โรงเรียน','0871243125','admin12','emp12@gmail.com','asas12','normal'),(13,'ชยพล','วีรภัทรเมธี',1223,'อยู่โรงแรม','0651312312','admin13','emp13@gmail.com','isas2','normal'),(14,'ดรัณภพ','ศรีสุข',NULL,'อยู่ทะเล','0992134455','admin14','emp14@gmail.com','admin14','admin'),(15,'ชัชชน','พุ่มสนธิ',232,'อยู่บนเขา','0985235211','admin15','emp15@gmail.com','too','normal'),(16,NULL,NULL,NULL,NULL,NULL,'1234566',NULL,'user111','normal'),(22,NULL,NULL,NULL,NULL,NULL,'$2b$10$ebA3odKwGMzK4WfCKsaMeek1F2gKCWahgIo5AtfcOwOHmIq7xlVfu',NULL,'user0203','normal'),(23,NULL,NULL,NULL,NULL,NULL,'$2b$10$PQSZZfNCncVkG43ctuVlFOcp9lSGqrOLf83reLCWQ9Yuql7061VYG',NULL,'user5555','normal'),(24,NULL,NULL,NULL,NULL,NULL,'$2b$10$zGBYIS4QyaD5s9JFNxyzEu9U2KpB1UEVw5DwxXCVmielKK8rSCyYq',NULL,'user_test','normal'),(25,'Peter','Saawu',NULL,'123/4 ซอยหอม ถนนห้ามห้วง เขตหวงห้าม เมืองวากานดา 69696','0944939210','$2b$10$llLxo9LlWiBa5CS78wmi4OougrnjmwZJ1sAqh0g.ijryFWIvgOJsG','ptsadw@gmail.com','user_t1','normal'),(26,NULL,NULL,NULL,NULL,NULL,'$2b$10$Igk5Zx5ZxRn1.mdTPiHMReC3MYHqiYOOFk1IopjAojJKWgvAyk/ge',NULL,'asdfgh','normal');
+INSERT INTO `user` VALUES (1,'สมควร','สมวยถลอก',0,'อยู่ในใจเธอ','0999999923','admin','admin1@gmail.com','admin','admin'),(2,'สมชี','ท่านอนกองกับพื้น',123123,'อยู่กับผัว','0999992323','somshe','somshe@hotmail.com','somshe','normal'),(3,'สมมวย','เป็นคนดี',0,'155/66 LA','0864878787','samul','samul@ok.com','samul','admin'),(4,'รธา','วงไข่น้อย',3123,'776 Thailand','0878776786','rata44','rata@gmail.com','rata23','normal'),(5,'ยิ่งสัก','ยิ่งรวย',0,'MasterChef','0967866666','yek123','yk@gmail.com','kydurex','admin'),(6,'ดารินทร์','แสงกระจ่าง',12323,'สงขลา','0869423517','sangja','admin6@gmail.com','sangja','normal'),(7,'เมนิลา','วิไลรัตน์',0,'อ่างทอง','0963487521','556677','admin7@gmail.com','admin7','admin'),(8,'ชลธี','อรุณฉาย',232,'เชียงใหม่','0976588823','654321','admin8@gmail.com','changmai','normal'),(9,'บัลลังค์','ปานประกอบ',23,'ชัยภูมิ','0877569982','875612','admin9@gmail.com','kuy123','normal'),(10,'ภูมิ','ไม้ทอง',0,'ชลบุรี','0988753221','af6845','admin10@gmail.com','admin10','admin'),(11,'ชนายุส','เกียรติบวรสกุล',0,'อยู่บ้าน','0932423411','admin11','emp11@gmail.com','admin11','admin'),(12,'นนท์','วงศ์วริศธารา',21,'อยู่โรงเรียน','0871243125','admin12','emp12@gmail.com','asas12','normal'),(13,'ชยพล','วีรภัทรเมธี',1223,'อยู่โรงแรม','0651312312','admin13','emp13@gmail.com','isas2','normal'),(14,'ดรัณภพ','ศรีสุข',0,'อยู่ทะเล','0992134455','admin14','emp14@gmail.com','admin14','admin'),(15,'ชัชชน','พุ่มสนธิ',232,'อยู่บนเขา','0985235211','admin15','emp15@gmail.com','too','normal'),(16,NULL,NULL,0,NULL,NULL,'1234566',NULL,'user111','normal'),(22,NULL,NULL,0,NULL,NULL,'$2b$10$ebA3odKwGMzK4WfCKsaMeek1F2gKCWahgIo5AtfcOwOHmIq7xlVfu',NULL,'user0203','normal'),(23,NULL,NULL,0,NULL,NULL,'$2b$10$PQSZZfNCncVkG43ctuVlFOcp9lSGqrOLf83reLCWQ9Yuql7061VYG',NULL,'user5555','normal'),(24,NULL,NULL,0,NULL,NULL,'$2b$10$zGBYIS4QyaD5s9JFNxyzEu9U2KpB1UEVw5DwxXCVmielKK8rSCyYq',NULL,'user_test','normal'),(25,'Peter','Saawu',9,'123/4 ซอยหอม ถนนห้ามห้วง เขตหวงห้าม เมืองวากานดา 69696','0944939210','$2b$10$llLxo9LlWiBa5CS78wmi4OougrnjmwZJ1sAqh0g.ijryFWIvgOJsG','ptsadw@gmail.com','user_t1','normal'),(26,NULL,NULL,0,NULL,NULL,'$2b$10$Igk5Zx5ZxRn1.mdTPiHMReC3MYHqiYOOFk1IopjAojJKWgvAyk/ge',NULL,'asdfgh','normal'),(27,'Micheal','Scofield',0,'ซอยตัน เขคหวงห้าม','0923124493','$2b$10$A7avkcjO2.FH7I5sF9PIoeIKSmT/gwswQODQgQrFsQiAyAmihkMg2','micsco@mail.ex','user_t2','normal'),(28,'ธรรมะแท้','ไม่มีคำปลอบใจ',0,'อยู่ในใจเธออะ','0695939322','$2b$10$LUElyC7YDFQz4zilxHH6puRcOm.jZl1ETI6bnUaaNIMcB71aBVyTG','validatearainaknawa@isus.com','admin_t1','admin');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -319,7 +320,7 @@ DROP TABLE IF EXISTS `user_redeem`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user_redeem` (
-  `user_redeem_id` int NOT NULL,
+  `user_redeem_id` int NOT NULL AUTO_INCREMENT,
   `user_id` int NOT NULL,
   `red_id` int NOT NULL,
   PRIMARY KEY (`user_redeem_id`,`user_id`,`red_id`),
@@ -327,7 +328,7 @@ CREATE TABLE `user_redeem` (
   KEY `cust_redeem_FK` (`user_id`),
   CONSTRAINT `user_redeem_FK` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
   CONSTRAINT `user_redeem_FK_1` FOREIGN KEY (`red_id`) REFERENCES `redeem` (`red_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -336,7 +337,7 @@ CREATE TABLE `user_redeem` (
 
 LOCK TABLES `user_redeem` WRITE;
 /*!40000 ALTER TABLE `user_redeem` DISABLE KEYS */;
-INSERT INTO `user_redeem` VALUES (2,7,2),(1,3,5);
+INSERT INTO `user_redeem` VALUES (2,7,2),(3,25,2),(4,25,3),(1,3,5);
 /*!40000 ALTER TABLE `user_redeem` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -349,4 +350,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-27 14:12:46
+-- Dump completed on 2022-05-01 12:14:28

@@ -32,9 +32,9 @@
             <!--Feedback box-->
 
             <!--pending order box-->
-            <div class="order-box" v-for="order, index in order" :key="order.order_id" v-show="pendingstage && order.order_status == 'pending'">
+            <div class="order-box" v-for="order, index in order" :key="order.order_id" v-show="(pendingstage && order.order_status == 'pending')">
               <p style="font-weight:bold; text-align:right; margin-bottom:-1.5em;">Status : <span style="color:blue;">{{order.order_status}}</span></p>
-              <p style="font-weight:bold;">User id : {{order.user_username}}</p>
+              <p style="font-weight:bold;">User id : {{order.user_username}} (Order id : {{order.order_id}})</p>
               <p style="font-weight:bold;">Total Items : {{order.item_quantity}} Items</p>
               <p style="font-weight:bold;">Total : <span style="font-size:18px; color:#FFBF18;">฿{{order.order_total}}</span></p>
               <div class="mt-5"></div>
@@ -52,7 +52,7 @@
                       <div class="modal-cart-item-info">
                         <p class="modal-cart-item-title-c">{{obj.item_name}}</p>
                         <p class="modal-cart-item-price-c">฿{{formatCurrency(obj.item_price * obj.item_quantity)}}</p>
-                        <p style="font-size:12px; color:gray;" class="mt-1">{{obj.size}}</p>
+                        <p style="font-size:12px; color:gray;">{{obj.item_size}} US {{obj.item_type}}</p>
                         <div style="display:flex;">
                           <p style="font-size:12px; text-align:left; color:black; margin-top:auto; margin-bottom:auto;">จำนวน {{obj.item_quantity}} ชิ้น</p>
                         </div>
@@ -78,18 +78,18 @@
               <div class="mt-5"></div>
               <div style="display:flex;">
                 <button class="button is-warning is-light mr-3" @click="modal_act = true, getpayImg(index)">See a payment</button>
-                <button class="button is-success is-light mr-3">Confirm order</button>
-                <button class="button is-danger is-light">Cancel order</button>
+                <button class="button is-success is-light mr-3" @click="changeStatusOrder('complete', order.user_id)">Confirm order</button>
+                <button class="button is-danger is-light" @click="changeStatusOrder('incomplete', order.user_id)">Cancel order</button>
               </div>
             </div>
-
-
-
+            <!-- <div class="order-box" style="text-align:center;" v-show="order.length == 0">
+              <p style="font-size:24px; font-weight:bold;">ยังไม่มีสินค้าที่รอยืนยัน</p>
+            </div> -->
 
             <!--completed order box-->
             <div class="order-box" v-for="order, index in order" :key="order.order_id" v-show="completestage && order.order_status == 'complete'">
               <p style="font-weight:bold; text-align:right; margin-bottom:-1.5em;">Status : <span style="color:lightgreen;">{{order.order_status}}</span></p>
-              <p style="font-weight:bold;">User id : {{order.user_username}}</p>
+              <p style="font-weight:bold;">User id : {{order.user_username}} (Order id : {{order.order_id}})</p>
               <p style="font-weight:bold;">Total Items : {{order.item_quantity}} Items</p>
               <p style="font-weight:bold;">Total : <span style="font-size:18px; color:#FFBF18;">฿{{order.order_total}}</span></p>
               <div class="mt-5"></div>
@@ -107,7 +107,7 @@
                       <div class="modal-cart-item-info">
                         <p class="modal-cart-item-title-c">{{obj.item_name}}</p>
                         <p class="modal-cart-item-price-c">฿{{formatCurrency(obj.item_price * obj.item_quantity)}}</p>
-                        <p style="font-size:12px; color:gray;" class="mt-1">{{obj.size}}</p>
+                        <p style="font-size:12px; color:gray;">{{obj.item_size}} US {{obj.item_type}}</p>
                         <div style="display:flex;">
                           <p style="font-size:12px; text-align:left; color:black; margin-top:auto; margin-bottom:auto;">จำนวน {{obj.item_quantity}} ชิ้น</p>
                         </div>
@@ -140,7 +140,7 @@
             <!--all order history box-->
             <div class="order-box" v-for="order, index in order" :key="order.order_id" v-show="historystage">
               <p style="font-weight:bold; text-align:right; margin-bottom:-1.5em;">Status : <span :style="{color:order.order_status == 'pending' ? 'blue' : order.order_status == 'complete' ? 'lightgreen' : 'red'}">{{order.order_status}}</span></p>
-              <p style="font-weight:bold;">User id : {{order.user_username}}</p>
+              <p style="font-weight:bold;">User id : {{order.user_username}} (Order id : {{order.order_id}})</p>
               <p style="font-weight:bold;">Total Items : {{order.item_quantity}} Items</p>
               <p style="font-weight:bold;">Total : <span style="font-size:18px; color:#FFBF18;">฿{{order.order_total}}</span></p>
               <div class="mt-5"></div>
@@ -158,7 +158,7 @@
                       <div class="modal-cart-item-info">
                         <p class="modal-cart-item-title-c">{{obj.item_name}}</p>
                         <p class="modal-cart-item-price-c">฿{{formatCurrency(obj.item_price * obj.item_quantity)}}</p>
-                        <p style="font-size:12px; color:gray;" class="mt-1">{{obj.size}}</p>
+                        <p style="font-size:12px; color:gray;">{{obj.item_size}} US {{obj.item_type}}</p>
                         <div style="display:flex;">
                           <p style="font-size:12px; text-align:left; color:black; margin-top:auto; margin-bottom:auto;">จำนวน {{obj.item_quantity}} ชิ้น</p>
                         </div>
@@ -186,6 +186,7 @@
                 <button class="button is-warning is-light mr-3" @click="modal_act = true, getpayImg(index)">See a payment</button>
               </div>
             </div>
+
         </div>
   </section>
   </div>
@@ -218,6 +219,13 @@ export default {
   methods : {
     getpayImg(index){
       this.modalind = this.order[index].pay_image
+    },
+    changeStatusOrder(status, usr_id){
+      console.log(status, usr_id)
+      axios.put("http://localhost:3000/user/change/status/order/"+usr_id, {status : status})
+      .then(response => {console.log(response)})
+      .catch(err => {console.log(err)})
+      location.reload()
     },
     getFeed(){
       axios.get("http://localhost:3000/feedback")

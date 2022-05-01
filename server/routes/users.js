@@ -38,7 +38,7 @@ router.post("/users/register", async function (req, res, next) {
       { username: username },
       secret,
     )
-    const user = await conn.query("insert into user(user_username, user_password, user_role) value(?, ?, 'normal')", [username, hashpwd])
+    const user = await conn.query("insert into user(user_username, user_password, user_point, user_role) value(?, ?, 0, 'normal')", [username, hashpwd])
     const getlastusid = await conn.query("select user_id from user order by user_id desc limit 1;")
     console.log(getlastusid[0])
     const addtoken = await conn.query("insert into token(user_id, token) value(?, ?)", [getlastusid[0][0].user_id, token])
@@ -159,7 +159,7 @@ router.get("/users/purchase/:uid", isLoggedIn, async function (req, res, next) {
   res.json({ order: order[0], orderBig: order1[0] })
 })
 router.get('/user/order', isLoggedIn, async (req, res, next) => {
-  const order = await pool.query("SELECT user_username, order_id, count(item_quantity) as item_quantity, sum(item_amount) as order_total, concat(user_fname, ' ' ,user_lname) as fullname, user_tel, user_address, order_status, pay_image FROM `user`" +
+  const order = await pool.query("SELECT user_id, user_username, order_id, count(item_quantity) as item_quantity, sum(item_amount) as order_total, concat(user_fname, ' ' ,user_lname) as fullname, user_tel, user_address, order_status, pay_image FROM `user`" +
   " join `order`" +
   " using (user_id)" +
   " join order_item" +
@@ -168,5 +168,8 @@ router.get('/user/order', isLoggedIn, async (req, res, next) => {
   " using (order_id) group by order_item.order_id")
   const order1 = await pool.query("SELECT * FROM `order` join order_item using (order_id) join item using (item_id)")
   res.json({orderBig:order[0], order: order1[0]}) 
+})
+router.put('/user/change/status/order/:uid', isLoggedIn, async (req, res, next) => {
+  const up_status = await pool.query("update `order` set order_status=? where user_id=?", [req.body.status, req.params.uid])
 })
 exports.router = router;

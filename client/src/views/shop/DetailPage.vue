@@ -147,7 +147,8 @@ export default {
           this.al_msg = ''
           let lastdata = ({name : this.items.item_name, 
           price : this.items.item_price, 
-          size : this.size_remain.substr(0, this.size_remain.length-1) + " US " + this.items.item_type,
+          size : this.size_remain.substr(0, this.size_remain.length-1),
+          type : this.items.item_type,
           quantity : this.counter,
           img : this.items.item_img})
           let save_item = JSON.parse(localStorage.getItem("cart"))

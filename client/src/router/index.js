@@ -13,53 +13,52 @@ const routes = [
     path: '/login',
     name: 'Login',
     meta: { guess: true },
-    component: () => import('../views/aboutaccount/LoginPage.vue') // set home as path '/'
+    component: () => import('../views/aboutaccount/LoginPage.vue')
   },
   {
     path: '/register',
     name: 'Register',
     meta: { guess: true },
-    component: () => import('../views/aboutaccount/RegisterPage.vue') // set home as path '/'
+    component: () => import('../views/aboutaccount/RegisterPage.vue')
   },
   {
     path: '/detail/:id',
     name: 'Detail',
-    component: () => import('../views/shop/DetailPage.vue') // set home as path '/'
+    component: () => import('../views/shop/DetailPage.vue')
   },
   {
     path: '/shop',
     name: 'Shop',
-    component: () => import('../views/shop/ShopPage.vue') // set home as path '/'
+    component: () => import('../views/shop/ShopPage.vue')
   },
   {
     path: '/redeem',
     name: 'Redeem',
-    meta: { login: true },
-    component: () => import('../views/shop/RedeemPage.vue') // set home as path '/'
+    component: () => import('../views/shop/RedeemPage.vue')
   },
   {
     path: '/cart',
     name: 'My Cart',
     meta: { login: true },
-    component: () => import('../views/shop/CartPage.vue') // set home as path '/'
+    component: () => import('../views/shop/CartPage.vue')
   },
   {
     path: '/feedback',
     name: 'Feedback',
     meta: { login: true },
-    component: () => import('../views/FeedbackPage.vue') // set home as path '/'
+    component: () => import('../views/FeedbackPage.vue')
   },
   {
     path: '/profile',
     name: 'Profile',
     meta: { login: true },
-    component: () => import('../views/aboutaccount/ProfilePage.vue') // set home as path '/'
+    component: () => import('../views/aboutaccount/ProfilePage.vue')
   },
   {
     path: '/manage',
     name: 'Manage',
     meta: { login: true },
-    component: () => import('../views/staff/ManageOrder.vue') // set home as path '/'
+    component: () => import('../views/staff/ManageOrder.vue')
   }
 ]
 
@@ -80,10 +79,8 @@ router.beforeEach((to, from, next) => {
   if (to.meta.guess && isLoggedIn) {
     next({ path: '/'})
   }
-
-  //ใส่กันฟ้อง unused var
   next()
-  console.log(from)
+  //ใส่กันฟ้อง unused var
 })
 
 export default router

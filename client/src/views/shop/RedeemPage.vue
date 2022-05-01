@@ -4,7 +4,10 @@
       <div class="redeem-container">
         <p class="text-redeem">แลกรับของรางวัล</p>
         <p style="font-size: 14px; font-weight: bold" v-if="user">
-          Your point : {{ user.user_point || 0 }}
+          Your point : {{ user.user_point }}
+        </p>
+        <p style="font-size: 14px; font-weight: bold" v-else>
+          Please Login before redeem item.
         </p>
         <div class="redeem-store-card">
           <div class="" v-for="item in items" :key="item.red_id">
@@ -26,11 +29,21 @@
                 <p class="redeem-info-remain">
                   รางวัลคงเหลือ {{ item.red_remain }} ชิ้น
                 </p>
-                <div class="redeem-info-heart">
+
+                <div class="redeem-info-heart"  v-if="user">
                   <button
                     :disabled="
                       item.red_remain > 0 && user.user_point < item.red_point
                     "
+                    @click="goRedeem(item.red_id)"
+                    class="button is-primary is-light is-medium"
+                  >
+                    Redeem
+                  </button>
+                </div>
+                <div class="redeem-info-heart"  v-if="!user">
+                  <button
+                    disabled
                     @click="goRedeem(item.red_id)"
                     class="button is-primary is-light is-medium"
                   >
@@ -56,9 +69,9 @@ export default {
       minprice: 0,
       maxprice: 99999,
       items: null,
-      human: null,
+      // human: null,
       brandname: "",
-      focus_heart: false,
+      // focus_heart: false,
       remain: 0,
       point: 0,
     };
