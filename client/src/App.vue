@@ -175,6 +175,9 @@
         <button class="modal-close is-large" aria-label="close" @click="showRedeemItem = false"></button>
       </div>
       <!-- Redeem item history -->
+
+
+      
     <router-view :key="$route.fullPath" @auth-change="onAuthChange" :user="user" />
   </div>
 </template>

@@ -145,12 +145,13 @@ export default {
   methods: {
     confirmOrder() {
       if (
-        this.user.user_fname === "" ||
-        this.user.user_lname === "" ||
-        this.user.user_tel === "" ||
-        this.user.user_address === ""
+        this.user.user_fname === null ||
+        this.user.user_lname === null ||
+        this.user.user_tel === null ||
+        this.user.user_address === null
       ) {
         alert("ข้อมูลการจัดส่งไม่ครบ กรุณาไปกรอกข้อมูลที่หน้า profile");
+        this.$router.push('/profile')
       } else {
         axios //post order_item
           .post("http://localhost:3000/cart/confirm/", {
