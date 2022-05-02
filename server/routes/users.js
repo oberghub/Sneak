@@ -154,7 +154,7 @@ router.get("/users/purchase/:uid", isLoggedIn, async function (req, res, next) {
     " using (item_id)" +
     " WHERE user_id = ?"
     , [req.params.uid])
-  const order1 = await pool.query("SELECT order_id,order_total FROM `order` WHERE user_id = ?", [req.params.uid])
+  const order1 = await pool.query("SELECT order_id,order_total, order_status FROM `order` WHERE user_id = ?", [req.params.uid]) 
 
   res.json({ order: order[0], orderBig: order1[0] })
 })

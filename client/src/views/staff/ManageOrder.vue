@@ -78,8 +78,8 @@
               <div class="mt-5"></div>
               <div style="display:flex;">
                 <button class="button is-warning is-light mr-3" @click="modal_act = true, getpayImg(index)">See a payment</button>
-                <button class="button is-success is-light mr-3" @click="changeStatusOrder('complete', order.user_id,order.order_id)">Confirm order</button>
-                <button class="button is-danger is-light" @click="changeStatusOrder('incomplete', order.user_id,order.order_id)">Cancel order</button>
+                <button class="button is-success is-light mr-3" @click="changeStatusOrder('complete', order.user_id,order.order_id, index)">Confirm order</button>
+                <button class="button is-danger is-light" @click="changeStatusOrder('incomplete', order.user_id,order.order_id, index)">Cancel order</button>
               </div>
             </div>
             <!-- <div class="order-box" style="text-align:center;" v-show="order.length == 0">
@@ -220,8 +220,27 @@ export default {
     getpayImg(index){
       this.modalind = this.order[index].pay_image
     },
-    changeStatusOrder(status, usr_id, order_id){
-      console.log(status, usr_id)
+    changeStatusOrder(status, usr_id, order_id, index){
+      // console.log(status, usr_id)
+      let obj = []
+      if(status == 'incomplete'){
+        for(let j =0; j<this.obj.length;j++){
+          if(this.order[index].order_id == this.obj[j].order_id){
+            obj.push(this.obj[j])
+          }
+        }
+        console.log('obj ', obj)
+        for(let i =0; i<obj.length;i++){
+          console.log('kuyt')
+          axios.put("http://localhost:3000/cart/rollcount/", {obj:obj[i]})
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        }
+      }
       axios.put("http://localhost:3000/user/change/status/order/"+usr_id, {status : status, order_id:order_id})
       .then(response => {console.log(response)})
       .catch(err => {console.log(err)})
@@ -251,13 +270,4 @@ export default {
       });
   },
 }
-// {id: 1, username : 'user_t1', status: 'Pending', quantity : 1, total : 10000, fullname : 'ปูนพร้อมก่อ สุดหล่อพร้อมยัง', tel : '0983211445', address : '123/4 ซอยตัน', pay : 'https://scontent.fbkk22-3.fna.fbcdn.net/v/t1.15752-9/275887883_516095816550304_8156555540180172838_n.jpg?_nc_cat=103&ccb=1-5&_nc_sid=ae9488&_nc_ohc=1wxSkCqmlJkAX-MhZLT&tn=WcwTTfOD8BqN81e6&_nc_ht=scontent.fbkk22-3.fna&oh=03_AVJ21oPQMGj4raP1B8FIgJgRoY8GImnQ3fxRo-Fj90Ao2Q&oe=628F9731'},
-//               {id: 2, username : 'user_t2', status: 'Pending',quantity : 2, total : 9000, fullname : 'อยากเป็นหวานใจ ทำไมเธอเมิน', tel : '0613325445', address : '1213/4 ซอยหอม', pay : 'https://scontent.fbkk22-2.fna.fbcdn.net/v/t1.15752-9/278912626_709551823725321_2070053246784373022_n.jpg?_nc_cat=105&ccb=1-5&_nc_sid=ae9488&_nc_ohc=hsg7HTwsmYMAX8ya6CB&_nc_ht=scontent.fbkk22-2.fna&oh=03_AVLw1ZiVz6XW_pQYkbARadPx3qGBLMcXzy4XqWHfYu_40Q&oe=62919192'},
-//               {id: 3, username : 'user_t2', status: 'Complete', quantity : 2, total : 9000, fullname : 'อยากเป็นหวานใจ ทำไมเธอเมิน', tel : '0613325445', address : '1213/4 ซอยหอม', pay : 'https://scontent.fbkk22-2.fna.fbcdn.net/v/t1.15752-9/278912626_709551823725321_2070053246784373022_n.jpg?_nc_cat=105&ccb=1-5&_nc_sid=ae9488&_nc_ohc=hsg7HTwsmYMAX8ya6CB&_nc_ht=scontent.fbkk22-2.fna&oh=03_AVLw1ZiVz6XW_pQYkbARadPx3qGBLMcXzy4XqWHfYu_40Q&oe=62919192'},
-//               {id: 4, username : 'user_t2', status: 'Cancel', quantity : 2, total : 9000, fullname : 'อยากเป็นหวานใจ ทำไมเธอเมิน', tel : '0613325445', address : '1213/4 ซอยหอม', pay : 'https://scontent.fbkk22-2.fna.fbcdn.net/v/t1.15752-9/278912626_709551823725321_2070053246784373022_n.jpg?_nc_cat=105&ccb=1-5&_nc_sid=ae9488&_nc_ohc=hsg7HTwsmYMAX8ya6CB&_nc_ht=scontent.fbkk22-2.fna&oh=03_AVLw1ZiVz6XW_pQYkbARadPx3qGBLMcXzy4XqWHfYu_40Q&oe=62919192'}],
-//       obj : [{name : 'Nike Air force 1', price : 3500, quantity : 1, image : '', size : '10 US Men', o_id : 1},
-//       {name : 'Nike Air force 2', price : 5500, quantity : 1, image : '', size : '11 US Men', o_id : 2},
-//       {name : 'Nike Air force 1', price : 3500, quantity : 1, image : '', size : '10 Us Men', o_id : 2},
-//       {name : 'Nike Air force 1', price : 3500, quantity : 1, image : '', size : '10 Us Men', o_id : 3},
-//       {name : 'Nike Air force 1', price : 3500, quantity : 1, image : '', size : '10 Us Men', o_id : 4}],
 </script>

@@ -144,71 +144,51 @@ export default {
   },
   methods: {
     confirmOrder() {
-      if (
-        this.user.user_fname === null ||
-        this.user.user_lname === null ||
-        this.user.user_tel === null ||
-        this.user.user_address === null
-      ) {
-        alert("ข้อมูลการจัดส่งไม่ครบ กรุณาไปกรอกข้อมูลที่หน้า profile");
-        this.$router.push('/profile')
-      } else {
+      if(confirm("ยืนยันที่จะชำระเงินใช่หรือไม่") == true){
+        if (
+          this.user.user_fname === null ||
+          this.user.user_lname === null ||
+          this.user.user_tel === null ||
+          this.user.user_address === null
+        ) {alert("ข้อมูลการจัดส่งไม่ครบ กรุณาไปกรอกข้อมูลที่หน้า profile");
+            this.$router.push('/profile')} 
         axios //post order_item
-          .post("http://localhost:3000/cart/confirm/", {
-            obj: this.obj,
-            user: this.user,
-            total: this.sumAllPrice,
-            date: this.dateTime,
-          })
-          .then((response) => {
-            console.log(response.data.order);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-        axios //post order
-          .post("http://localhost:3000/cart/order/", {
-            user: this.user,
-            total: this.sumAllPrice,
-          })
-          .then((response) => {
-            console.log(response.data.order);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+        .post("http://localhost:3000/cart/confirm/", {
+          user: this.user,
+          total: this.sumAllPrice,
+          obj: this.obj,
+          date:this.dateTime.substring(0, 10), time : this.dateTime.substring(11, 16)
+        })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
         axios //update cust point
           .put("http://localhost:3000/cart/point/", {
             user: this.user,
             total: this.sumAllPrice,
           })
           .then((response) => {
-            console.log(response.data.order);
+            console.log(response);
           })
           .catch((err) => {
             console.log(err);
-          });
-        axios //post payment
-          .post("http://localhost:3000/cart/payment/", {
-            user: this.user,
-            date:this.dateTime.substring(0, 10), time : this.dateTime.substring(11, 16)
-          })
-          .then((response) => {
-            console.log(response.data.order);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-        axios //reduce item count
-          .put("http://localhost:3000/cart/reducecount/", {
-            obj:this.obj
-          })
-          .then((response) => {
-            console.log(response.data.order);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+        });
+
+        for(let i =0; i<this.obj.length;i++){
+          axios //reduce item count
+            .put("http://localhost:3000/cart/reducecount/", {
+              obj:this.obj[i]
+            })
+            .then((response) => {
+              console.log(response);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
         alert("ยืนยันOrderสําเร็จ");
         let item = JSON.parse(localStorage.getItem("cart"));
         this.obj.splice(0, this.obj.length);

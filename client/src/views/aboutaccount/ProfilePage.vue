@@ -246,14 +246,22 @@
               <div style="font-size:32px; font-weight:500;" class="mb-4" v-show="obj.length == 0">You are haven't purchase yet.</div>
               
               <div class="profile-purhis my-3" v-for="order in order" :key="order.id">
-                <div class="modal-cart-item" v-for="obj in obj" :key="obj.id">
-                  <div class="modal-cart-item-image" v-show="obj.order_id == order.order_id">
+                <div style="width:100%; height:auto; background-color:white; padding:1em; display:flex; border-radius:0.5em; margin-bottom:0.5em;">
+                  <div class="modal-bottom-l" style="margin-top:0;">
+                    <div style="font-size:16px; font-weight:bold; text-align:left;">Order id : {{order.order_id}}</div>
+                  </div>
+                <div class="modal-bottom-r" style="margin-top:0;">
+                    <div style="font-size:16px; font-weight:bold; align-items:flex-end;">Status : <span  :style="{color : order.order_status == 'complete' ? 'lightgreen' : order.order_status == 'pending' ? 'blue' : 'red'}">{{order.order_status}}</span></div>
+                  </div>
+                </div>
+                <div class="modal-cart-item" v-for="obj in obj" :key="obj.id" v-show="obj.order_id == order.order_id">
+                  <div class="modal-cart-item-image">
                     <img class="modal-cart-image" :src="obj.item_img">
                   </div>
-                    <div class="modal-cart-item-info" v-show="obj.order_id == order.order_id">
+                    <div class="modal-cart-item-info">
                       <p class="modal-cart-item-title-c">{{obj.item_name}}</p>
                       <p class="modal-cart-item-price-c">฿{{formatCurrency(obj.item_price * obj.item_quantity)}}</p>
-                      <p style="font-size:12px; color:gray;" class="mt-1">{{obj.size}}</p>
+                      <p style="font-size:12px; color:gray;">{{obj.item_size}} US {{obj.item_type}}</p>
                       <div style="display:flex;">
                         <p style="font-size:12px; text-align:left; color:black; margin-top:auto; margin-bottom:auto;">จำนวน {{obj.item_quantity}} ชิ้น</p>
                       </div>
