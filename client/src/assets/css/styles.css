@@ -788,15 +788,18 @@ input::-webkit-inner-spin-button {
 /*Edititem*/
 /*manage (admin)*/
 .manage-bar{
-    max-width: 1440px;
+    width: 1440px;
     height: auto;
     margin:auto;
-    background-color: white;
     display: flex;
+    background-color: white;
     padding: 1.5em;
 }
+.manage-ovf{
+    overflow-x: hidden;
+}
 .sub-box-manage{
-    width: 200px;
+    width: 220px;
     height: 60px;
     background-color: white;
     display: flex;
@@ -865,6 +868,20 @@ input::-webkit-inner-spin-button {
     background-color: white;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
+.manage-item-image{
+    width: 125px;
+    height: 125px;
+    border-radius: 0.5em;
+}
+.manage-image{
+    width: 125px;
+    height: 125px;
+}
+.manage-status{
+    font-weight:bold;
+    text-align:right;
+    margin-bottom:-1.5em;
+}
 /* manage (admin)*/
 /*carousel*/
 .carous{
@@ -908,6 +925,9 @@ input::-webkit-inner-spin-button {
         width: 1280px;
     }
     /*carous*/
+    .manage-ovf{
+        overflow-x: scroll;
+    }
 }
 @media (max-width: 1280px){
     /* Detail */
@@ -1367,6 +1387,21 @@ input::-webkit-inner-spin-button {
         padding:1em;
         background-color:rgb(211,211,211);
         border-radius:0.5em;
+    }
+
+    .manage-item-image{
+        width: auto;
+        height: auto;
+        border-radius: 0.5em;
+    }
+    .manage-image{
+        width: auto;
+        height: auto;
+    }
+    .manage-status{
+        font-weight:bold;
+        text-align:left;
+        margin-bottom:1em;
     }
 }
 @media (max-width:500px){

@@ -20,20 +20,20 @@
                 <p class="redeem-info-title">{{ item.red_name }}</p>
                 <p class="redeem-info-price">{{ item.red_point }} แต้ม</p>
                 <p
-                  style="font-size: 16px; color: red; margin-bottom: 1em"
+                  style="font-size: 16px; color: red; margin-top: 0.7em;"
                   class="item-info-type"
-                  v-show="item.red_remain == 0"
+                  v-if="item.red_remain == 0"
                 >
                   สินค้าหมด
                 </p>
-                <p class="redeem-info-remain">
+                <p class="redeem-info-remain" v-else>
                   รางวัลคงเหลือ {{ item.red_remain }} ชิ้น
                 </p>
 
                 <div class="redeem-info-heart"  v-if="user">
                   <button
                     :disabled="
-                      item.red_remain > 0 && user.user_point < item.red_point
+                      item.red_remain == 0 || user.user_point < item.red_point
                     "
                     @click="goRedeem(item.red_id)"
                     class="button is-primary is-light is-medium"

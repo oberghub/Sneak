@@ -17,6 +17,11 @@ router.get("/user/redeem/", isLoggedIn, async function (req, res, next) {
     const user_red = await pool.query("select * from user_redeem join redeem using(red_id) where user_id=?", [req.user.user_id])
     res.json(user_red[0])
   });
+router.get("/user/redeem/history",  async function (req, res, next) {
+  // Your code here
+  const user_red = await pool.query("select * from redeem join user_redeem using(red_id) join user using (user_id)")
+  res.json({red : user_red[0]})
+});
 router.put("/redeem/:itemId", async function (req, res, next) {
   // Your code here
   const [rows1, fields1] = await pool.query("select red_remain, red_point from redeem where red_id = ?",[req.params.itemId])
