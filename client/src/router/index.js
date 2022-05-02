@@ -59,6 +59,12 @@ const routes = [
     name: 'Manage',
     meta: { login: true },
     component: () => import('../views/staff/ManageOrder.vue')
+  },
+  {
+    path: '/addedit',
+    name: 'AddEdit',
+    meta: { login: true },
+    component: () => import('../views/staff/AddEditItem.vue')
   }
 ]
 

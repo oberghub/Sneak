@@ -16,28 +16,27 @@ router.put("/cart/point", async function (req, res, next) {
   const [rows, fields] = await pool.query("select user_point from user where user_id = ?",[req.body.user.user_id])
   const [rows1, fields1] = await pool.query("update user set user_point = ? where user_id = ?", [rows[0].user_point+(req.body.total/100),req.body.user.user_id])
 });
+
+
 router.put("/cart/reducecount", async function (req, res, next) {
   //ลบใน item_size
   const rd_size_r = await pool.query("select size_remain from item_size where item_id=? and size=?", [req.body.obj.id, req.body.obj.size])
   const rd_size = await pool.query("update item_size set size_remain=? where item_id = ? and size = ?", [parseInt(rd_size_r[0][0].size_remain - req.body.obj.quantity), req.body.obj.id, req.body.obj.size])
 
 
-  //มีปัญหา
   const rd_item = await pool.query("select item_remain from `item` where item_id = ?", [req.body.obj.id])
 
   const rd_item2 = await pool.query("update item set item_remain = ? where item_id = ?", [parseInt(rd_item[0][0].item_remain - req.body.obj.quantity), req.body.obj.id])  
 });
+
+
 router.put("/cart/rollcount", async function (req, res, next) {
   const rc_size_r = await pool.query("select size_remain from item_size where item_id=? and size=?", [req.body.obj.item_id, req.body.obj.item_size])
+  const rc_item = await pool.query("select item_remain from `item` where item_id = ?", [req.body.obj.item_id])
+
   const rc_size = await pool.query("update item_size set size_remain=? where item_id = ? and size = ?", [parseInt(rc_size_r[0][0].size_remain + req.body.obj.item_quantity), req.body.obj.item_id, req.body.obj.item_size])
 
-  //มีปัญหา
-  const rc_item = await pool.query("select item_remain from `item` where item_id = ?", [req.body.obj.item_id])
+
   const rc_item2 = await pool.query("update item set item_remain = ? where item_id = ?", [parseInt(rc_item[0][0].item_remain + req.body.obj.item_quantity), req.body.obj.item_id])
-});
-router.put("/cart/itemsold", async function (req, res, next) {
-  //มีปัญหา
-  const item_sold = await pool.query("select item_sold from `item` where item_id = ?", [req.body.obj.item_id])
-  const item_sold2 = await pool.query("update item set item_sold = ? where item_id = ?", [parseInt(item_sold[0][0].item_sold + req.body.obj.item_quantity), req.body.obj.item_id])
 });
 exports.router = router;

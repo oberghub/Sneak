@@ -23,20 +23,20 @@
               <a class="button" @click="checkLimit">+</a>
             </div>
             <p v-if="size_remain === 'Choose Size' && items.item_remain != 0" class="item-remain">มีสินค้าทั้งหมด {{ items.item_remain }} ชิ้น</p>
-            <p v-else-if="size_remain !== 'Choose Size' && items.item_remain != 0" class="item-remain">สินค้าคงเหลือ {{ size_remain.substr(-1) }} ชิ้น</p>
+            <p v-else-if="size_remain !== 'Choose Size' && items.item_remain != 0" class="item-remain">สินค้าคงเหลือ {{ size_remain.split(' ')[1] }} ชิ้น</p>
           </div>
           <div class="detail-option" v-show="items.item_remain != 0">
             <div class="select is-normal" v-if="items.item_type == 'kid'">
               <select v-model="size_remain">
                 <option disabled>Choose Size</option>
-                <option v-for="size in size" :key="size.size_id" :value="size.size + size.size_remain" :disabled="size.size_remain == 0" :style= "[size.size_remain == 0 ? {color : '#E1E1E1'} : {color : 'black'}]">US {{size.size}} Y</option>
+                <option v-for="size in size" :key="size.size_id" :value="size.size + ' ' +size.size_remain" :disabled="size.size_remain == 0" :style= "[size.size_remain == 0 ? {color : '#E1E1E1'} : {color : 'black'}]">US {{size.size}} Y</option>
               </select>
               <p style="color:red; font-size:12px;">{{al_msg}}</p>
             </div>
             <div class="select is-normal" v-else>
               <select v-model="size_remain" @change="counter=1">
                 <option disabled>Choose Size</option>
-                <option v-for="size in size" :key="size.size_id" :value="size.size + size.size_remain" :disabled="size.size_remain == 0" :style= "[size.size_remain == 0 ? {color : '#E1E1E1'} : {color : 'black'}]">US {{size.size}} {{items.item_type.charAt(0).toUpperCase()}}</option>
+                <option v-for="size in size" :key="size.size_id" :value="size.size + ' ' +size.size_remain" :disabled="size.size_remain == 0" :style= "[size.size_remain == 0 ? {color : '#E1E1E1'} : {color : 'black'}]">US {{size.size}} {{items.item_type.charAt(0).toUpperCase()}}</option>
               </select>
               <p style="color:red; font-size:12px;">{{al_msg}}</p>
             </div>
@@ -131,7 +131,7 @@ export default {
       size: null,
       size_remain : "Choose Size",
       al_msg : '',
-      showFavHeart: null
+      showFavHeart: null,
     };
   },
   methods: {
@@ -147,7 +147,7 @@ export default {
           this.al_msg = ''
           let lastdata = ({id:this.items.item_id,name : this.items.item_name, 
           price : this.items.item_price,
-          size : this.size_remain.substr(0, this.size_remain.length-1),
+          size : this.size_remain.split(' ')[0],
           type : this.items.item_type,
           quantity : parseInt(this.counter),
           img : this.items.item_img})
@@ -217,12 +217,14 @@ export default {
       }
     },
     checkLimit(){
-      if(this.size_remain == 'Choose Size' && this.counter == 1){
+      let spl = this.size_remain.split(' ')
+      console.log(spl)
+      if(spl[0] == 'Choose' && this.counter == 1){
         this.counter = 1
         this.al_msg = 'Please Choose Size'
       }
-      else if(this.counter >= this.size_remain.substr(-1)){
-        this.counter = this.size_remain.substr(-1)
+      else if(this.counter >= parseInt(spl[1])){
+        this.counter = spl[1]
         this.al_msg = ''
       }
       else{

@@ -154,20 +154,11 @@ export default {
           obj.push(this.obj[j])
         }
       }
+      console.log(obj)
       if(status == 'incomplete'){
         //อัปเดตที่ละค่า
         for(let i =0; i<obj.length;i++){
           axios.put("http://localhost:3000/cart/rollcount/", {obj:obj[i]})
-          .then((response) => {
-            console.log(response);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-        }
-      }else{
-        for(let i =0; i<obj.length;i++){
-          axios.put("http://localhost:3000/cart/itemsold/", {obj:obj[i]})
           .then((response) => {
             console.log(response);
           })

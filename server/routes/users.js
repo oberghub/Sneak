@@ -172,4 +172,35 @@ router.get('/user/order', isLoggedIn, async (req, res, next) => {
 router.put('/user/change/status/order/:uid', isLoggedIn, async (req, res, next) => {
   const up_status = await pool.query("update `order` set order_status=? where user_id=? and order_id = ?", [req.body.status, req.params.uid, req.body.order_id])
 })
+//แก้ไขข้อมูลสินค้า
+router.put('/user/detail/:itemId', isLoggedIn, async (req, res, next) => {
+  const [rows1, fields1] = await pool.query('UPDATE item SET item_desc=?, item_price=? WHERE item_id=?', [req.body.desc, req.body.price, req.params.itemId])
+  res.json({ desc: req.body.desc, price: req.body.price})
+})
+//แก้ไขจำนวนสินค้า
+router.put('/user/size/:itemId', isLoggedIn, async (req, res, next) => {
+  const [rows1, fields1] = await pool.query('UPDATE item_size SET size_remain=? WHERE item_id=? AND size=?', [req.body.remain, req.params.itemId, req.body.size])
+  const [rows2, fields2] = await pool.query('SELECT sum(size_remain) `sumall` FROM item_size WHERE item_id=?', [req.params.itemId])
+  const [rows3, fields3] = await pool.query('UPDATE item SET item_remain=? WHERE item_id=?', [rows2[0].sumall, req.params.itemId])
+  res.json({ remain: req.body.remain})
+})
+//เพิ่ม Size สินค้า
+router.put('/user/addsize/:itemId', isLoggedIn, async (req, res, next) => {
+  const [rows1, fields1] = await pool.query('INSERT INTO item_size(item_id, size_remain, size) value(?,?,?)', [req.params.itemId, req.body.newremain, req.body.newsize])
+  const [rows2, fields2] = await pool.query('SELECT sum(size_remain) `sumall` FROM item_size WHERE item_id=?', [req.params.itemId])
+  const [rows3, fields3] = await pool.query('UPDATE item SET item_remain=? WHERE item_id=?', [rows2[0].sumall, req.params.itemId])
+  const [rows4, fields4] = await pool.query('SELECT item_id, item_name, size_remain, size FROM item_size join item using (item_id)WHERE size_id=?', [rows1.insertId])
+  res.json({item_id: rows4[0].item_id, item_name: rows4[0].item_name, size_remain: rows4[0].size_remain, size: rows4[0].size})
+})
+router.get('/user/itemdetail', isLoggedIn, async (req, res, next) => {
+  const item = await pool.query("SELECT item_id, item_name, item_desc, item_price FROM `item`")
+  // console.log(item)
+  res.json({item:item[0]}) 
+})
+router.get('/user/itemsize', isLoggedIn, async (req, res, next) => {
+  const item = await pool.query("select item_id, item_name, size, size_remain from item join item_size using (item_id) order by cast(size as float)")
+  const item2 = await pool.query("select sum(size_remain) as sumall from item join item_size using (item_id) group by item_id")
+  // console.log(item)
+  res.json({item:item[0], sumall : item2[0]})
+})
 exports.router = router;
