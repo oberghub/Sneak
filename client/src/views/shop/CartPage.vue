@@ -177,7 +177,7 @@ export default {
             console.log(err);
         });
 
-        for(let i =0; i<this.obj.length;i++){
+        for(let i=0; i<this.obj.length;i++){
           axios //reduce item count
             .put("http://localhost:3000/cart/reducecount/", {
               obj:this.obj[i]

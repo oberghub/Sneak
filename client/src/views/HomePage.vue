@@ -22,7 +22,7 @@
     </div>
     <div class="container">
       <br /><br />
-      <h1 style="font-size: 2.7em">SneakerShop ขอต้อนรับ</h1>
+      <!-- <h1 style="font-size: 2.7em">SneakerShop ขอต้อนรับ</h1> -->
       <br />
       <div class="columns">
         <div class="column">
@@ -110,9 +110,10 @@ export default {
       autoplay: true,
     },
     vfImages: [
-      "https://cdn.mos.cms.futurecdn.net/7biBAm9ouR7ELAnNsj4zpR.jpg",
-      "https://runningmagazine.ca/wp-content/uploads/2022/03/SS22-Cloudmonster-GDN-Asset-9-1200x628-1.jpg",
-      "https://cf.shopee.co.th/file/bf9af64aa05710a00cb0d4bc571793b3",
+      "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/7ed0855435194229a525aad6009a0497_9366/Superstar_Shoes_White_EG4958_01_standard.jpg",
+      "https://www.soul4street.com/wp-content/uploads/2020/01/https___hypebeast.com_image_2020_01_air-jordan-1-low-noble-red-553558-604-release-info-5.jpg",
+      "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/e7ef43c8f2f64e9ab834ae0800981571_9366/Stan_Smith_Shoes_White_GW0488_01_standard.jpg",
+      "https://www.unlockmen.com/wp-content/uploads/2017/06/170623-converse-1-cover.jpg",
     ],
     vfTransitions: ['fade'],
   }),

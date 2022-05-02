@@ -148,16 +148,26 @@ export default {
     changeStatusOrder(status, usr_id, order_id, index){
       // console.log(status, usr_id)
       let obj = []
-      if(status == 'incomplete'){
-        for(let j =0; j<this.obj.length;j++){
-          if(this.order[index].order_id == this.obj[j].order_id){
-            obj.push(this.obj[j])
-          }
+      //หาสินค้าที่ตรงกับ order ที่กด
+      for(let j =0; j<this.obj.length;j++){
+        if(this.order[index].order_id == this.obj[j].order_id){
+          obj.push(this.obj[j])
         }
-        console.log('obj ', obj)
+      }
+      if(status == 'incomplete'){
+        //อัปเดตที่ละค่า
         for(let i =0; i<obj.length;i++){
-          console.log('kuyt')
           axios.put("http://localhost:3000/cart/rollcount/", {obj:obj[i]})
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        }
+      }else{
+        for(let i =0; i<obj.length;i++){
+          axios.put("http://localhost:3000/cart/itemsold/", {obj:obj[i]})
           .then((response) => {
             console.log(response);
           })

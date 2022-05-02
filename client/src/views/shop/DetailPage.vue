@@ -146,22 +146,37 @@ export default {
         else{
           this.al_msg = ''
           let lastdata = ({id:this.items.item_id,name : this.items.item_name, 
-          price : this.items.item_price, 
+          price : this.items.item_price,
           size : this.size_remain.substr(0, this.size_remain.length-1),
           type : this.items.item_type,
-          quantity : this.counter,
+          quantity : parseInt(this.counter),
           img : this.items.item_img})
           let save_item = JSON.parse(localStorage.getItem("cart"))
+
+          //ลูปเพื่อตอนกดไซส์รองเท้าเหมือนกับของที่เราเคยกดไปแล้ว จะให้อัปเดตแค่ quantity
           for(let i=0;i<save_item.length;i++){
+            //เช็คว่าลูปมาแล้วชื่อสินค้าและไซส์ตรงกับข้อมูลที่เพิ่มหรือยัง
             if(save_item[i].size == lastdata.size && save_item[i].name == lastdata.name){
-              lastdata.quantity = save_item[i].quantity + lastdata.quantity
-              save_item.splice(i, 1)
-              break
+              
+              //เช็คว่า ถ้าเรากดเกินที่มีใน stock ของไซส์นั้นๆ
+              if(lastdata.quantity + save_item[i].quantity > parseInt(this.size_remain.substr(this.size_remain.length-1))){
+                alert("You can't add this item too much, This item is not enough.")
+                //ลบค่าเก่าของ localStorage ออกก่อน เพราะว่าเราจะเอาค่าที่อัปเดตก็คือ ตัวแปร lastdata push เข้าไปใหม่ใน localStorage
+                save_item.splice(i, 1)
+                break
+              }
+              else{
+                //เพิ่มจำนวนตามที่เรากดไป
+                lastdata.quantity = parseInt(save_item[i].quantity) + lastdata.quantity
+                //ลบค่าเก่าของ localStorage
+                save_item.splice(i, 1)
+              }
             }
           }
+          //เพิ่มค่าใหม่ของสินค้าเดิมลงไป
           save_item.push(lastdata)
           localStorage.setItem('cart', JSON.stringify(save_item))
-          this.$router.go()
+          // this.$router.go()
         }
       }
     },
