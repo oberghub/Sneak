@@ -11,7 +11,8 @@
 ## วิธีใช้งาน
 - ติดตั้ง node.js ลงเครื่อง
 - git clone project นี้ลงมา
-- npm i
+- cd ไปที่ path client แล้ว npm i
+- cd ไปที่ path server แล้ว npm i
 - นำไฟล์ sql ไปรันตาราง
 - แก้ config sql
 - cd ไปที่ path client และ server
