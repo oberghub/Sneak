@@ -62,13 +62,13 @@ const routes = [
   {
     path: '/manage',
     name: 'Manage',
-    meta: { login: true },
+    meta: { login: true, isAdmin : true },
     component: () => import('../views/staff/ManageOrder.vue')
   },
   {
     path: '/addedit',
     name: 'AddEdit',
-    meta: { login: true },
+    meta: { login: true, isAdmin : true },
     component: () => import('../views/staff/AddEditItem.vue')
   }
 ]
@@ -81,6 +81,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   document.title = "Sneak! : " + to.name
+  const role = localStorage.getItem('role')
   const isLoggedIn = !!localStorage.getItem('token')
 
   if (to.meta.login && !isLoggedIn) {
@@ -89,6 +90,9 @@ router.beforeEach((to, from, next) => {
 
   if (to.meta.guess && isLoggedIn) {
     next({ path: '/'})
+  }
+  if(to.meta.isAdmin && role != 'admin'){
+    next({path : '/'})
   }
   next()
   //ใส่กันฟ้อง unused var

@@ -80,7 +80,6 @@ router.post("/users/login", async function (req, res, next) {
       { username: username },
       secret,
     )
-
     conn.commit()
     res.status(200).json(checkuser[0][0])
   }

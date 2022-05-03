@@ -80,6 +80,7 @@ export default {
         .then((response) => {
           localStorage.setItem("token", response.data.token);
           localStorage.setItem("cart", JSON.stringify(cart));
+          localStorage.setItem("role", response.data.user_role)
           console.log(response);
           this.$emit("auth-change");
           this.$router.push({ path: "/" });
