@@ -62,6 +62,12 @@ html{
     align-items: center;
     justify-content: center;
 }
+.footerItemCenter{
+    display: flex;
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+}
 .itemRight{
     display: flex;
     justify-content: right;

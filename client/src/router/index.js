@@ -10,6 +10,11 @@ const routes = [
     component: () => import('../views/HomePage.vue') // set home as path '/'
   },
   {
+    path: '/aboutus',
+    name: 'About Us',
+    component: () => import('../views/AboutUs.vue')
+  },
+  {
     path: '/login',
     name: 'Login',
     meta: { guess: true },

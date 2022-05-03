@@ -38,7 +38,8 @@
           <p class="cart-title">Upload หลักฐาน</p>
           <div class="cart-addressbox">
             <p class="cart-adbox-info">
-              <b>ชื่อ-นามสกุล : </b>{{ user.user_fname }} {{ user.user_lname }}
+              <b>ชื่อ-นามสกุล : </b>{{ user.user_fname }}
+              {{ user.user_lname }}
             </p>
             <p class="cart-adbox-info">
               <b>เบอร์โทรศัพท์ : </b>{{ user.user_tel }}
@@ -84,16 +85,12 @@
               id="photo"
               name="photo"
               accept="image/*"
-              oninput="pic.src=window.URL.createObjectURL(this.files[0])"
+              @change="selectImages"
             />
           </div>
 
-          <div id="cart-show-image" class="mt-4">
-            <img
-              id="pic"
-              class="cart-slip"
-              src="https://www.kasikornbank.com/SiteCollectionDocuments/personal/digital-banking/kplus/functions/verified-slip/img/img-06.png"
-            />
+          <div id="cart-show-image" class="mt-4" v-if="images">
+            <img id="pic" class="cart-slip" :src="showSelectImage(images)" />
           </div>
 
           <div class="cart-datetime">
@@ -113,6 +110,7 @@
             *PM คือ เที่ยงวัน - 5 ทุ่ม (12PM - 11PM)
           </p>
           <button
+            type="button"
             @click="confirmOrder()"
             class="button is-success is-light is-large my-4"
           >
@@ -135,66 +133,86 @@ export default {
       modal_act: false,
       previewImage: null,
       dateTime: "",
+      images: "",
       obj: null,
-      itemOrder: []
+      itemOrder: [],
     };
   },
   mounted() {
     this.getCartItem();
   },
   methods: {
+    selectImages(event) {
+      console.log("hee");
+      this.images = event.target.files[0];
+    },
+    showSelectImage(image) {
+      // for preview only
+      console.log("kuyy");
+      return URL.createObjectURL(image);
+    },
     confirmOrder() {
-      if(confirm("ยืนยันที่จะชำระเงินใช่หรือไม่") == true){
-        if (
-          this.user.user_fname === null ||
-          this.user.user_lname === null ||
-          this.user.user_tel === null ||
-          this.user.user_address === null
-        ) {alert("ข้อมูลการจัดส่งไม่ครบ กรุณาไปกรอกข้อมูลที่หน้า profile");
-            this.$router.push('/profile')} 
-        axios //post order_item
-        .post("http://localhost:3000/cart/confirm/", {
-          user: this.user,
-          total: this.sumAllPrice,
-          obj: this.obj,
-          date:this.dateTime.substring(0, 10), time : this.dateTime.substring(11, 16)
-        })
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-        axios //update cust point
-          .put("http://localhost:3000/cart/point/", {
-            user: this.user,
-            total: this.sumAllPrice,
-          })
-          .then((response) => {
-            console.log(response);
-          })
-          .catch((err) => {
-            console.log(err);
-        });
+      if (confirm("ยืนยันที่จะชำระเงินใช่หรือไม่") == true) {
+        let formData = new FormData();
+        formData.append("user", JSON.stringify(this.user));
+        formData.append("total", this.sumAllPrice);
+        formData.append("obj", JSON.stringify(this.obj));
+        formData.append("date", this.dateTime.substring(0, 10));
+        formData.append("time", this.dateTime.substring(11, 16));
+        formData.append("photo", this.images);
+        console.log(this.images)
 
-        for(let i=0; i<this.obj.length;i++){
-          axios //reduce item count
-            .put("http://localhost:3000/cart/reducecount/", {
-              obj:this.obj[i]
+        // console.log(formData)
+        if (
+          this.user.user_fname === "" ||
+          this.user.user_lname === "" ||
+          this.user.user_tel === "" ||
+          this.user.user_address === "" ||
+          this.dateTime === "" ||
+          this.images === ""
+        ) {
+          alert("ข้อมูลการจัดส่งไม่ครบ กรุณาไปกรอกข้อมูลที่หน้า profile");
+          this.$router.push("/profile");
+        } else {
+          axios //post order_item
+            .post("http://localhost:3000/cart/confirm/", formData)
+            .then((response) => {
+              console.log(response);
+              console.log("bjj");
             })
+            .catch((err) => {
+              console.log(err);
+            });
+          axios //update cust point
+            .put("http://localhost:3000/cart/point/", {user:this.user,total:this.sumAllPrice})
             .then((response) => {
               console.log(response);
             })
             .catch((err) => {
               console.log(err);
             });
+
+          for (let i = 0; i < this.obj.length; i++) {
+            axios //reduce item count
+              .put("http://localhost:3000/cart/reducecount/", {
+                obj: this.obj[i],
+              })
+              .then((response) => {
+                console.log(response);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          }
+          alert("ยืนยันOrderสําเร็จ");
         }
-        alert("ยืนยันOrderสําเร็จ");
         let item = JSON.parse(localStorage.getItem("cart"));
         this.obj.splice(0, this.obj.length);
         item.splice(0, item.length);
         localStorage.setItem("cart", JSON.stringify(item));
         this.$router.push({ path: "/" });
+      } else {
+        this.$router.push("/");
       }
     },
     getCartItem() {
@@ -219,6 +237,7 @@ export default {
     },
   },
 };
+//              <!-- oninput="pic.src=window.URL.createObjectURL(this.files[0])" -->
 </script>
 
 <style scoped>

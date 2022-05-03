@@ -3,8 +3,6 @@ const path = require("path")
 const bodyParser = require('body-parser')
 const cors = require('cors');
 const app = express();
-
-
 app.use(cors())
 // set the view engine to ejs
 app.set('view engine', 'ejs')
@@ -30,6 +28,7 @@ const cartRouter = require('./routes/cart')
 const feedbackRouter = require('./routes/feedback')
 const redeemRouter = require('./routes/redeem')
 const detailRouter = require('./routes/detail')
+const homeRouter = require('./routes/index')
 
 // app.use(indexRouter.router)
 app.use(shopRouter.router)
@@ -38,7 +37,7 @@ app.use(cartRouter.router)
 app.use(feedbackRouter.router)
 app.use(redeemRouter.router)
 app.use(detailRouter.router)
-
+app.use(homeRouter.router)
 
 
 app.listen(3000, () => {
