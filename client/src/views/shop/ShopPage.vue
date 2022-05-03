@@ -206,7 +206,9 @@ export default {
       return currency.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
     },
     chkType(){
-      this.checkedType.push(this.$route.params.value)
+      if(this.$route.params.value){
+        this.checkedType.push(this.$route.params.value)
+      }
     }
   },
   computed : {

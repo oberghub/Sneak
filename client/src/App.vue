@@ -355,7 +355,7 @@
     />
 
 
-    <div class="footer-box" style="margin-top:3em;">
+    <!-- <div class="footer-box" style="margin-top:3em;"> -->
       <!-- <div class="footer-left">
           <a>
             <img
@@ -366,21 +366,21 @@
             />
           </a>
       </div> -->
-      <div class="footer-center">
-        <router-link to="/aboutus" style="color: white;margin:10px">About us </router-link>
-          <router-link to="/shop"  style="color: white;margin:10px"> Shop </router-link>
-          <router-link to="/redeem"  style="color: white;margin:10px">
+      <!-- <div class="footer-center">
+        <router-link to="/aboutus" style="color: white; margin-right:1em">About us </router-link>
+          <router-link to="/shop"  style="color: white; margin-right:1em"> Shop </router-link>
+          <router-link to="/redeem"  style="color: white; margin-right:1em">
             Redeem
           </router-link>
           <router-link
-           style="color: white;margin:10px"
+           style="color: white; margin-right:1em"
             to="/feedback"
             v-if="!user || (user && user.user_role == 'normal')"
           >
             Feedback
           </router-link>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
