@@ -32,15 +32,6 @@
                 d="M96 0C107.5 0 117.4 8.19 119.6 19.51L121.1 32H541.8C562.1 32 578.3 52.25 572.6 72.66L518.6 264.7C514.7 278.5 502.1 288 487.8 288H170.7L179.9 336H488C501.3 336 512 346.7 512 360C512 373.3 501.3 384 488 384H159.1C148.5 384 138.6 375.8 136.4 364.5L76.14 48H24C10.75 48 0 37.25 0 24C0 10.75 10.75 0 24 0H96zM128 464C128 437.5 149.5 416 176 416C202.5 416 224 437.5 224 464C224 490.5 202.5 512 176 512C149.5 512 128 490.5 128 464zM512 464C512 490.5 490.5 512 464 512C437.5 512 416 490.5 416 464C416 437.5 437.5 416 464 416C490.5 416 512 437.5 512 464z"
               />
             </svg>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="noti-icon"
-              viewBox="0 0 512 512"
-            >
-              <path
-                d="M256 0C114.6 0 0 114.6 0 256s114.6 256 256 256s256-114.6 256-256S397.4 0 256 0zM232 152C232 138.8 242.8 128 256 128s24 10.75 24 24v128c0 13.25-10.75 24-24 24S232 293.3 232 280V152zM256 400c-17.36 0-31.44-14.08-31.44-31.44c0-17.36 14.07-31.44 31.44-31.44s31.44 14.08 31.44 31.44C287.4 385.9 273.4 400 256 400z"
-              />
-            </svg>
           </div>
         </div>
         <div class="itemCenter">
@@ -94,17 +85,6 @@
                 <!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
                 <path
                   d="M96 0C107.5 0 117.4 8.19 119.6 19.51L121.1 32H541.8C562.1 32 578.3 52.25 572.6 72.66L518.6 264.7C514.7 278.5 502.1 288 487.8 288H170.7L179.9 336H488C501.3 336 512 346.7 512 360C512 373.3 501.3 384 488 384H159.1C148.5 384 138.6 375.8 136.4 364.5L76.14 48H24C10.75 48 0 37.25 0 24C0 10.75 10.75 0 24 0H96zM128 464C128 437.5 149.5 416 176 416C202.5 416 224 437.5 224 464C224 490.5 202.5 512 176 512C149.5 512 128 490.5 128 464zM512 464C512 490.5 490.5 512 464 512C437.5 512 416 490.5 416 464C416 437.5 437.5 416 464 416C490.5 416 512 437.5 512 464z"
-                />
-              </svg>
-              <svg
-                v-show="obj.length > 0"
-                xmlns="http://www.w3.org/2000/svg"
-                class="nav-cart-icon-d"
-                style="position: absolute; top: 12; width: 17px; fill: red"
-                viewBox="0 0 512 512"
-              >
-                <path
-                  d="M256 0C114.6 0 0 114.6 0 256s114.6 256 256 256s256-114.6 256-256S397.4 0 256 0zM232 152C232 138.8 242.8 128 256 128s24 10.75 24 24v128c0 13.25-10.75 24-24 24S232 293.3 232 280V152zM256 400c-17.36 0-31.44-14.08-31.44-31.44c0-17.36 14.07-31.44 31.44-31.44s31.44 14.08 31.44 31.44C287.4 385.9 273.4 400 256 400z"
                 />
               </svg>
             </div>
@@ -373,20 +353,21 @@
       @auth-change="onAuthChange"
       :user="user"
     />
-    <footer class="footer" style="background-color: rgb(33, 33, 33)">
-      <div class="content has-text-centered">
-        <div class="itemLeft">
+
+
+    <div class="footer-box" style="margin-top:3em;">
+      <!-- <div class="footer-left">
           <a>
             <img
-              class="image-nav"
-              style="border-radius: 10%"
+              class="image-footer"
+              style="border-radius: 10%;"
               src="https://cdn.discordapp.com/attachments/877785654329753660/963700674762260540/logo-proj.png"
               onClick="window.location.href = '/'"
             />
           </a>
-        </div>
-        <div class="footerItemCenter">
-          <router-link to="/aboutus" style="color: white;margin:10px"> About Us </router-link>
+      </div> -->
+      <div class="footer-center">
+        <router-link to="/aboutus" style="color: white;margin:10px">About us </router-link>
           <router-link to="/shop"  style="color: white;margin:10px"> Shop </router-link>
           <router-link to="/redeem"  style="color: white;margin:10px">
             Redeem
@@ -398,23 +379,8 @@
           >
             Feedback
           </router-link>
-          <router-link
-            to="/manage"
- style="color: white;margin:10px"
-            v-if="user && user.user_role == 'admin'"
-          >
-            Manage
-          </router-link>
-          <router-link
-            to="/addedit"
-             style="color: white;margin:10px"
-            v-if="user && user.user_role == 'admin'"
-          >
-            Add / Edit
-          </router-link>
-        </div>
       </div>
-    </footer>
+    </div>
   </div>
 </template>
 

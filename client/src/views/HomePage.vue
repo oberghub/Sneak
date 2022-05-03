@@ -20,45 +20,25 @@
     </div>
     <div class="container">
       <br /><br />
-      <!-- <h1 style="font-size: 2.7em">SneakerShop ขอต้อนรับ</h1> -->
+      <p style="font-size: 32px; font-weight:bold; margin-bottom:1em;">Category</p>
       <br />
       <div class="columns">
         <div class="column">
-          <div class="card shop-card home-card">
-            <div class="card-image">
-              <figure class="image is-4by3">
-                <img
-                  src="https://balenciaga.dam.kering.com/m/2aa3ecc582db239f/Large-653870W2RA31212_F.jpg?v=4"
-                  alt="Placeholder image"
-                />
-              </figure>
-            </div>
-            <div class="card-content">
-              <div class="media">
-                <div class="media-content" style="overflow: hidden">
-                  <p class="title is-4">Recommend Products</p>
-                  <p class="subtitle is-4">สินค้าแนะนํา</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="column">
-          <router-link to="/shop">
+          <router-link :to="{name : 'Shop', params : {value : 'men'}}">
             <div class="card shop-card home-card">
               <div class="card-image">
                 <figure class="image is-4by3">
                   <img
-                    src="https://www.kito.co.th/wp-content/uploads/2021/10/Kito-BE7-BW-1.jpg"
+                    src="https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/b7d9211c-26e7-431a-ac24-b0540fb3c00f/%E0%B8%A3%E0%B8%AD%E0%B8%87%E0%B9%80%E0%B8%97%E0%B9%89%E0%B8%B2%E0%B8%9C%E0%B8%B9%E0%B9%89-air-force-1-07-WrLlWX.png"
                     alt="Placeholder image"
                   />
                 </figure>
               </div>
               <div class="card-content">
-                <div class="media">
-                  <div class="media-content" style="overflow: hidden">
-                    <p class="title is-4">ALL Products</p>
-                    <p class="subtitle is-4">สินค้าทั้งหมด</p>
+                <div class="media" style="cursor:pointer;">
+                  <div class="media-content" style="overflow: hidden;">
+                    <p class="title is-4">MEN</p>
+                    <p class="subtitle is-4">รองเท้าผู้ชาย</p>
                   </div>
                 </div>
               </div>
@@ -66,12 +46,12 @@
           </router-link>
         </div>
         <div class="column">
-          <router-link to="/redeem">
+          <router-link :to="{name : 'Shop', params : {value : 'women'}}">
             <div class="card shop-card home-card">
-              <div class="card-image">
+              <div class="card-image" >
                 <figure class="image is-4by3">
                   <img
-                    src="https://balenciaga.dam.kering.com/m/2aa3ecc582db239f/Large-653870W2RA31212_F.jpg?v=4"
+                    src="https://d1a2ggqmhsoom.cloudfront.net/O3lG9XokWWulhvoxIEVTfiZNmW4=/fit-in/346x500/filters:quality(90):fill(ffffff)/http://static-catalog.supersports.co.th/p/fila-7500-380211-1.jpg"
                     alt="Placeholder image"
                   />
                 </figure>
@@ -79,8 +59,30 @@
               <div class="card-content">
                 <div class="media">
                   <div class="media-content" style="overflow: hidden">
-                    <p class="title is-4">Redeem</p>
-                    <p class="subtitle is-4">แลกสินค้า</p>
+                    <p class="title is-4">WOMEN</p>
+                    <p class="subtitle is-4">รองเท้าผู้หญิง</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </router-link>
+        </div>
+        <div class="column">
+          <router-link :to="{name : 'Shop', params : {value : 'kid'}}">
+            <div class="card shop-card home-card">
+              <div class="card-image">
+                <figure class="image is-4by3">
+                  <img
+                    src="https://media.ot-sea-prod.com/catalog/product/cache/388c51a5e4b57808b579f3ffa818e79f/0/c/0c94000c64afd35eeabb47ad218277e474e3076b194c6da4941db440ee4318ab.jpeg"
+                    alt="Placeholder image"
+                  />
+                </figure>
+              </div>
+              <div class="card-content">
+                <div class="media">
+                  <div class="media-content" style="overflow: hidden">
+                    <p class="title is-4">KIDS</p>
+                    <p class="subtitle is-4">สำหรับเด็ก</p>
                   </div>
                 </div>
               </div>
@@ -89,8 +91,9 @@
         </div>
       </div>
       <br />
-      <div class="shop-store-card">
-        <div v-for="item in items" class="item-card" :key="item.item_id">
+      <p style="font-size:32px; font-weight:bold; margin-bottom:2em; margin-top:2em;">Recommend Item</p>
+      <div class="shop-recitem-card">
+        <div v-for="item in items" class="recitem-card mb-4" :key="item.item_id">
           <router-link style="color: black" :to="`/detail/${item.item_id}`">
               <div class="image-card">
                 <img class="card-image-size" :src="item.item_img" />

@@ -1,91 +1,47 @@
 <template>
   <div>
-    <br />
-    <div class="container">
-      <br /><br />
-      <!-- <h1 style="font-size: 2.7em">SneakerShop ขอต้อนรับ</h1> -->
-      <br />
-      <div class="columns">
-        <div class="column">
-          <div class="card shop-card home-card">
-            <div class="card-image">
-              <figure class="image is-4by4">
-                <img
-                  src="https://media.discordapp.net/attachments/877785654329753660/970944245533904906/279331497_381108473938290_2580588671558885245_n.jpg?width=561&height=619"
-                  alt="Placeholder image"
-                />
-              </figure>
-            </div>
-            <div class="card-content">
-              <div class="media">
-                <div class="media-content" style="overflow: hidden">
-                  <p class="title is-4">สมาชิกคนที่1</p>
-                  <p class="subtitle is-4">นายณัชพล นันทัสนติ</p>
-                  <p class="subtitle is-4">63070049</p>
-                  <p class="subtitle is-4">Developer</p>
+      <section id="app">
+          <div class="about-box">
+            <p style="font-size:32px; font-weight:bold;">ABOUT US</p>
+
+          <div v-for="obj in obj" :key="obj.id" style="display:flex;"> 
+            <div class="about-box-l">
+              <div class="about-profile" style="text-align:center;">
+                <img style="border-radius:50%; width:200px; height:200px;" :src="obj.img">
+                <div class="about-profile-text">
+                  <p style="margin-left:3em;">ชื่อ : {{obj.name}}</p>
+                  <p style="margin-left:3em;">รหัสนักศึกษา : {{obj.id}}</p>
+                  <p style="margin-left:3em;">ชั้นปี : ปี 2</p>
+                  <p style="margin-left:3em;">แขนง : Software Engineer</p>
                 </div>
+              </div>
+            </div>
+
+            <div class="about-box-r">
+              <div class="about-contact">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="contact-icon" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="contact-icon" viewBox="0 0 24 24"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"/></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="contact-icon" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-4.466 19.59c-.405.078-.534-.171-.534-.384v-2.195c0-.747-.262-1.233-.55-1.481 1.782-.198 3.654-.875 3.654-3.947 0-.874-.312-1.588-.823-2.147.082-.202.356-1.016-.079-2.117 0 0-.671-.215-2.198.82-.64-.18-1.324-.267-2.004-.271-.68.003-1.364.091-2.003.269-1.528-1.035-2.2-.82-2.2-.82-.434 1.102-.16 1.915-.077 2.118-.512.56-.824 1.273-.824 2.147 0 3.064 1.867 3.751 3.645 3.954-.229.2-.436.552-.508 1.07-.457.204-1.614.557-2.328-.666 0 0-.423-.768-1.227-.825 0 0-.78-.01-.055.487 0 0 .525.246.889 1.17 0 0 .463 1.428 2.688.944v1.489c0 .211-.129.459-.528.385-3.18-1.057-5.472-4.056-5.472-7.59 0-4.419 3.582-8 8-8s8 3.581 8 8c0 3.533-2.289 6.531-5.466 7.59z"/></svg>
               </div>
             </div>
           </div>
-        </div>
-        <div class="column">
-          <router-link to="/shop">
-            <div class="card shop-card home-card">
-              <div class="card-image">
-                <figure class="image">
-                  <img
-                    src="https://www.kito.co.th/wp-content/uploads/2021/10/Kito-BE7-BW-1.jpg"
-                    alt="Placeholder image"
-                  />
-                </figure>
-              </div>
-              <div class="card-content">
-                <div class="media">
-                  <div class="media-content" style="overflow: hidden">
-                    <p class="title is-4">สมาชิกคนที่2</p>
-                    <p class="subtitle is-4">นายณัฐพล วังคํา</p>
-                    <p class="subtitle is-4">63070056</p>
-                    <p class="subtitle is-4">Developer</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </router-link>
-        </div>
-        <div class="column">
-          <router-link to="/redeem">
-            <div class="card shop-card home-card">
-              <div class="card-image">
-                <figure class="image is-4by3">
-                  <img
-                    src="https://media.discordapp.net/attachments/839907788629082152/970945306546024448/line_1465371854896417.jpg?width=412&height=619"
-                    alt="Placeholder image"
-                  />
-                </figure>
-              </div>
-              <div class="card-content">
-                <div class="media">
-                  <div class="media-content" style="overflow: hidden">
-                    <p class="title is-4">สมาชิกคนที่3</p>
-                    <p class="subtitle is-4">นายธิติวุฒิ หุ่นท่าไม้</p>
-                    <p class="subtitle is-4">63070085</p>
-                    <p class="subtitle is-4">Developer</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </router-link>
-        </div>
-      </div>
-      <br />
-    </div>
+
+          </div>
+      </section>
   </div>
 </template>
 
 <script>
-// import { VueFlux, FluxControls, FluxPagination } from "vue-flux";
 // import axios from "@/plugins/axios";
-export default {};
+export default {
+  data () {
+    return {
+      obj : [{name : 'ณัชพล นันทสันติ', id : '63070049', img : 'https://media.discordapp.net/attachments/877785654329753660/970944245533904906/279331497_381108473938290_2580588671558885245_n.jpg?width=608&height=671' },
+             {name : 'ณัฐพล วังคำ', id : '63070056', img : 'https://cdn.discordapp.com/attachments/877785654329753660/970995575065563146/WIN_20220107_13_20_09_Pro.jpg' },
+             {name : 'ธิติวุฒิ หุ่นท่าไม้', id : '63070085', img : 'https://media.discordapp.net/attachments/839907788629082152/970945306546024448/line_1465371854896417.jpg?width=412&height=619' }]
+    }
+  },
+};
 </script>
 
 <style scoped>

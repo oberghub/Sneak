@@ -62,12 +62,6 @@ html{
     align-items: center;
     justify-content: center;
 }
-.footerItemCenter{
-    display: flex;
-    margin: auto;
-    align-items: center;
-    justify-content: center;
-}
 .itemRight{
     display: flex;
     justify-content: right;
@@ -899,6 +893,115 @@ input::-webkit-inner-spin-button {
     margin-right:auto;
 }
 /*carousel*/
+
+/*footer*/
+.footer-box{
+    width: 100%;
+    height: 130px;
+    background-color: #333333;
+    position: relative;
+    display: flex;
+    padding: 2em;
+}
+.footer-left{
+    display: flex;
+    align-items: flex-start;
+    justify-content: left;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+.footer-center{
+    display: flex;
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+}
+.image-footer{
+    width: 90px;
+    margin-top: 0.5em;
+}
+/*footer*/
+
+/* about us */
+.about-box{
+    width: 1440px;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2em;
+    margin-bottom: 2em;
+    background-color: white;
+    padding: 2em;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.about-box-l{
+    display: block;
+    width: 100%;
+    height: auto;
+    align-items: flex-start;
+    justify-content: left;
+    padding: 1.5em;
+}
+.about-box-r{
+    display: block;
+    width: 100%;
+    height: auto;
+    align-items: flex-end;
+    justify-content: right;
+    padding: 1.5em;
+}
+.contact-icon{
+    width: 50px;
+    height: 50px;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 2em;
+    margin-right: 2em;
+    cursor: pointer;
+}
+.about-contact{
+    display: flex;
+    margin: auto;
+    justify-content: right;
+    width: 100%;
+    height: 200px;
+    margin-top: 2em;
+}
+.about-profile{
+    margin-top: 2em;
+    width: 100%;
+    height: 200px;
+    display: flex;
+}
+.about-profile-text{
+    text-align: left;
+    display: block;
+    width: 100%;
+    font-size: 18px;
+    font-weight: bold;
+    margin: auto;
+}
+/* about us */
+
+.shop-recitem-card{
+    width: 100%;
+    height: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    /* background-color: red; */
+}
+.recitem-card{
+    width: 95%;
+    height: 570px;
+    display: block;
+    background-color: white;
+    margin: auto;
+    padding: 1.5em;
+    cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
 @media (max-width: 1440px){
     /* Detail */
     .detail-content{
@@ -1137,6 +1240,11 @@ input::-webkit-inner-spin-button {
         width: 100%;
     }
     /*carous*/
+
+    .shop-recitem-card{
+        grid-template-columns: 1fr 1fr;
+        /* background-color: red; */
+    }
 }
 @media (max-width: 700px){
     /* form auth */
@@ -1211,6 +1319,14 @@ input::-webkit-inner-spin-button {
         font-weight: 500;
     }
     /*modal*/
+    .footer-box{
+        display: block;
+        height: auto;
+    }
+    .footer-left{
+        align-items: center;
+        justify-content: center;
+    }
 }
 @media (max-width: 600px){
     /* Navbar */
@@ -1408,6 +1524,10 @@ input::-webkit-inner-spin-button {
         font-weight:bold;
         text-align:left;
         margin-bottom:1em;
+    }
+    .shop-recitem-card{
+        grid-template-columns: 1fr;
+        /* background-color: red; */
     }
 }
 @media (max-width:500px){

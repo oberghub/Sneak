@@ -38,29 +38,6 @@
               </label>
             </div>
           </div>
-          <!-- Filter type -->
-          <div class="shop-filter-item">
-            <div class="filter-title">By Type</div>
-            <label class="checkbox lblsize">
-              <input type="checkbox" />
-              Sneaker
-            </label>
-            <br />
-            <label class="checkbox lblsize">
-              <input type="checkbox" />
-              Sports
-            </label>
-            <br />
-            <label class="checkbox lblsize">
-              <input type="checkbox" />
-              Slippers
-            </label>
-            <br />
-            <label class="checkbox lblsize">
-              <input type="checkbox" />
-              Accessories
-            </label>
-          </div>
           <!-- Filter Brand -->
           <div class="shop-filter-item">
             <div class="filter-title">By Brand</div>
@@ -214,23 +191,23 @@ export default {
       itemcount : "",
       focus_heart: false,
       brand: null,
+      type : this.$route.params.value,
       checkedType: [],
       checkedBrand: [],
       checkedSort: 'l-h',
     };
+  },
+  mounted () {
+    this.chkType()
   },
   methods: {
     formatCurrency(currency) {
       //format เงินให้มีลูกน้ำ
       return currency.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
     },
-    // overTxt(txt) {
-    //   if (txt.length > 30) {
-    //     return txt.slice(0, 19) + "...";
-    //   } else {
-    //     return txt;
-    //   }
-    // }
+    chkType(){
+      this.checkedType.push(this.$route.params.value)
+    }
   },
   computed : {
     checkHeart(){

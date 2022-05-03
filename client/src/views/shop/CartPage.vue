@@ -64,7 +64,7 @@
             <div class="modal-content">
               <p class="image is-4by3">
                 <img
-                  src="https://bulma.io/images/placeholders/1280x960.png"
+                  src="https://media3.giphy.com/media/TFr1IjKYPZokEEhqIG/giphy.gif?cid=790b7611b869f61fbe13e2a66165e215b7d76bf0975c6399&rid=giphy.gif&ct=g"
                   alt=""
                 />
               </p>
@@ -92,6 +92,10 @@
           <div id="cart-show-image" class="mt-4" v-if="images">
             <img id="pic" class="cart-slip" :src="showSelectImage(images)" />
           </div>
+          <div id="cart-show-image" class="mt-4" v-else>
+            <img id="pic" class="cart-slip" src="https://cdn.discordapp.com/attachments/877785654329753660/970944245533904906/279331497_381108473938290_2580588671558885245_n.jpg" />
+          </div>
+
 
           <div class="cart-datetime">
             <input
@@ -143,7 +147,6 @@ export default {
   },
   methods: {
     selectImages(event) {
-      console.log("hee");
       this.images = event.target.files[0];
     },
     showSelectImage(image) {

@@ -34,7 +34,7 @@ const routes = [
   {
     path: '/shop',
     name: 'Shop',
-    component: () => import('../views/shop/ShopPage.vue')
+    component: () => import('../views/shop/ShopPage.vue'),
   },
   {
     path: '/redeem',
