@@ -56,7 +56,7 @@
                 viewBox="0 0 16 16"
               > 
                 <!-- ไม่ได้กด fav ใช้ path นี้-->
-                <path v-if="(checkHeart.length < 1) && showFavHeart == false" 
+                <path v-if="showFavHeart == false" 
                   d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"
                   fill="red"
                 ></path>
@@ -182,7 +182,7 @@ export default {
       }
     },
     toggleFav(){
-      if(this.checkHeart.length == 1){
+      if(this.showFavHeart){
         axios.delete("http://localhost:3000/detail/delFav/"+this.items.item_id, {
           headers:{
             'authorization': localStorage.getItem('token') 
@@ -193,13 +193,11 @@ export default {
         })
         .then(response => {
           console.log(response)
-          this.checkHeart.pop()
           this.showFavHeart = false
         })
         .catch(err => console.log(err))
       }
       else{
-        console.log(this.checkHeart)
         axios.post("http://localhost:3000/detail/addFav/"+this.items.item_id, {userId : this.user.user_id})
         .then(response => {
           console.log(response)
@@ -244,17 +242,6 @@ export default {
         return path;
       }
     },
-  },
-  computed : {
-    checkHeart(){
-      let copy=[]
-      for(let i=0;i<this.focus_heart.length;i++){
-        if(this.focus_heart[i].user_id == this.user.user_id){
-          copy.push(this.focus_heart[i])
-        }
-      }
-      return copy
-    }
   },
   created() {
     if(this.user){
