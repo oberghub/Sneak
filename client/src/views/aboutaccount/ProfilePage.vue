@@ -256,7 +256,7 @@
                 </div>
                 <div class="modal-cart-item" v-for="obj in obj" :key="obj.id" v-show="obj.order_id == order.order_id">
                   <div class="modal-cart-item-image">
-                    <img class="modal-cart-image" :src="obj.item_img">
+                    <img class="modal-cart-image" :src="imagePath(obj.item_img)">
                   </div>
                     <div class="modal-cart-item-info">
                       <p class="modal-cart-item-title-c">{{obj.item_name}}</p>
@@ -362,11 +362,13 @@ export default {
     formatCurrency(currency){ //format เงินให้มีลูกน้ำ
       return ((currency).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'))
     },
-    // checklentel(){
-    //   if(this.tel.length > 10){
-
-    //   }
-    // },
+    imagePath(path){
+      if (path.substring(0, 5) != 'https') {
+        return "http://localhost:3000/" + path;
+      } else {
+        return path;
+      }
+    },
     saveInfo() {
       if (this.$v.$invalid) {
         this.submitStatus = "ERROR";

@@ -182,7 +182,7 @@ export default {
       }
     },
     toggleFav(){
-      if(this.checkHeart.length == 1){
+      if(this.showFavHeart){
         axios.delete("http://localhost:3000/detail/delFav/"+this.items.item_id, {
           headers:{
             'authorization': localStorage.getItem('token') 
