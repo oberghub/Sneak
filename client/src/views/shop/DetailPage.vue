@@ -61,7 +61,7 @@
                   fill="red"
                 ></path>
 
-                <path v-else-if="(checkHeart.length = 1) && showFavHeart == true"
+                <path v-else-if="showFavHeart == true"
                   fill-rule="evenodd"
                   d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"
                   fill="red"
@@ -259,11 +259,11 @@ export default {
   created() {
     if(this.user){
       axios
-        .get("http://localhost:3000/detail/" + this.$route.params.id, {userId : this.user.user_id})
+        .get("http://localhost:3000/detail/user/" + this.$route.params.id)
         .then((response) => {
           this.items = response.data.items[0];
           this.size = response.data.items
-          this.focus_heart = response.data.favItem[0]
+          this.focus_heart = response.data.favUser[0]
           if(this.focus_heart.length == 0){
             this.showFavHeart = false
           }else {
@@ -277,11 +277,11 @@ export default {
     }
     else{
     axios
-      .get("http://localhost:3000/detail/" + this.$route.params.id)
+      .get("http://localhost:3000/detail/notuser/" + this.$route.params.id)
       .then((response) => {
         this.items = response.data.items[0];
         this.size = response.data.items
-        this.focus_heart = response.data.fav_nouser[0]
+        this.focus_heart = response.data.favNoUser[0]
         if(this.focus_heart.length == 0){
           this.showFavHeart = false
         }else {

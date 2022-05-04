@@ -1,20 +1,41 @@
 const express = require("express");
 const pool = require("../config");
-//const { isLoggedIn } = require('../middlewares')
+const { isLoggedIn } = require('../middlewares')
 router = express.Router();
 
-router.get("/detail/:id", async function (req, res, next) {
+router.get("/detail/user/:id", isLoggedIn, async function (req, res, next) {
   const conn = await pool.getConnection()
   await conn.beginTransaction()
-  
+
   try{
-    const [rows, fields] = await conn.query("select * from item left outer join item_size using(item_id) where item_id = ? order by cast(size as float)",[req.params.id])
-    const fav_nouser = await pool.query("select * from fav_item where item_id=?", [req.params.id])
-    const fav = await pool.query("select * from fav_item where item_id=? and user_id=?", [req.params.id, req.body.userId])
+    const [rows, fields] = await pool.query("select * from item left outer join item_size using(item_id) where item_id = ? order by cast(size as float)",[req.params.id])
+    const fav_user = await pool.query("select * from fav_item where item_id=? and user_id=?", [req.params.id, req.user.user_id])
     res.json({
       items:rows,
-      fav_nouser : fav_nouser,
-      favItem : fav
+      favUser : fav_user
+    }) 
+    conn.commit()
+    res.status(200)
+  }
+  catch(err){
+    conn.rollback()
+    console.log(err)
+  }
+  finally{
+    conn.release()
+  }
+  
+});
+router.get("/detail/notuser/:id", async function (req, res, next) {
+  const conn = await pool.getConnection()
+  await conn.beginTransaction()
+
+  try{
+    const [rows, fields] = await pool.query("select * from item left outer join item_size using(item_id) where item_id = ? order by cast(size as float)",[req.params.id])
+    const fav_nouser = await pool.query("select * from fav_item where item_id=?", [req.params.id])
+    res.json({
+      items:rows,
+      favNoUser: fav_nouser,
     })
     conn.commit()
     res.status(200)
@@ -26,6 +47,7 @@ router.get("/detail/:id", async function (req, res, next) {
   finally{
     conn.release()
   }
+
 });
 
 router.post("/detail/addFav/:id", async function (req, res, next) {

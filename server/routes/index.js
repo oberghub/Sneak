@@ -11,9 +11,11 @@ router.get("/recitem", async function (req, res, next) {
   
   try{
     const [rows, fields] = await conn.query("select item_name,item_id,item_remain,item_type,item_img,item_price from item where item_price between 5000 and 10000 order by item_price DESC limit 4")
+    const [rows2, fields2] = await conn.query("select item_name,item_id,item_remain,item_type,item_img,item_price from item where item_brand='converse' order by item_price DESC limit 4")
     // console.log(rows)
     res.json({
-      item : rows
+      item : rows,
+      item2 : rows2
     })
     conn.commit()
     res.status(200)

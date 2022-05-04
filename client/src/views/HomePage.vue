@@ -96,7 +96,36 @@
         <div v-for="item in items" class="recitem-card mb-4" :key="item.item_id">
           <router-link style="color: black" :to="`/detail/${item.item_id}`">
               <div class="image-card">
-                <img class="card-image-size" :src="item.item_img" />
+                <img class="card-image-size" :src="imagePath(item.item_img)" />
+              </div>
+              <div class="item-info">
+                <p class="item-info-title">{{ item.item_name }}</p>
+                <p style="margin-bottom: 1em" class="item-info-type">
+                  {{
+                    item.item_type.charAt(0).toUpperCase() +
+                    item.item_type.slice(1)
+                  }}<span
+                    style="font-size: 16px; color: red; margin-left: 1em"
+                    v-show="item.item_remain == 0"
+                    >สินค้าหมด</span
+                  >
+                </p>
+                <p class="item-info-price">
+                  ฿{{ formatCurrency(item.item_price) }}
+                </p>
+                <p class="item-info-remain">
+                  มีสินค้าท้ังหมด {{ item.item_remain }} ชิ้น
+                </p>
+            </div>
+          </router-link>
+        </div>
+      </div>
+      <p style="font-size:32px; font-weight:bold; margin-bottom:2em; margin-top:2em;">Recommend by sponsor</p>
+      <div class="shop-recitem-card">
+        <div v-for="item in items2" class="recitem-card mb-4" :key="item.item_id">
+          <router-link style="color: black" :to="`/detail/${item.item_id}`">
+              <div class="image-card">
+                <img class="card-image-size" :src="imagePath(item.item_img)" />
               </div>
               <div class="item-info">
                 <p class="item-info-title">{{ item.item_name }}</p>
@@ -136,6 +165,7 @@ export default {
 
   data: () => ({
     items: null,
+    items2 : null,
     vfOptions: {
       autoplay: true,
     },
@@ -155,19 +185,20 @@ export default {
       //format เงินให้มีลูกน้ำ
       return currency.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
     },
-    // overTxt(txt) {
-    //   if (txt.length > 30) {
-    //     return txt.slice(0, 19) + "...";
-    //   } else {
-    //     return txt;
-    //   }
-    // }
+    imagePath(path){
+      if (path.substring(0, 5) != 'https') {
+        return "http://localhost:3000/" + path;
+      } else {
+        return path;
+      }
+    },
   },
   created() {
     axios
       .get("http://localhost:3000/recitem")
       .then((response) => {
         this.items = response.data.item;
+        this.items2 = response.data.item2
         console.log(response.data.item);
       })
       .catch((err) => {

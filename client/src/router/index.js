@@ -79,11 +79,11 @@ const router = new VueRouter({
   routes
 })
 
+
 router.beforeEach((to, from, next) => {
   document.title = "Sneak! : " + to.name
   const role = localStorage.getItem('role')
   const isLoggedIn = !!localStorage.getItem('token')
-
   if (to.meta.login && !isLoggedIn) {
     next({ path: '/login' })
   }
@@ -92,6 +92,7 @@ router.beforeEach((to, from, next) => {
     next({ path: '/'})
   }
   if(to.meta.isAdmin && role != 'admin'){
+    // console.log('asdasdas', role)
     next({path : '/'})
   }
   next()

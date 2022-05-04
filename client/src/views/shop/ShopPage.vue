@@ -193,7 +193,7 @@ export default {
       brand: null,
       checkedType: [],
       checkedBrand: [],
-      checkedSort: 'l-h',
+      checkedSort: 'a-z',
     };
   },
   mounted () {
