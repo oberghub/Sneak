@@ -229,7 +229,7 @@
             :key="obj.id"
           >
             <div class="modal-cart-item-image">
-              <img class="modal-cart-image" :src="obj.img" />
+              <img class="modal-cart-image" :src="imagePath(obj.img)" />
             </div>
             <div class="modal-cart-item-info">
               <p class="modal-cart-item-title-c">{{ obj.name }}</p>
@@ -414,6 +414,13 @@ export default {
       axios.get("/user/me").then((res) => {
         this.user = res.data;
       });
+    },
+    imagePath(path){
+      if (path.substring(0, 5) != 'https') {
+        return "http://localhost:3000/" + path;
+      } else {
+        return path;
+      }
     },
     getRedeem() {
       axios

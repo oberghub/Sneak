@@ -120,7 +120,7 @@
           <p style="font-weight: bold">
             Total :
             <span style="font-size: 18px; color: #ffbf18"
-              >฿{{ order.order_total }}</span
+              >฿{{ formatCurrency(parseInt(order.order_total)) }}</span
             >
           </p>
           <div class="mt-5"></div>
@@ -136,7 +136,7 @@
             >
               <div class="modal-cart-item">
                 <div class="manage-item-image">
-                  <img class="manage-image" :src="obj.item_img" />
+                  <img class="manage-image" :src="imagePath(obj.item_img.substring(0,5), obj.item_img)" />
                 </div>
                 <div class="modal-cart-item-info">
                   <p class="modal-cart-item-title-c">{{ obj.item_name }}</p>
@@ -175,7 +175,7 @@
             <div class="modal-background"></div>
             <div class="modal-content">
               <p class="image">
-                <img :src="imagePath(modalind)" />
+                <img :src="modalind" />
               </p>
             </div>
             <button
@@ -295,7 +295,7 @@ export default {
   },
   methods: {
     getpayImg(index) {
-      this.modalind = this.order[index].pay_image;
+      this.modalind = this.imagePath(this.order[index].pay_image.substring(0,5), this.order[index].pay_image)
       console.log(this.modalind);
     },
     changeStatusOrder(status, usr_id, order_id, index) {
@@ -321,6 +321,16 @@ export default {
             });
         }
       }
+      else{
+        axios //update user point
+        .put("http://localhost:3000/cart/point/"+ usr_id, {total:parseFloat(this.order[index].order_total)})
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      }
       axios
         .put("http://localhost:3000/user/change/status/order/" + usr_id, {
           status: status,
@@ -332,13 +342,13 @@ export default {
         .catch((err) => {
           console.log(err);
         });
-      location.reload();
+        location.reload();
     },
-    imagePath(file_path) {
-      if (file_path) {
-        return "http://localhost:3000/" + file_path;
+    imagePath(chk_path, path) {
+      if (chk_path != 'https') {
+        return "http://localhost:3000/" + path;
       } else {
-        return "https://bulma.io/images/placeholders/640x360.png";
+        return path;
       }
     },
     getFeed() {

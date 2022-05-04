@@ -8,7 +8,7 @@
 
           <div class="cart-item" v-for="obj in obj" :key="obj.id">
             <div class="cart-item-image">
-              <img class="cart-image" :src="obj.img" />
+              <img class="cart-image" :src="imagePath(obj.img)" />
             </div>
             <div class="cart-item-info">
               <p class="cart-item-title-c">{{ obj.name }}</p>
@@ -149,6 +149,13 @@ export default {
     selectImages(event) {
       this.images = event.target.files[0];
     },
+    imagePath(path){
+      if (path.substring(0, 5) != 'https') {
+        return "http://localhost:3000/" + path;
+      } else {
+        return path;
+      }
+    },
     showSelectImage(image) {
       // for preview only
       console.log("kuyy");
@@ -181,20 +188,10 @@ export default {
             .post("http://localhost:3000/cart/confirm/", formData)
             .then((response) => {
               console.log(response);
-              console.log("bjj");
             })
             .catch((err) => {
               console.log(err);
             });
-          axios //update cust point
-            .put("http://localhost:3000/cart/point/", {user:this.user,total:this.sumAllPrice})
-            .then((response) => {
-              console.log(response);
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-
           for (let i = 0; i < this.obj.length; i++) {
             axios //reduce item count
               .put("http://localhost:3000/cart/reducecount/", {
@@ -207,15 +204,13 @@ export default {
                 console.log(err);
               });
           }
+          let item = JSON.parse(localStorage.getItem("cart"));
+          this.obj.splice(0, this.obj.length);
+          item.splice(0, item.length);
+          localStorage.setItem("cart", JSON.stringify(item));
+          this.$router.push({ path: "/" });
           alert("ยืนยันOrderสําเร็จ");
         }
-        let item = JSON.parse(localStorage.getItem("cart"));
-        this.obj.splice(0, this.obj.length);
-        item.splice(0, item.length);
-        localStorage.setItem("cart", JSON.stringify(item));
-        this.$router.push({ path: "/" });
-      } else {
-        this.$router.push("/");
       }
     },
     getCartItem() {

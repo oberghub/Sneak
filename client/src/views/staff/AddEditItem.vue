@@ -2,16 +2,68 @@
   <div>
     <section id="app">
         <div class="manage-ovf">
-            <div class="manage-bar">
-            <div class="sub-box-manage" @click="itemdetailstage = true, itemsizestage = false">
-                <div class="text-manage-bar">Add / Edit Item Details</div>
+            <div class="edit-bar">
+            <div class="sub-box-addedit" @click="additemstage = true, itemdetailstage = false, itemsizestage = false">
+                <div class="text-manage-bar">Add New Item</div>
             </div> 
-            <div class="sub-box-manage" @click="itemdetailstage = false, itemsizestage = true">
+            <div class="sub-box-addedit" @click="additemstage = false, itemdetailstage = true, itemsizestage = false">
+                <div class="text-manage-bar">Edit Item Details</div>
+            </div> 
+            <div class="sub-box-addedit" @click="additemstage = false, itemdetailstage = false, itemsizestage = true">
                 <div class="text-manage-bar">Add / Edit Item Size</div>
             </div>
             </div>
         </div>
         <div class="list-item-box">
+            <!-- หน้า Add Item -->
+            <div v-show="additemstage" class="columns">
+                <div class="column">
+                    <label class="label">Item Name</label>
+                    <input v-model="newItemName" class="input mb-3" type="text">
+                    <div class="columns">
+                        <div class="column">
+                            <label class="label">Item Price</label>
+                            <input v-model="newItemPrice" class="input mb-5" type="number">
+                            <label class="label">Item Brand</label>
+                            <input v-model="newItemBrand" class="input" type="text">
+                        </div>
+                        <div class="column">
+                            <label class="label">Item Type</label>
+                            <div class="select mb-5">
+                                <select v-model="newItemType">
+                                    <option value="men">Men</option>
+                                    <option value="women">Women</option>
+                                    <option value="kid">Kid</option>
+                                </select>
+                            </div>
+                            <!-- ยืม class มาใช้ -->
+                            <label class="label">Item Image</label>
+                            <div class="cart-upload-image">
+                                <input
+                                class="button cart-pickimg"
+                                style="margin: auto"
+                                type="file"
+                                id="photo"
+                                name="photo"
+                                accept="image/*"
+                                @change="selectImages"
+                                />
+                            </div>
+                            <div id="cart-show-image" class="mt-4" v-if="images != ''">
+                                <img id="pic" class="cart-slip" :src="showSelectImage(images)" />
+                            </div>
+                            <div id="cart-show-image" class="mt-4" v-else>
+                                <img id="pic" class="cart-slip" src="https://cdn.discordapp.com/attachments/894919456126554143/971114985017200640/unknown.png" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <label class="label">Item Description</label>
+                    <textarea v-model="newItemDesc" class="textarea mb-3"></textarea>
+                    <button class='button is-warning is-rounded ml-3' @click="addItem()">Confirm</button>
+                </div>
+            </div>
             <!-- หน้า detail -->
             <div v-show="itemdetailstage">
                 <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
@@ -67,12 +119,12 @@
                         </option>
                     </select>
                 </div>
-                <button v-show="selectItem && !addstage" class='button is-info is-rounded ml-3 mb-3' @click="addstage = true">Add</button>
-                <button v-show="addstage" class='button is-warning is-rounded ml-3 mb-3' @click="addSize(selectItem[1])">Confirm</button>
-                <button v-show="addstage" class='button is-danger is-outlined is-rounded ml-3 mb-3' @click="addstage = false">Cancel</button>
+                <button v-show="selectItem && !addSizestage" class='button is-info is-rounded ml-3 mb-3' @click="addSizestage = true">Add</button>
+                <button v-show="addSizestage" class='button is-warning is-rounded ml-3 mb-3' @click="addSize(selectItem[1])">Confirm</button>
+                <button v-show="addSizestage" class='button is-danger is-outlined is-rounded ml-3 mb-3' @click="addSizestage = false">Cancel</button>
                 <!-- เพิ่ม size ใหม่ -->
-                <p style="font-size:12px; text-align:left;" :style="{color : al_msg == 'ซ้ำโว้ยยยยยย' ? 'red' : 'lightgreen'}">{{al_msg}}</p>
-                <div class="mb-3" v-show="addstage">
+                <p style="font-size:12px; text-align:left;" :style="{color : al_msg == 'โปรดกรอกไซส์ใหม่' ? 'red' : 'lightgreen'}">{{al_msg}}</p>
+                <div class="mb-3" v-show="addSizestage">
                     <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
                     <thead>
                         <tr>
@@ -145,9 +197,10 @@ export default {
       itemdetails : [],
       itemsize : [],
       sumsize : [],
+      additemstage : false,
       itemdetailstage : true,
       itemsizestage : false,
-      addstage: false,
+      addSizestage: false,
       selectItem: '',
       editToggle: -1,
       editDesc: "",
@@ -156,7 +209,13 @@ export default {
       newSize: "",
       newRemain: "",
       al_msg : '',
-      checkdup : false
+      checkdup : false,
+      newItemName: "",
+      newItemDesc: "",
+      newItemPrice: "",
+      newItemType: "",
+      newItemBrand: "",
+      images: "",
     }
   },
   methods : {
@@ -200,10 +259,10 @@ export default {
             }
         }
         if(this.checkdup){
-            this.al_msg = 'ซ้ำโว้ยยยยยย'
+            this.al_msg = 'โปรดกรอกไซส์ใหม่'
         }
         else{
-            this.al_msg = 'เพิ่มให้ละน้าาาาาา'
+            this.al_msg = 'เพิ่มสินค้าใหม่แล้ว'
             this.checkdup = false
             axios
             .put(`http://localhost:3000/user/addsize/` + itemId, {
@@ -218,7 +277,7 @@ export default {
                     size: response.data.size
                 })
                 console.log(response);
-                this.addstage = false;
+                this.addSizestage = false;
             })
             .catch((error) => {
                 this.error = error.message;
@@ -227,6 +286,60 @@ export default {
         this.newRemain = ''
         this.newSize = ''
         this.checkdup = false
+    },
+    selectImages(event) {
+      this.images = event.target.files[0];
+    },
+    showSelectImage(image) {
+      // for preview only
+      return URL.createObjectURL(image);
+    },
+    addItem(){
+        //เพิ่มสินค้าใหม่ แล้วไป edit, size ไม่ได้
+        if (confirm("ยืนยันที่จะเพิ่มสินค้าใช่หรือไม่") == true) {
+            let formData = new FormData();
+            formData.append("name", this.newItemName);
+            formData.append("desc", this.newItemDesc);
+            formData.append("price", this.newItemPrice);
+            formData.append("type", this.newItemType);
+            formData.append("brand", this.newItemBrand);
+            formData.append("photo", this.images);
+
+            if (
+                this.newItemName == "" ||
+                this.newItemDesc == "" ||
+                this.newItemPrice == "" ||
+                this.newItemType == "" ||
+                this.newItemBrand == "" ||
+                this.images === ""
+            ) {
+                alert("ข้อมูลการเพิ่มสินค้าไม่ครบ");
+            } else {
+                axios
+                .post("http://localhost:3000/user/additem", formData)
+                .then((response) => {
+                    console.log(response);
+                    this.itemdetails.push({
+                        item_id: response.data.itemId,
+                        item_name: this.newItemName, 
+                        item_desc: this.newItemDesc, 
+                        item_price: this.newItemPrice
+                    })
+                    this.sumsize.push({
+                        sumall : "0"
+                    })
+                    this.newItemName = ""
+                    this.newItemDesc = ""
+                    this.newItemPrice = ""
+                    this.newItemType = ""
+                    this.newItemBrand = ""
+                    this.images = ""
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+            }
+        }
     }
   },
     created() {
@@ -236,7 +349,7 @@ export default {
             this.itemdetails = response.data.item;
         })
         .catch((err) => {
-            console.log(err, "WTF");
+            console.log(err);
         }),
         axios
         .get("http://localhost:3000/user/itemsize", {})

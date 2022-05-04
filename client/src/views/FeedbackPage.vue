@@ -30,7 +30,7 @@
         <div class="modal-content">
           <section class="modal-card-body" style="width:50%; margin:auto; border-radius:1em;">
             <p style="font-size:20px; font-weight:bold; ">Your feedback has sent.</p>
-            <p style="font-size:10px; color:green;">You can click anything in screen, It will close.</p>
+            <p style="font-size:10px; color:green;">You can click anything on screen, It will be close.</p>
           </section>
         </div>
         <button class="modal-close is-large" aria-label="close"></button>

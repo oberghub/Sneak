@@ -4,7 +4,7 @@
       <!-- Start Detail div-->
       <div class="detail-box">
         <div class="detail-image">
-          <img class="detail-image-size" :src="items.item_img" />
+          <img class="detail-image-size" :src="imagePath(items.item_img)" />
         </div>
         <div class="detail-info">
           <div class="detail-title">{{ items.item_name }}</div>
@@ -66,6 +66,7 @@
                   d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"
                   fill="red"
                 ></path>
+
               </svg>
               <p
                 class="favitem"
@@ -236,6 +237,13 @@ export default {
       //format เงินให้มีลูกน้ำ
       return currency.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
     },
+    imagePath(path){
+      if (path.substring(0, 5) != 'https') {
+        return "http://localhost:3000/" + path;
+      } else {
+        return path;
+      }
+    },
   },
   computed : {
     checkHeart(){
@@ -249,12 +257,31 @@ export default {
     }
   },
   created() {
+    if(this.user){
+      axios
+        .get("http://localhost:3000/detail/" + this.$route.params.id, {userId : this.user.user_id})
+        .then((response) => {
+          this.items = response.data.items[0];
+          this.size = response.data.items
+          this.focus_heart = response.data.favItem[0]
+          if(this.focus_heart.length == 0){
+            this.showFavHeart = false
+          }else {
+            this.showFavHeart = true
+          }
+          console.log("data = ", response.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+    else{
     axios
       .get("http://localhost:3000/detail/" + this.$route.params.id)
       .then((response) => {
         this.items = response.data.items[0];
         this.size = response.data.items
-        this.focus_heart = response.data.favItem[0]
+        this.focus_heart = response.data.fav_nouser[0]
         if(this.focus_heart.length == 0){
           this.showFavHeart = false
         }else {
@@ -265,6 +292,7 @@ export default {
       .catch((err) => {
         console.log(err);
       });
+    }
   },
 };
 </script>

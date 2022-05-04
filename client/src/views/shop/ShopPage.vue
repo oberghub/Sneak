@@ -112,7 +112,7 @@
               <router-link style="color:black;" :to="`/detail/${item.item_id}`">
               
                 <div class="image-card">
-                  <img class="card-image-size" :src="item.item_img" />
+                  <img class="card-image-size" :src="imagePath(item.item_img)" />
                 </div>
                 <div class="item-info">
                   <p class="item-info-title">{{ item.item_name }}</p>
@@ -191,7 +191,6 @@ export default {
       itemcount : "",
       focus_heart: false,
       brand: null,
-      type : this.$route.params.value,
       checkedType: [],
       checkedBrand: [],
       checkedSort: 'l-h',
@@ -204,6 +203,13 @@ export default {
     formatCurrency(currency) {
       //format เงินให้มีลูกน้ำ
       return currency.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
+    },
+    imagePath(path){
+      if (path.substring(0, 5) != 'https') {
+        return "http://localhost:3000/" + path;
+      } else {
+        return path;
+      }
     },
     chkType(){
       if(this.$route.params.value){
