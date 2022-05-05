@@ -183,7 +183,7 @@ export default {
   data() {
     return {
       minprice: 0,
-      maxprice: 99999,
+      maxprice: 999999,
       items: null,
       human: null,
       allitem : null,
