@@ -93,9 +93,12 @@
             <img id="pic" class="cart-slip" :src="showSelectImage(images)" />
           </div>
           <div id="cart-show-image" class="mt-4" v-else>
-            <img id="pic" class="cart-slip" src="https://cdn.discordapp.com/attachments/877785654329753660/970944245533904906/279331497_381108473938290_2580588671558885245_n.jpg" />
+            <img
+              id="pic"
+              class="cart-slip"
+              src="https://cdn.discordapp.com/attachments/877785654329753660/970944245533904906/279331497_381108473938290_2580588671558885245_n.jpg"
+            />
           </div>
-
 
           <div class="cart-datetime">
             <input
@@ -149,8 +152,8 @@ export default {
     selectImages(event) {
       this.images = event.target.files[0];
     },
-    imagePath(path){
-      if (path.substring(0, 5) != 'https') {
+    imagePath(path) {
+      if (path.substring(0, 5) != "https") {
         return "http://localhost:3000/" + path;
       } else {
         return path;
@@ -170,19 +173,21 @@ export default {
         formData.append("date", this.dateTime.substring(0, 10));
         formData.append("time", this.dateTime.substring(11, 16));
         formData.append("photo", this.images);
-        console.log(this.images)
+        console.log(this.images);
 
         // console.log(formData)
         if (
           this.user.user_fname === "" ||
           this.user.user_lname === "" ||
           this.user.user_tel === "" ||
-          this.user.user_address === "" ||
-          this.dateTime === "" ||
-          this.images === ""
+          this.user.user_address === ""
         ) {
           alert("ข้อมูลการจัดส่งไม่ครบ กรุณาไปกรอกข้อมูลที่หน้า profile");
           this.$router.push("/profile");
+        } else if (this.dateTime === "") {
+          alert("กรุณาระบุวันเวลาการโอน");
+        } else if (this.images === "") {
+          alert("กรุณาใส่รูปหลักฐาน");
         } else {
           axios //post order_item
             .post("http://localhost:3000/cart/confirm/", formData)
