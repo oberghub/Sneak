@@ -116,7 +116,7 @@
             <router-link to="/profile" class="navbar-item font-in-nav">
               <p>สวัสดีจู้! {{ user.user_username }}</p>
             </router-link>
-            <p class="button is-danger is-light" @click="logout()">Log out</p>
+            <p class="button is-danger is-light" @click="logout()">ออกจากระบบ</p>
           </div>
         </div>
       </nav>
