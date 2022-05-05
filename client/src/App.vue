@@ -42,20 +42,20 @@
           <!--For Guest-->
           <div style="display: flex">
             <router-link to="/shop" class="navbar-item itemSpacing font-in-nav">
-              Shop
+              ร้านค้า
             </router-link>
             <router-link
               to="/redeem"
               class="navbar-item itemSpacing font-in-nav"
             >
-              Redeem
+              แลกรางวัล
             </router-link>
             <router-link
               to="/feedback"
               class="navbar-item itemSpacing font-in-nav"
               v-if="!user || (user && user.user_role == 'normal')"
             >
-              Feedback
+              ความเห็น
             </router-link>
             <router-link
               to="/manage"
@@ -63,7 +63,7 @@
               style="color: blue"
               v-if="user && user.user_role == 'admin'"
             >
-              Manage
+              จัดการคำสั่งซื้อ
             </router-link>
             <router-link
               to="/addedit"
@@ -71,7 +71,7 @@
               style="color: blue"
               v-if="user && user.user_role == 'admin'"
             >
-              Add / Edit
+              จัดการสินค้า
             </router-link>
             <!--Cart-->
             <div @click="getCartItem" v-show="checkRoute($route.fullPath)">
@@ -92,14 +92,14 @@
         </div>
         <div class="itemRight">
           <router-link to="/login" class="navbar-item font-in-nav" v-if="!user">
-            Login
+            เข้าสู่ระบบ
           </router-link>
           <router-link
             to="/register"
             class="navbar-item font-in-nav"
             v-if="!user"
           >
-            Sign Up
+            สมัครสมาชิก
           </router-link>
           <div style="display: flex" v-if="user">
             <svg
@@ -114,7 +114,7 @@
               />
             </svg>
             <router-link to="/profile" class="navbar-item font-in-nav">
-              <p>Hi! {{ user.user_username }}</p>
+              <p>สวัสดีจู้! {{ user.user_username }}</p>
             </router-link>
             <p class="button is-danger is-light" @click="logout()">Log out</p>
           </div>
@@ -123,17 +123,17 @@
       <div id="showmenu">
         <div class="cilckHamburger">
           <router-link to="/shop" class="navbar-item borderItem font-in-ham">
-            Shop
+            ร้านค้า
           </router-link>
           <router-link to="/redeem" class="navbar-item borderItem font-in-ham">
-            Redeem
+            แลกรางวัล
           </router-link>
           <router-link
             to="/feedback"
             class="navbar-item borderItem font-in-ham"
             v-if="!user || (user && user.user_role == 'normal')"
           >
-            Feedback
+            ความเห็น
           </router-link>
           <router-link
             to="/manage"
@@ -141,7 +141,7 @@
             style="color: blue"
             v-if="user && user.user_role == 'admin'"
           >
-            Manage
+            จัดการคำสั่งซื้อ
           </router-link>
           <router-link
             to="/addedit"
@@ -149,7 +149,7 @@
             style="color: blue"
             v-if="user && user.user_role == 'admin'"
           >
-            Add / Edit
+            จัดการสินค้า
           </router-link>
 
           <div
@@ -160,13 +160,13 @@
               to="/profile"
               class="navbar-item font-in-nav heightCenter"
             >
-              <p>Hi! {{ user.user_username }}</p>
+              <p>สวัสดีจู้! {{ user.user_username }}</p>
             </router-link>
             <p
               class="button is-danger is-light heightCenter ml-3"
               @click="logout()"
             >
-              Log out
+              ออกจากระบบ
             </p>
             <svg
               @click="showRedeemItem = true"
@@ -188,7 +188,7 @@
 
           <div v-else style="display: flex; margin-left: 1em; height: 65px">
             <button class="button is-light heightCenter font-in-ham">
-              <router-link to="/login"> Login </router-link>
+              <router-link to="/login"> เข้าสู่ระบบ </router-link>
             </button>
             <p
               class="font-in-ham"
@@ -202,7 +202,7 @@
               Or
             </p>
             <button class="button is-light heightCenter font-in-ham">
-              <router-link to="/register"> Sign Up </router-link>
+              <router-link to="/register"> สมัครสมาชิก </router-link>
             </button>
           </div>
         </div>
@@ -221,7 +221,7 @@
             class="mb-4"
             v-show="obj.length == 0"
           >
-            There are no item in cart.
+            ยังไม่มีสินค้าในตะกร้า.
           </div>
           <div
             class="modal-cart-item"
@@ -255,7 +255,7 @@
                   class="button is-warning is-light is-small ml-3"
                   @click="deleteSomeItem(index)"
                 >
-                  Delete
+                  ลบ
                 </button>
               </div>
             </div>
@@ -266,18 +266,18 @@
                 class="button is-success is-light"
                 @click="(showEditItem = false), $router.push('/cart')"
               >
-                Go to cart
+                ชำระเงินเดี๋ยวนี้
               </button>
               <button
                 class="button is-danger is-light ml-5"
                 @click="clearCart()"
               >
-                Clear
+                ล้างตะกร้า
               </button>
             </div>
             <div class="modal-bottom-r">
               <p style="font-weight: bold">
-                Total ฿{{ formatCurrency(sumAllPrice) }}
+                รวม ฿{{ formatCurrency(sumAllPrice) }}
               </p>
             </div>
           </div>
@@ -305,14 +305,14 @@
               margin-bottom: 1.5em;
             "
           >
-            Redeem History
+            ประวัติการแลกรางวัล
           </p>
           <div
             style="font-size: 32px; font-weight: 500"
             class="mb-4"
             v-show="red_his.length == 0"
           >
-            There are no redeem item.
+            ยังไม่มีการแลกรางวัล.
           </div>
           <div class="modal-cart-item" v-for="obj in red_his" :key="obj.red_id">
             <div class="modal-cart-item-image">
@@ -354,33 +354,6 @@
       :user="user"
     />
 
-
-    <!-- <div class="footer-box" style="margin-top:3em;"> -->
-      <!-- <div class="footer-left">
-          <a>
-            <img
-              class="image-footer"
-              style="border-radius: 10%;"
-              src="https://cdn.discordapp.com/attachments/877785654329753660/963700674762260540/logo-proj.png"
-              onClick="window.location.href = '/'"
-            />
-          </a>
-      </div> -->
-      <!-- <div class="footer-center">
-        <router-link to="/aboutus" style="color: white; margin-right:1em">About us </router-link>
-          <router-link to="/shop"  style="color: white; margin-right:1em"> Shop </router-link>
-          <router-link to="/redeem"  style="color: white; margin-right:1em">
-            Redeem
-          </router-link>
-          <router-link
-           style="color: white; margin-right:1em"
-            to="/feedback"
-            v-if="!user || (user && user.user_role == 'normal')"
-          >
-            Feedback
-          </router-link>
-      </div>
-    </div> -->
   </div>
 </template>
 

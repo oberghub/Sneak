@@ -5,22 +5,21 @@
       <div class="profile-main">
         <form class="profile-left-box">
           <div>
-            <p class="profile-title">Your Profile</p>
+            <p class="profile-title">ข้อมูลผู้ใช้</p>
             <p class="profile-username">{{ user.user_username }}</p>
             <p style="font-size: 10px">
-              Your point : {{ user.user_point || 0 }}
+              แต้มของคุณมี : {{ user.user_point || 0 }}
             </p>
             <button
               type="submit"
               v-show="changepwd_bt"
               class="button is-small is-light is-warning heightCenter mt-2"
-              @click="(changepwd = true), (changepwd_bt = false)"
-            >
-              Change your password
+              @click="changepwd = true, changepwd_bt = false">
+              เปลี่ยนรหัสผ่าน
             </button>
             <div v-show="changepwd">
               <div class="field">
-                <label class="label textform-left">Old Password</label>
+                <label class="label textform-left">รหัสผ่านเดิม</label>
                 <div class="control">
                   <input
                     class="input is-small"
@@ -34,7 +33,7 @@
               </div>
 
               <div class="field">
-                <label class="label textform-left">New Password</label>
+                <label class="label textform-left">รหัสผ่านใหม่</label>
                 <div class="control">
                   <input
                     class="input is-small"
@@ -51,7 +50,7 @@
               </div>
 
               <div class="field">
-                <label class="label textform-left">Confirm New Password</label>
+                <label class="label textform-left">ยืนยันรหัสผ่านใหม่</label>
                 <div class="control">
                   <input
                     class="input is-small"
@@ -74,7 +73,7 @@
                     type="submit"
                     @click="changePwd()"
                   >
-                    Confirm
+                    ยืนยัน
                   </button>
                 </div>
                 <div class="control">
@@ -85,7 +84,7 @@
                     "
                     @click="(changepwd_bt = true), (changepwd = false)"
                   >
-                    Cancel
+                    ยกเลิก
                   </button>
                 </div>
               </div>
@@ -95,7 +94,7 @@
         <form @submit.prevent="submit">
           <div class="profile-right-box">
             <div style="profile-header">
-              <p class="profile-info">Your Information</p>
+              <p class="profile-info">ข้อมูลส่วนตัวของคุณ</p>
               <div class="profile-saveinfo">
                 <button
                   type="submit"
@@ -103,19 +102,19 @@
                   class="button is-light is-primary heightCenter is-small"
                   @click="saveInfo()"
                 >
-                  Save Info
+                  บันทึกข้อมูล
                 </button>
                 <button @click="showEditItem = true" class="button is-light is-warning heightCenter is-small ml-4">
-                  Purchase History
+                  ประวัติการสั่งซื้อทั้งหมด
                 </button>
-                <p class="has-text-primary ml-3" style="font-size: 12px">
-                  {{ complete }}
+                <p class="ml-3" style="font-size: 12px" :style="{color : complete == 'Reject' ? 'red' : 'lightgreen'}">
+                  {{ complete == 'Reject' ? 'อัปเดตไม่สำเร็จ ข้อมูลบางอย่างอาจไม่ถูกต้อง' : complete == 'Complete' ? 'อัปเดตสำเร็จ!' : '' }}
                 </p>
               </div>
             </div>
             <div class="profile-name">
               <div class="field profile-fname">
-                <label class="label textform-left">Firstname</label>
+                <label class="label textform-left">ชื่อจริง</label>
                 <div
                   class="control"
                   :class="{ 'form-group--error': $v.fname.$error }"
@@ -125,7 +124,7 @@
                     type="text"
                     v-model="fname"
                     autocomplete="username"
-                    required
+
                   />
                 </div>
                 <div style="text-align:left; font-size:12px;" class="error has-text-danger" v-if="!$v.fname.required">
@@ -134,7 +133,7 @@
               </div>
 
               <div class="field profile-lname">
-                <label class="label textform-left">Lastname</label>
+                <label class="label textform-left">นามสกุล</label>
                 <div
                   class="control"
                   :class="{ 'form-group--error': $v.lname.$error }"
@@ -144,7 +143,6 @@
                     type="text"
                     v-model="lname"
                     autocomplete=""
-                    required
                   />
                 </div>
                 <div style="text-align:left; font-size:12px;" class="error has-text-danger" v-if="!$v.lname.required">
@@ -154,7 +152,7 @@
             </div>
 
             <div class="field">
-              <label class="label textform-left">Email</label>
+              <label class="label textform-left">อีเมล</label>
               <div
                 class="control"
                 :class="{ 'form-group--error': $v.email.$error }"
@@ -164,19 +162,18 @@
                   type="email"
                   v-model="email"
                   autocomplete="username"
-                  required
                 />
               </div>
               <div style="text-align:left; font-size:12px;" class="error has-text-danger" v-if="!$v.email.required">
-                กรุณากรอก Email
+                กรุณากรอกอีเมล
               </div>
               <div style="text-align:left; font-size:12px;" class="error has-text-danger" v-if="!$v.email.email">
-                ไม่ใช่ Email กรุณากรอกใหม่
+                ไม่ใช่อีเมลนีหน่าาา กรุณากรอกใหม่
               </div>
             </div>
 
             <div class="field">
-              <label class="label textform-left">Tel</label>
+              <label class="label textform-left">เบอร์โทรศัพท์</label>
               <div
                 class="control"
                 :class="{ 'form-group--error': $v.tel.$error }"
@@ -187,7 +184,6 @@
                   v-model="tel"
                   :maxlength="10"
                   autocomplete="username"
-                  required
                 />
               </div>
               <div style="text-align:left; font-size:12px;" class="error has-text-danger" v-if="!$v.tel.required">
@@ -207,7 +203,7 @@
             </div>
 
             <div class="field">
-              <label class="label textform-left">Address</label>
+              <label class="label textform-left">ที่อยู่จัดส่ง</label>
               <div class="control">
                 <textarea
                   class="textarea"
@@ -219,7 +215,7 @@
 
             <div class="field">
               <label class="label textform-left"
-                >Current password (ถ้ามีการเปลี่ยนแปลงข้อมูล)</label
+                >รหัสผ่านปัจจุบัน (ถ้ามีการเปลี่ยนแปลงข้อมูล)</label
               >
               <div class="control">
                 <input
@@ -242,16 +238,16 @@
           <div class="modal-content">
             <div class="modal-bg-custom">
                 <!-- Content ... -->
-                <p style="font-size:24px; font-weight:bold; text-align:center; margin-bottom:1.5em;">Purchase History</p>
-              <div style="font-size:32px; font-weight:500;" class="mb-4" v-show="obj.length == 0">You are haven't purchase yet.</div>
+                <p style="font-size:24px; font-weight:bold; text-align:center; margin-bottom:1.5em;">ประวัติการสั่งซื้อทั้งหมด</p>
+              <div style="font-size:32px; font-weight:500;" class="mb-4" v-show="obj.length == 0">คุณยังไม่เคยสั่งซื้ออะไรเลย T_T.</div>
               
               <div class="profile-purhis my-3" v-for="order in order" :key="order.id">
                 <div style="width:100%; height:auto; background-color:white; padding:1em; display:flex; border-radius:0.5em; margin-bottom:0.5em;">
                   <div class="modal-bottom-l" style="margin-top:0;">
-                    <div style="font-size:16px; font-weight:bold; text-align:left;">Order id : {{order.order_id}}</div>
+                    <div style="font-size:16px; font-weight:bold; text-align:left;">รหัสคำสั่งซื้อ : {{order.order_id}}</div>
                   </div>
                 <div class="modal-bottom-r" style="margin-top:0;">
-                    <div style="font-size:16px; font-weight:bold; align-items:flex-end;">Status : <span  :style="{color : order.order_status == 'complete' ? 'lightgreen' : order.order_status == 'pending' ? 'blue' : 'red'}">{{order.order_status}}</span></div>
+                    <div style="font-size:16px; font-weight:bold; align-items:flex-end;">สถานะ : <span  :style="{color : order.order_status == 'complete' ? 'lightgreen' : order.order_status == 'pending' ? 'blue' : 'red'}">{{order.order_status == 'pending' ? 'รอดำเนินการ' : order.order_status == 'complete' ? 'สำเร็จ' : 'ยกเลิก'}}</span></div>
                   </div>
                 </div>
                 <div class="modal-cart-item" v-for="obj in obj" :key="obj.id" v-show="obj.order_id == order.order_id">
@@ -372,7 +368,7 @@ export default {
     saveInfo() {
       if (this.$v.$invalid) {
         this.submitStatus = "ERROR";
-        this.complete = "Update ไม่สําเร็จ! ข้อมูลบางอย่างไม่ถูกต้อง";
+        this.complete = "Reject";
       } else {
         axios
           .put("http://localhost:3000/users/saveinfo/" + this.user.user_id, {
@@ -385,7 +381,7 @@ export default {
           })
           .then((response) => {
             console.log(response.data);
-            this.complete = "Update สําเร็จ!";
+            this.complete = "Success";
             location.reload()
           })
           .catch((err) => {
@@ -438,6 +434,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-</style>

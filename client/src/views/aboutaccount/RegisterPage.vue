@@ -5,9 +5,9 @@
         <div class="absolute-center">
           <div class="formBox">
             <div class="formInfo">
-              <p class="textform-left mb-5" style="font-size: 24px">Sign up</p>
+              <p class="textform-left mb-5" style="font-size: 24px">สมัครสมาชิก</p>
               <div class="field">
-                <label class="label textform-left">Username</label>
+                <label class="label textform-left">ชื่อผู้ใช้</label>
                 <div
                   class="control"
                   :class="{ 'form-group--error': $v.username.$error }"
@@ -42,7 +42,7 @@
               </div>
 
               <div class="field">
-                <label class="label textform-left">Password</label>
+                <label class="label textform-left">รหัสผ่าน</label>
                 <div
                   class="control"
                   :class="{ 'form-group--error': $v.pwd.$error }"
@@ -70,7 +70,7 @@
                 </div>
               </div>
               <div class="field">
-                <label class="label textform-left">Confirm Password</label>
+                <label class="label textform-left">ยืนยันรหัสผ่าน</label>
                 <div
                   class="control"
                   :class="{ 'form-group--error': $v.conpwd.$error }"
@@ -102,7 +102,7 @@
                     :disabled="submitStatus === 'PENDING'"
                     @click="register"
                   >
-                    Register
+                    สมัครเล้ย!
                   </button>
                 </div>
                 <div class="control">
@@ -112,7 +112,7 @@
                       button
                       is-block is-fullwidth is-primary is-small is-link is-light
                     "
-                    >Cancel</router-link
+                    >ยกเลิก</router-link
                   >
                 </div>
               </div>

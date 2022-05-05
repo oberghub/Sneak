@@ -4,10 +4,10 @@
       <div class="redeem-container">
         <p class="text-redeem">แลกรับของรางวัล</p>
         <p style="font-size: 14px; font-weight: bold" v-if="user">
-          Your point : {{ user.user_point }}
+          แต้มของคุณมี : {{ user.user_point }}
         </p>
         <p style="font-size: 14px; font-weight: bold" v-else>
-          Please Login before redeem item.
+          โปรดเข้าสู่ระบบก่อนแลกรางวัล 'นะจ๊ะ'.
         </p>
         <div class="redeem-store-card">
           <div class="" v-for="item in items" :key="item.red_id">

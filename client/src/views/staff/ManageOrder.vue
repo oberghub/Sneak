@@ -13,7 +13,7 @@
                 (redeemstage = false)
             "
           >
-            <div class="text-manage-bar">Pending Order</div>
+            <div class="text-manage-bar">รอดำเนินการ</div>
           </div>
           <div
             class="sub-box-manage"
@@ -25,7 +25,7 @@
                 (redeemstage = false)
             "
           >
-            <div class="text-manage-bar">Completed Order</div>
+            <div class="text-manage-bar">คำสั่งซื้อที่เสร็จสิ้น</div>
           </div>
           <div
             class="sub-box-manage"
@@ -37,7 +37,7 @@
                 (redeemstage = false)
             "
           >
-            <div class="text-manage-bar">Check order history</div>
+            <div class="text-manage-bar">ประวัติการสั่งซื้อทั้งหมด</div>
           </div>
           <div
             class="sub-box-manage"
@@ -49,7 +49,7 @@
                 (redeemstage = false)
             "
           >
-            <div class="text-manage-bar">Feedback from user</div>
+            <div class="text-manage-bar">ความเห็นจากลูกค้า</div>
           </div>
           <div
             class="sub-box-manage"
@@ -61,7 +61,7 @@
                 (completestage = false)
             "
           >
-            <div class="text-manage-bar">Redeem History</div>
+            <div class="text-manage-bar">ประวัติการแลกรางวัล</div>
           </div>
         </div>
       </div>
@@ -74,13 +74,13 @@
           :key="'feed ' + feed.req_id"
           v-show="feedstage"
         >
-          <div class="feed-text-title">Title : {{ feed.req_title }}</div>
-          <div class="feed-text-p">Detail : {{ feed.req_detail }}</div>
+          <div class="feed-text-title">หัวข้อ : {{ feed.req_title }}</div>
+          <div class="feed-text-p">รายละเอียด : {{ feed.req_detail }}</div>
           <div
             class="feed-text-p mt-4"
             style="font-size: 14px; font-weight: bold"
           >
-            Comment by : {{ feed.user_username }}
+            ส่งความเห็นโดย : {{ feed.user_username }}
           </div>
         </div>
         <!--Feedback box-->
@@ -97,7 +97,7 @@
           "
         >
           <p class="manage-status">
-            Status :
+            สถานะ :
             <span
               :style="{
                 color:
@@ -107,18 +107,18 @@
                     ? 'lightgreen'
                     : 'red',
               }"
-              >{{ order.order_status }}</span
+              >{{ order.order_status == 'pending' ? 'รอดำเนินการ' : order.order_status == 'complete' ? 'สำเร็จ' : 'ยกเลิก' }}</span
             >
           </p>
           <p style="font-weight: bold">
-            User id : {{ order.user_username }} (Order id :
+            ชื่อผู้ใช้ : {{ order.user_username }} (รหัสคำสั่งซื้อ :
             {{ order.order_id }})
           </p>
           <p style="font-weight: bold">
-            Total Items : {{ order.item_quantity }} Items
+            สินค้าหมด : {{ order.item_quantity }} ชิ้น
           </p>
           <p style="font-weight: bold">
-            Total :
+            รวม :
             <span style="font-size: 18px; color: #ffbf18"
               >฿{{ formatCurrency(parseInt(order.order_total)) }}</span
             >
@@ -187,15 +187,15 @@
           <!-- Modal หลักฐานการโอน -->
 
           <div class="mt-5"></div>
-          <div style="display: flex">
+          <div class="order-button">
             <button
-              class="button is-warning is-light mr-3"
+              class="button is-warning is-light mr-3 my-1"
               @click="(modal_act = true), getpayImg(index)"
             >
-              See a payment
+              ดูหลักฐานชำระ
             </button>
             <button
-              class="button is-success is-light mr-3"
+              class="button is-success is-light mr-3 my-1"
               v-show="order.order_status == 'pending'"
               @click="
                 changeStatusOrder(
@@ -206,10 +206,10 @@
                 )
               "
             >
-              Confirm order
+              ยืนยันคำสั่งซื้อ
             </button>
             <button
-              class="button is-danger is-light"
+              class="button is-danger is-light my-1"
               v-show="order.order_status == 'pending'"
               @click="
                 changeStatusOrder(
@@ -220,7 +220,7 @@
                 )
               "
             >
-              Cancel order
+              ยกเลิกคำสั่งซื้อ
             </button>
           </div>
         </div>
@@ -255,7 +255,7 @@
                   </p>
                 </div>
                 <p class="modal-cart-item-title-c" style="font-size: 12px">
-                  Redeem by : {{ obj.user_username }}
+                  แลกโดย : {{ obj.user_username }}
                 </p>
               </div>
             </div>

@@ -4,13 +4,13 @@
         <div class="manage-ovf">
             <div class="edit-bar">
             <div class="sub-box-addedit" @click="additemstage = true, itemdetailstage = false, itemsizestage = false">
-                <div class="text-manage-bar">Add New Item</div>
+                <div class="text-manage-bar">เพิ่มสินค้าใหม่</div>
             </div> 
             <div class="sub-box-addedit" @click="additemstage = false, itemdetailstage = true, itemsizestage = false">
-                <div class="text-manage-bar">Edit Item Details</div>
+                <div class="text-manage-bar">แก้ไขรายละเอียดสินค้า</div>
             </div> 
             <div class="sub-box-addedit" @click="additemstage = false, itemdetailstage = false, itemsizestage = true">
-                <div class="text-manage-bar">Add / Edit Item Size</div>
+                <div class="text-manage-bar">จัดการเกี่ยวกับไซส์รองเท้า</div>
             </div>
             </div>
         </div>
@@ -18,26 +18,26 @@
             <!-- หน้า Add Item -->
             <div v-show="additemstage" class="columns">
                 <div class="column">
-                    <label class="label">Item Name</label>
+                    <label class="label">ชื่อสินค้า</label>
                     <input v-model="newItemName" class="input mb-3" type="text">
                     <div class="columns">
                         <div class="column">
-                            <label class="label">Item Price</label>
+                            <label class="label">ราคา</label>
                             <input v-model="newItemPrice" class="input mb-5" type="number">
-                            <label class="label">Item Brand</label>
+                            <label class="label">ยี่ห้อ</label>
                             <input v-model="newItemBrand" class="input" type="text">
                         </div>
                         <div class="column">
-                            <label class="label">Item Type</label>
+                            <label class="label">ชนิด</label>
                             <div class="select mb-5">
                                 <select v-model="newItemType">
-                                    <option value="men">Men</option>
-                                    <option value="women">Women</option>
-                                    <option value="kid">Kid</option>
+                                    <option value="men">ผู้ชาย</option>
+                                    <option value="women">ผู้หญิง</option>
+                                    <option value="kid">เด็ก</option>
                                 </select>
                             </div>
                             <!-- ยืม class มาใช้ -->
-                            <label class="label">Item Image</label>
+                            <label class="label">รูปภาพสินค้า</label>
                             <div class="cart-upload-image">
                                 <input
                                 class="button cart-pickimg"
@@ -59,9 +59,9 @@
                     </div>
                 </div>
                 <div class="column">
-                    <label class="label">Item Description</label>
+                    <label class="label">คำอธิบายสินค้า</label>
                     <textarea v-model="newItemDesc" class="textarea mb-3"></textarea>
-                    <button class='button is-warning is-rounded ml-3' @click="addItem()">Confirm</button>
+                    <button class='button is-warning is-rounded ml-3' @click="addItem()">ยืนยัน</button>
                 </div>
             </div>
             <!-- หน้า detail -->
@@ -69,10 +69,10 @@
                 <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Description</th>
-                            <th>Price</th>
-                            <th>Edit</th>
+                            <th>ชื่อสินค้า</th>
+                            <th>คำอธิบายสินค้า</th>
+                            <th>ราคา</th>
+                            <th>แก้ไข</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -97,13 +97,13 @@
                             <td WIDTH="200">
                                 <div v-if="index===editToggle">
                                     <button @click="saveEditItem(item.item_id,index)" class="button is-warning mr-3" >
-                                        <span>Save</span>
+                                        <span>บันทึก</span>
                                     </button>
                                     <button @click="editToggle = -1" class="button is-danger is-outlined">
-                                        <span>Cancel</span>
+                                        <span>ยกเลิก</span>
                                     </button>
                                 </div>
-                                <button v-else @click="editToggle = index; editDesc = item.item_desc; editPrice = item.item_price" class='button is-primary'>Edit</button>
+                                <button v-else @click="editToggle = index; editDesc = item.item_desc; editPrice = item.item_price" class='button is-primary'>แก้ไข</button>
                             </td>
                         </tr>
                     </tbody>
@@ -113,24 +113,24 @@
             <div v-show="itemsizestage">
                 <div class="select mb-3">
                     <select v-model="selectItem">
-                        <option disabled value="">Select Item</option>
+                        <option disabled value="">เลือกสินค้า</option>
                         <option v-for="item, index in itemdetails" :key="item.size" :value="[item.item_name, item.item_id]">
-                            {{ item.item_name }} ({{sumsize[index].sumall}} ea)
+                            {{ item.item_name }} ({{sumsize[index].sumall != null ? sumsize[index].sumall : 0}} ชิ้น)
                         </option>
                     </select>
                 </div>
-                <button v-show="selectItem && !addSizestage" class='button is-info is-rounded ml-3 mb-3' @click="addSizestage = true">Add</button>
-                <button v-show="addSizestage" class='button is-warning is-rounded ml-3 mb-3' @click="addSize(selectItem[1])">Confirm</button>
-                <button v-show="addSizestage" class='button is-danger is-outlined is-rounded ml-3 mb-3' @click="addSizestage = false">Cancel</button>
+                <button v-show="selectItem && !addSizestage" class='button is-info is-rounded ml-3 mb-3' @click="addSizestage = true">เพิ่มไซส์</button>
+                <button v-show="addSizestage" class='button is-warning is-rounded ml-3 mb-3' @click="addSize(selectItem[1])">ยืนยัน</button>
+                <button v-show="addSizestage" class='button is-danger is-outlined is-rounded ml-3 mb-3' @click="addSizestage = false">ยกเลิก</button>
                 <!-- เพิ่ม size ใหม่ -->
                 <p style="font-size:12px; text-align:left;" :style="{color : al_msg == 'โปรดกรอกไซส์ใหม่' ? 'red' : 'lightgreen'}">{{al_msg}}</p>
                 <div class="mb-3" v-show="addSizestage">
                     <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Item Size</th>
-                            <th>Item Remain</th>
+                            <th>ชื่อสินค้า</th>
+                            <th>ไซส์รองเท้า</th>
+                            <th>สินค้าคงเหลือ</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -145,10 +145,10 @@
                 <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Item Size</th>
-                            <th>Item Remain</th>
-                            <th>Edit</th>
+                            <th>ชื่อสินค้า</th>
+                            <th>ไซส์รองเท้า</th>
+                            <th>สินค้าคงเหลือ</th>
+                            <th>แก้ไข</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -168,13 +168,13 @@
                             <td>
                                 <div v-if="index===editToggle">
                                     <button @click="saveEditSize(item.item_id, index, item.size)" class="button is-warning mr-3" >
-                                        <span>Save</span>
+                                        <span>บันทึก</span>
                                     </button>
                                     <button @click="editToggle = -1" class="button is-danger is-outlined">
-                                        <span>Cancel</span>
+                                        <span>ยกเลิก</span>
                                     </button>
                                 </div>
-                                <button v-else @click="editToggle = index; editRemain = item.size_remain" class='button is-primary'>Edit</button>
+                                <button v-else @click="editToggle = index; editRemain = item.size_remain" class='button is-primary'>แก้ไข</button>
                             </td>
                         </tr>
                     </tbody>

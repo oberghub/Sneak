@@ -615,7 +615,8 @@ input::-webkit-inner-spin-button {
 #cart-show-image{
     width: 300px;
     height: 400px;
-    background-color: transparent;
+    background-color: rgb(224, 224, 224);
+    border-radius: 2em;
     margin: auto;
     margin-bottom: 1em;
 }
@@ -849,6 +850,9 @@ input::-webkit-inner-spin-button {
     margin-top: 2em;
     padding: 2em;
     background-color: white;
+}
+.order-button{
+    display: flex;
 }
 .feed-box{
     width: 100%;
@@ -1555,6 +1559,9 @@ input::-webkit-inner-spin-button {
     .shop-recitem-card{
         grid-template-columns: 1fr;
         /* background-color: red; */
+    }
+    .order-button{
+        display: block;
     }
 }
 @media (max-width:500px){

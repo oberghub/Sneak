@@ -93,11 +93,10 @@
             <img id="pic" class="cart-slip" :src="showSelectImage(images)" />
           </div>
           <div id="cart-show-image" class="mt-4" v-else>
-            <img
-              id="pic"
-              class="cart-slip"
-              src="https://cdn.discordapp.com/attachments/877785654329753660/970944245533904906/279331497_381108473938290_2580588671558885245_n.jpg"
-            />
+            <div style="color:black; font-weight:bold;">โอนมาที่เลขบัญชี</div>
+            <div style="color:black; font-weight:bold;">696-9-69696-9</div>
+            <div style="color:black; font-weight:bold;">ธนาคารลึกลับ</div>
+            <div style="color:black; font-weight:bold;">โอนเสร็จแล้วอย่าลืมอัปโหลดรูปภาพ</div>
           </div>
 
           <div class="cart-datetime">
@@ -110,10 +109,10 @@
             />
           </div>
           <div class="mt-3"></div>
-          <p style="font-size: 10px; color: red">
+          <p style="font-size: 12px; color: red">
             *AM คือ เที่ยงคืน - 11 โมงเช้า (12AM - 11AM)
           </p>
-          <p style="font-size: 10px; color: red">
+          <p style="font-size: 12px; color: red">
             *PM คือ เที่ยงวัน - 5 ทุ่ม (12PM - 11PM)
           </p>
           <button
@@ -161,7 +160,6 @@ export default {
     },
     showSelectImage(image) {
       // for preview only
-      console.log("kuyy");
       return URL.createObjectURL(image);
     },
     confirmOrder() {
@@ -182,12 +180,12 @@ export default {
           this.user.user_tel === "" ||
           this.user.user_address === ""
         ) {
-          alert("ข้อมูลการจัดส่งไม่ครบ กรุณาไปกรอกข้อมูลที่หน้า profile");
+          alert("ข้อมูลการจัดส่งไม่ครบ กรุณาไปกรอกข้อมูลที่หน้า profile เลย ไม่กรอกงอนนะ");
           this.$router.push("/profile");
         } else if (this.dateTime === "") {
           alert("กรุณาระบุวันเวลาการโอน");
         } else if (this.images === "") {
-          alert("กรุณาใส่รูปหลักฐาน");
+          alert("กรุณาใส่รูปหลักฐานดั้ว");
         } else {
           axios //post order_item
             .post("http://localhost:3000/cart/confirm/", formData)
@@ -215,7 +213,7 @@ export default {
           item.splice(0, item.length);
           localStorage.setItem("cart", JSON.stringify(item));
           this.$router.push({ path: "/" });
-          alert("ยืนยันOrderสําเร็จ");
+          alert("ยืนยันคำสั่งซื้อสําเร็จ");
         }
       }
     },

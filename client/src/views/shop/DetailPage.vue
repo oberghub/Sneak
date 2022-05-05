@@ -22,20 +22,20 @@
               >
               <a class="button" @click="checkLimit">+</a>
             </div>
-            <p v-if="size_remain === 'Choose Size' && items.item_remain != 0" class="item-remain">มีสินค้าทั้งหมด {{ items.item_remain }} ชิ้น</p>
-            <p v-else-if="size_remain !== 'Choose Size' && items.item_remain != 0" class="item-remain">สินค้าคงเหลือ {{ size_remain.split(' ')[1] }} ชิ้น</p>
+            <p v-if="size_remain === 'เลือกไซส์รองเท้า' && items.item_remain != 0" class="item-remain">มีสินค้าทั้งหมด {{ items.item_remain }} ชิ้น</p>
+            <p v-else-if="size_remain !== 'เลือกไซส์รองเท้า' && items.item_remain != 0" class="item-remain">สินค้าคงเหลือ {{ size_remain.split(' ')[1] }} ชิ้น</p>
           </div>
           <div class="detail-option" v-show="items.item_remain != 0">
             <div class="select is-normal" v-if="items.item_type == 'kid'">
               <select v-model="size_remain">
-                <option disabled>Choose Size</option>
+                <option disabled>เลือกไซส์รองเท้า</option>
                 <option v-for="size in size" :key="size.size_id" :value="size.size + ' ' +size.size_remain" :disabled="size.size_remain == 0" :style= "[size.size_remain == 0 ? {color : '#E1E1E1'} : {color : 'black'}]">US {{size.size}} Y</option>
               </select>
               <p style="color:red; font-size:12px;">{{al_msg}}</p>
             </div>
             <div class="select is-normal" v-else>
               <select v-model="size_remain" @change="counter=1">
-                <option disabled>Choose Size</option>
+                <option disabled>เลือกไซส์รองเท้า</option>
                 <option v-for="size in size" :key="size.size_id" :value="size.size + ' ' +size.size_remain" :disabled="size.size_remain == 0" :style= "[size.size_remain == 0 ? {color : '#E1E1E1'} : {color : 'black'}]">US {{size.size}} {{items.item_type.charAt(0).toUpperCase()}}</option>
               </select>
               <p style="color:red; font-size:12px;">{{al_msg}}</p>
@@ -43,7 +43,7 @@
           </div>
           <div class="detail-button">
             <button @click="addItem" class="button is-success is-large is-light mr-5" :disabled="items.item_remain == 0">
-              Add to cart
+              เพิ่มลงตะกร้า
             </button>
             <div style="display: flex" @click="toggleFav" v-if="user">
               <svg
@@ -74,10 +74,10 @@
                   font-size: 20px;
                   margin-top: auto;
                   margin-bottom: auto;
-                  margin-left: 1em;
+                  margin-left: 0.5em;
                 "
               >
-                Add to favourite
+                ถ้ารักก็กดหัวใจนะคิคิ
               </p>
             </div>
             <div style="display:flex;" v-else>
@@ -130,7 +130,7 @@ export default {
       focus_heart: false, //ใช้ทดสอบชั่วคราว,
       items: null,
       size: null,
-      size_remain : "Choose Size",
+      size_remain : "เลือกไซส์รองเท้า",
       al_msg : '',
       showFavHeart: null,
     };
@@ -141,8 +141,8 @@ export default {
         alert("Please login before add item to your cart.")
       }
       else{
-        if(this.size_remain === 'Choose Size'){
-          this.al_msg = 'Please Choose Size'
+        if(this.size_remain === 'เลือกไซส์รองเท้า'){
+          this.al_msg = 'โปรดเลือกไซส์รองเท้าก่อน'
         }
         else{
           this.al_msg = ''
@@ -161,7 +161,7 @@ export default {
               
               //เช็คว่า ถ้าเรากดเกินที่มีใน stock ของไซส์นั้นๆ
               if(lastdata.quantity + save_item[i].quantity > parseInt(this.size_remain.substr(this.size_remain.length-1))){
-                alert("You can't add this item too much, This item is not enough.")
+                alert("ไม่สามารถเพิ่มจำนวนสินค้าไปได้มากกว่านี้")
                 //ลบค่าเก่าของ localStorage ออกก่อน เพราะว่าเราจะเอาค่าที่อัปเดตก็คือ ตัวแปร lastdata push เข้าไปใหม่ใน localStorage
                 save_item.splice(i, 1)
                 break
@@ -218,9 +218,10 @@ export default {
     checkLimit(){
       let spl = this.size_remain.split(' ')
       console.log(spl)
-      if(spl[0] == 'Choose' && this.counter == 1){
+      //ถ้ายังไม่เลือกไซส์รองเท้าจะกดเพิ่มจำนวนสินค้าไม่ได้
+      if(spl[0] == 'เลือกไซส์รองเท้า' && this.counter == 1){
         this.counter = 1
-        this.al_msg = 'Please Choose Size'
+        this.al_msg = 'โปรดเลือกไซส์รองเท้าก่อน'
       }
       else if(this.counter >= parseInt(spl[1])){
         this.counter = spl[1]

@@ -8,7 +8,7 @@
         <div class="shop-filter">
           <!--Search bar -->
           <div class="shop-filter-item">
-            <div class="filter-title">Search bar</div>
+            <div class="filter-title">แทบค้นหา</div>
             <div style="display: block">
               <input
                 style="width: 100%"
@@ -27,12 +27,12 @@
           </div> -->
           <!-- Filter human type -->
           <div class="shop-filter-item">
-            <div class="filter-title">By Human</div>
+            <div class="filter-title">หมวดหมู่</div>
             <div v-for="type in human" :key="type.item_type">
               <label class="checkbox lblsize">
                 <input type="checkbox" v-model="checkedType" :value="type.item_type"/>
                 {{
-                  type.item_type.charAt(0).toUpperCase() + type.item_type.slice(1)
+                  type.item_type == 'men' ? 'ผู้ชาย' : type.item_type == 'women' ? 'ผู้หญิง' : 'เด็ก'
                 }}
                 ({{type.count_type}})
               </label>
@@ -40,7 +40,7 @@
           </div>
           <!-- Filter Brand -->
           <div class="shop-filter-item">
-            <div class="filter-title">By Brand</div>
+            <div class="filter-title">ยี่ห้อ</div>
             <div v-for="type in brand" :key="type.item_brand">
               <label class="checkbox lblsize">
                 <input type="checkbox" v-model="checkedBrand" :value="type.item_brand"/>
@@ -54,7 +54,7 @@
           </div>
           <!-- Filter Price -->
           <div class="shop-filter-item">
-            <div class="filter-title">By Price</div>
+            <div class="filter-title">ช่วงราคา</div>
             <div style="display: block">
               <input
                 style="width: 100%"
@@ -62,7 +62,7 @@
                 type="number"
                 v-model="minprice"
               />
-              <p style="width: 100%; text-align: center; font-size: 13px">to</p>
+              <p style="width: 100%; text-align: center; font-size: 13px">ถึง</p>
               <input
                 style="width: 100%"
                 class="input is-small is-rounded"
@@ -77,22 +77,22 @@
           </div>
           <!-- Sort Price -->
           <div class="shop-filter-item">
-            <div class="filter-title">Sort By Price</div>
+            <div class="filter-title">จัดเรียงตามราคา</div>
             <div class="control">
               <label class="radio lblsize">
                 <input type="radio" name="sort" v-model="checkedSort" value="l-h"/>
-                Low - High
+                น้อย - มาก
               </label>
               <br />
               <label class="radio lblsize">
                 <input type="radio" name="sort" v-model="checkedSort" value="h-l"/>
-                High - Low
+                มาก - น้อย
               </label>
             </div>
           </div>
           <!-- Sort by Name -->
           <div class="shop-filter-item">
-            <div class="filter-title">Sort By Name</div>
+            <div class="filter-title">จัดเรียงตามตัวอักษร</div>
             <div class="control">
               <label class="radio lblsize">
                 <input type="radio" name="sort" v-model="checkedSort" value="a-z"/>
@@ -116,7 +116,7 @@
                 </div>
                 <div class="item-info">
                   <p class="item-info-title">{{ item.item_name }}</p>
-                  <p style="margin-bottom:1em;" class="item-info-type">{{ item.item_type.charAt(0).toUpperCase() + item.item_type.slice(1) }}<span style="font-size:16px; color:red; margin-left:1em;" v-show="item.item_remain == 0">สินค้าหมด</span> </p>
+                  <p style="margin-bottom:1em;" class="item-info-type">{{ item.item_type == 'men' ? 'ผู้ชาย' : item.item_type == 'women' ? 'ผู้หญิง' : 'เด็ก' }}<span style="font-size:16px; color:red; margin-left:1em;" v-show="item.item_remain == 0">สินค้าหมด</span> </p>
                   <p class="item-info-price">
                     ฿{{ formatCurrency(item.item_price) }}
                   </p>

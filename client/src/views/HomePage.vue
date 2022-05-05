@@ -20,7 +20,7 @@
     </div>
     <div class="container">
       <br /><br />
-      <p style="font-size: 32px; font-weight:bold; margin-bottom:1em;">Category</p>
+      <p style="font-size: 32px; font-weight:bold; margin-bottom:1em;">หมวดหมู่รองเท้า</p>
       <br />
       <div class="columns">
         <div class="column">
@@ -91,7 +91,7 @@
         </div>
       </div>
       <br />
-      <p style="font-size:32px; font-weight:bold; margin-bottom:2em; margin-top:2em;">Recommend Item</p>
+      <p style="font-size:32px; font-weight:bold; margin-bottom:2em; margin-top:2em;">สินค้าแปลกแหวกแฟชั่น</p>
       <div class="shop-recitem-card">
         <div v-for="item in items" class="recitem-card mb-4" :key="item.item_id">
           <router-link style="color: black" :to="`/detail/${item.item_id}`">
@@ -102,8 +102,7 @@
                 <p class="item-info-title">{{ item.item_name }}</p>
                 <p style="margin-bottom: 1em" class="item-info-type">
                   {{
-                    item.item_type.charAt(0).toUpperCase() +
-                    item.item_type.slice(1)
+                    item.item_type == 'men' ? 'ผู้ชาย' : item.item_type == 'women' ? 'ผู้หญิง' : 'เด็ก'
                   }}<span
                     style="font-size: 16px; color: red; margin-left: 1em"
                     v-show="item.item_remain == 0"
@@ -120,7 +119,7 @@
           </router-link>
         </div>
       </div>
-      <p style="font-size:32px; font-weight:bold; margin-bottom:2em; margin-top:2em;">Recommend by sponsor</p>
+      <p style="font-size:32px; font-weight:bold; margin-bottom:2em; margin-top:2em;">Converse ใส่แล้วเกิดทุกแนวทาง</p>
       <div class="shop-recitem-card">
         <div v-for="item in items2" class="recitem-card mb-4" :key="item.item_id">
           <router-link style="color: black" :to="`/detail/${item.item_id}`">
@@ -131,8 +130,7 @@
                 <p class="item-info-title">{{ item.item_name }}</p>
                 <p style="margin-bottom: 1em" class="item-info-type">
                   {{
-                    item.item_type.charAt(0).toUpperCase() +
-                    item.item_type.slice(1)
+                    item.item_type == 'men' ? 'ผู้ชาย' : item.item_type == 'women' ? 'ผู้หญิง' : 'เด็ก'
                   }}<span
                     style="font-size: 16px; color: red; margin-left: 1em"
                     v-show="item.item_remain == 0"

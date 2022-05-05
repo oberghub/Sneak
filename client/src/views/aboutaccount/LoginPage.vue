@@ -4,9 +4,9 @@
       <div class="absolute-center">
         <div class="formBox">
           <div class="formInfo">
-            <p class="textform-left mb-5" style="font-size: 24px">Login</p>
+            <p class="textform-left mb-5" style="font-size: 24px">เข้าสู่ระบบ</p>
             <div class="field">
-              <label class="label textform-left">Username</label>
+              <label class="label textform-left">ชื่อผู้ใช้</label>
               <div class="control">
                 <input
                   class="input is-small"
@@ -20,7 +20,7 @@
             </div>
 
             <div class="field">
-              <label class="label textform-left">Password</label>
+              <label class="label textform-left">รหัสผ่าน</label>
               <div class="control">
                 <input
                   class="input is-small"
@@ -39,7 +39,7 @@
                   class="button is-block is-fullwidth is-primary is-small"
                   type="submit"
                 >
-                  Login
+                  เข้าสู่ระบบ
                 </button>
               </div>
               <div class="control">
@@ -49,7 +49,7 @@
                     button
                     is-block is-fullwidth is-primary is-small is-link is-light
                   "
-                  >Cancel</router-link
+                  >ยกเลิก</router-link
                 >
               </div>
             </div>
@@ -88,7 +88,7 @@ export default {
         })
         .catch((err) => {
           console.log(err);
-          alert("Login ไม่สําเร็จ");
+          alert("เข้าสู่ระบบไม่สําเร็จ");
         });
       this.$router.push({ name: "Home" });
     },
