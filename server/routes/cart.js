@@ -90,12 +90,10 @@ router.put("/cart/reducecount",isLoggedIn, async function (req, res, next) {
   
   try{
     const rd_size_r = await conn.query("select size_remain from item_size where item_id=? and size=?", [req.body.obj.id, req.body.obj.size])
-    const rd_size = await conn.query("update item_size set size_remain=? where item_id = ? and size = ?", [parseInt(rd_size_r[0][0].size_remain - req.body.obj.quantity), req.body.obj.id, req.body.obj.size])
+    await conn.query("update item_size set size_remain=? where item_id = ? and size = ?", [parseInt(rd_size_r[0][0].size_remain - req.body.obj.quantity), req.body.obj.id, req.body.obj.size])
+
+    await conn.query("update item set item_remain = (select sum(size_remain) from item_size where item_id = ?) where item_id = ?", [req.body.obj.id, req.body.obj.id])
   
-  
-    const rd_item = await conn.query("select item_remain from `item` where item_id = ?", [req.body.obj.id])
-  
-    const rd_item2 = await conn.query("update item set item_remain = ? where item_id = ?", [parseInt(rd_item[0][0].item_remain - req.body.obj.quantity), req.body.obj.id])
     conn.commit()
     res.status(200)
   }
@@ -115,12 +113,12 @@ router.put("/cart/rollcount",isLoggedIn, async function (req, res, next) {
   
   try{
     const rc_size_r = await conn.query("select size_remain from item_size where item_id=? and size=?", [req.body.obj.item_id, req.body.obj.item_size])
-    const rc_item = await conn.query("select item_remain from `item` where item_id = ?", [req.body.obj.item_id])
   
-    const rc_size = await conn.query("update item_size set size_remain=? where item_id = ? and size = ?", [parseInt(rc_size_r[0][0].size_remain + req.body.obj.item_quantity), req.body.obj.item_id, req.body.obj.item_size])
+    await conn.query("update item_size set size_remain=? where item_id = ? and size = ?", [parseInt(rc_size_r[0][0].size_remain + req.body.obj.item_quantity), req.body.obj.item_id, req.body.obj.item_size])
+
+    await conn.query("update item set item_remain = (select sum(size_remain) from item_size where item_id = ?) where item_id = ?", [req.body.obj.item_id, req.body.obj.item_id])
   
-  
-    const rc_item2 = await conn.query("update item set item_remain = ? where item_id = ?", [parseInt(rc_item[0][0].item_remain + req.body.obj.item_quantity), req.body.obj.item_id])
+
     conn.commit()
     res.status(200)
   }

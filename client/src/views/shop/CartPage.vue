@@ -209,6 +209,7 @@ export default {
                 console.log(err);
               });
           }
+
           let item = JSON.parse(localStorage.getItem("cart"));
           this.obj.splice(0, this.obj.length);
           item.splice(0, item.length);
